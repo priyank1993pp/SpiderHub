@@ -19,19 +19,19 @@ public class Comment implements Serializable {
 
 	@Id
 	@GeneratedValue
-	private int cmt_id;
+	private int commentId;
 
-	private String cmt_desc;
+	private String commentDesc;
 
 	private boolean isDelete;
 
-	private Date create_date;
+	private Date createDate;
 
 	@ManyToOne
-	User user_comment;
+	User userComment;
 
 	@ManyToOne
-	Task task_comments;
+	Task taskComments;
 
 	public boolean isDelete() {
 		return isDelete;
@@ -42,42 +42,42 @@ public class Comment implements Serializable {
 	}
 
 	public Date getCreate_date() {
-		return create_date;
+		return createDate;
 	}
 
 	public void setCreate_date(Date create_date) {
-		this.create_date = create_date;
+		this.createDate = create_date;
 	}
 
 	public int getCmt_id() {
-		return cmt_id;
+		return commentId;
 	}
 
 	public void setCmt_id(int cmt_id) {
-		this.cmt_id = cmt_id;
+		this.commentId = cmt_id;
 	}
 
 	public String getCmt_desc() {
-		return cmt_desc;
+		return commentDesc;
 	}
 
 	public void setCmt_desc(String cmt_desc) {
-		this.cmt_desc = cmt_desc;
+		this.commentDesc = cmt_desc;
 	}
 
 	public User getUser_comment() {
-		return user_comment;
+		return userComment;
 	}
 
 	public void setUser_comment(User user_comment) {
-		this.user_comment = user_comment;
+		this.userComment = user_comment;
 	}
 
 	public Task getTask_comments() {
-		return task_comments;
+		return taskComments;
 	}
 
 	public void setTask_comments(Task task_comments) {
-		this.task_comments = task_comments;
+		this.taskComments = task_comments;
 	}
 }

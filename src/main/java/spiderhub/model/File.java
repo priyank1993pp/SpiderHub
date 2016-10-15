@@ -19,29 +19,29 @@ public class File implements Serializable {
 
 	@Id
 	@GeneratedValue
-	private int file_id;
+	private int fileId;
 
-	private String file_name;
+	private String fileName;
 
-	private String file_type;
+	private String fileType;
 
-	private String file_size;
+	private String fileSize;
 
-	private String file_path;
+	private String filePath;
 
-	private Date upload_date;
+	private Date uploadDate;
 
 	private boolean isDelete;
 
 	@ManyToOne
-	Task task_files;
+	Task taskFiles;
 
 	public Date getUpload_date() {
-		return upload_date;
+		return uploadDate;
 	}
 
 	public void setUpload_date(Date upload_date) {
-		this.upload_date = upload_date;
+		this.uploadDate = upload_date;
 	}
 
 	public boolean isDelete() {
@@ -53,50 +53,50 @@ public class File implements Serializable {
 	}
 
 	public String getFile_path() {
-		return file_path;
+		return fileName;
 	}
 
 	public void setFile_path(String file_path) {
-		this.file_path = file_path;
+		this.fileName = file_path;
 	}
 
 	public int getFile_id() {
-		return file_id;
+		return fileId;
 	}
 
 	public void setFile_id(int file_id) {
-		this.file_id = file_id;
+		this.fileId = file_id;
 	}
 
 	public String getFile_name() {
-		return file_name;
+		return fileName;
 	}
 
 	public void setFile_name(String file_name) {
-		this.file_name = file_name;
+		this.fileName = file_name;
 	}
 
 	public String getFile_type() {
-		return file_type;
+		return fileType;
 	}
 
 	public void setFile_type(String file_type) {
-		this.file_type = file_type;
+		this.fileType = file_type;
 	}
 
 	public String getFile_size() {
-		return file_size;
+		return fileSize;
 	}
 
 	public void setFile_size(String file_size) {
-		this.file_size = file_size;
+		this.fileSize = file_size;
 	}
 
 	public Task getTask_files() {
-		return task_files;
+		return taskFiles;
 	}
 
 	public void setTask_files(Task task_files) {
-		this.task_files = task_files;
+		this.taskFiles = task_files;
 	}
 }

@@ -24,35 +24,35 @@ public class User implements Serializable {
 	@GeneratedValue
 	private int id;
 
-	private String name;
+	private String userName;
 
-	private String email;
+	private String emailAddress;
 
 	private String password;
 
-	private String phone_number;
+	private String phoneNumber;
 
-	private Date create_date;
+	private Date createDate;
 
 	private boolean isDelete;
 
 	@ManyToOne
-	User_role user_role;
+	UserRole userRole;
 
-	@ManyToMany(mappedBy = "users_related_project")
+	@ManyToMany(mappedBy = "usersRelatedProject")
 	Set<Project> projects;
 
-	@OneToMany(mappedBy = "created_user")
+	@OneToMany(mappedBy = "createdUser")
 	Set<Project> project;
 
-	@OneToMany(mappedBy = "user_comment")
+	@OneToMany(mappedBy = "userComment")
 	Set<Comment> comments;
 
 	@OneToMany(mappedBy = "userTasks")
 	Set<Task> tasks;
 
 	@OneToMany(mappedBy = "activityOfTaskByUser")
-	Set<Task_activity> activities;
+	Set<TaskActivity> activities;
 
 	public boolean isDelete() {
 		return isDelete;
@@ -62,20 +62,20 @@ public class User implements Serializable {
 		this.isDelete = isDelete;
 	}
 
-	public User_role getUser_role() {
-		return user_role;
+	public UserRole getUser_role() {
+		return userRole;
 	}
 
-	public void setUser_role(User_role user_role) {
-		this.user_role = user_role;
+	public void setUser_role(UserRole user_role) {
+		this.userRole = user_role;
 	}
 
 	public Date getCreate_date() {
-		return create_date;
+		return createDate;
 	}
 
 	public void setCreate_date(Date create_date) {
-		this.create_date = create_date;
+		this.createDate = create_date;
 	}
 
 	public Set<Task> getTasks() {
@@ -86,11 +86,11 @@ public class User implements Serializable {
 		this.tasks = tasks;
 	}
 
-	public Set<Task_activity> getActivities() {
+	public Set<TaskActivity> getActivities() {
 		return activities;
 	}
 
-	public void setActivities(Set<Task_activity> activities) {
+	public void setActivities(Set<TaskActivity> activities) {
 		this.activities = activities;
 	}
 
@@ -127,19 +127,19 @@ public class User implements Serializable {
 	}
 
 	public String getName() {
-		return name;
+		return userName;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.userName = name;
 	}
 
 	public String getEmail() {
-		return email;
+		return emailAddress;
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		this.emailAddress = email;
 	}
 
 	public String getPassword() {
@@ -151,10 +151,10 @@ public class User implements Serializable {
 	}
 
 	public String getPhone_number() {
-		return phone_number;
+		return phoneNumber;
 	}
 
 	public void setPhone_number(String phone_number) {
-		this.phone_number = phone_number;
+		this.phoneNumber = phone_number;
 	}
 }

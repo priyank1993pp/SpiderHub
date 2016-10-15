@@ -23,45 +23,45 @@ public class Task implements Serializable {
 	@GeneratedValue
 	private int id;
 
-	private String task_name;
+	private String taskName;
 
-	private String task_description;
+	private String taskDescription;
 
-	private Date create_date;
+	private Date createDate;
 
-	private Date start_date;
+	private Date startDate;
 
-	private Date end_date;
-
-	@ManyToOne
-	Task_priority taskPriority;
+	private Date endDate;
 
 	@ManyToOne
-	Project project_tasks;
+	TaskPriority taskPriority;
 
-	@OneToMany(mappedBy = "task_files")
+	@ManyToOne
+	Project projectTasks;
+
+	@OneToMany(mappedBy = "taskFiles")
 	Set<File> files;
 
-	@OneToMany(mappedBy = "task_comments")
+	@OneToMany(mappedBy = "taskComments")
 	Set<Comment> comments;
 
 	@ManyToOne
 	User userTasks;
 
 	@ManyToOne
-	Task_status statusTasks;
+	TaskStatus statusTasks;
 
 	@OneToMany(mappedBy = "activityOfTask")
-	Set<Task_activity> activities;
+	Set<TaskActivity> activities;
 
 	private boolean isDelete;
 
 	public Date getCreate_date() {
-		return create_date;
+		return createDate;
 	}
 
 	public void setCreate_date(Date create_date) {
-		this.create_date = create_date;
+		this.createDate = create_date;
 	}
 
 	public boolean isDelete() {
@@ -72,19 +72,19 @@ public class Task implements Serializable {
 		this.isDelete = isDelete;
 	}
 
-	public Task_status getStatusTasks() {
+	public TaskStatus getStatusTasks() {
 		return statusTasks;
 	}
 
-	public void setStatusTasks(Task_status statusTasks) {
+	public void setStatusTasks(TaskStatus statusTasks) {
 		this.statusTasks = statusTasks;
 	}
 
-	public Set<Task_activity> getActivities() {
+	public Set<TaskActivity> getActivities() {
 		return activities;
 	}
 
-	public void setActivities(Set<Task_activity> activities) {
+	public void setActivities(Set<TaskActivity> activities) {
 		this.activities = activities;
 	}
 
@@ -112,11 +112,11 @@ public class Task implements Serializable {
 		this.comments = comments;
 	}
 
-	public Task_priority getTaskPriority() {
+	public TaskPriority getTaskPriority() {
 		return taskPriority;
 	}
 
-	public void setTaskPriority(Task_priority taskPriority) {
+	public void setTaskPriority(TaskPriority taskPriority) {
 		this.taskPriority = taskPriority;
 	}
 
@@ -129,42 +129,42 @@ public class Task implements Serializable {
 	}
 
 	public String getTask_name() {
-		return task_name;
+		return taskName;
 	}
 
 	public void setTask_name(String task_name) {
-		this.task_name = task_name;
+		this.taskName = task_name;
 	}
 
 	public String getTask_description() {
-		return task_description;
+		return taskDescription;
 	}
 
 	public void setTask_description(String task_description) {
-		this.task_description = task_description;
+		this.taskDescription = task_description;
 	}
 
 	public Date getStart_date() {
-		return start_date;
+		return startDate;
 	}
 
 	public void setStart_date(Date start_date) {
-		this.start_date = start_date;
+		this.startDate = start_date;
 	}
 
 	public Date getEnd_date() {
-		return end_date;
+		return endDate;
 	}
 
 	public void setEnd_date(Date end_date) {
-		this.end_date = end_date;
+		this.endDate = end_date;
 	}
 
 	public Project getProject_tasks() {
-		return project_tasks;
+		return projectTasks;
 	}
 
 	public void setProject_tasks(Project project_tasks) {
-		this.project_tasks = project_tasks;
+		this.projectTasks = project_tasks;
 	}
 }

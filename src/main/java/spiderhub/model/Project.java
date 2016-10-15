@@ -24,26 +24,26 @@ public class Project implements Serializable {
 	@GeneratedValue
 	private int id;
 
-	private String project_name;
+	private String projectName;
 
 	@ManyToOne
-	Project_type project_type;
+	ProjectType projectType;
 
-	private String project_description;
+	private String projectDescription;
 
-	private String project_gitHubLink;
+	private String projectGitHubLink;
 
-	private Date created_date;
+	private Date createdDate;
 
 	private boolean isDelete;
 
 	@ManyToMany
-	Set<User> users_related_project;
+	Set<User> usersRelatedProject;
 
 	@ManyToOne
-	User created_user;
+	User createdUser;
 
-	@OneToMany(mappedBy = "project_tasks")
+	@OneToMany(mappedBy = "projectTasks")
 	Set<Task> tasks;
 
 	public boolean isDelete() {
@@ -55,35 +55,35 @@ public class Project implements Serializable {
 	}
 
 	public Date getCreated_date() {
-		return created_date;
+		return createdDate;
 	}
 
 	public void setCreated_date(Date created_date) {
-		this.created_date = created_date;
+		this.createdDate = created_date;
 	}
 
 	public String getProject_gitHubLink() {
-		return project_gitHubLink;
+		return projectGitHubLink;
 	}
 
 	public void setProject_gitHubLink(String project_gitHubLink) {
-		this.project_gitHubLink = project_gitHubLink;
+		this.projectGitHubLink = project_gitHubLink;
 	}
 
 	public Set<User> getUsers_related_project() {
-		return users_related_project;
+		return usersRelatedProject;
 	}
 
 	public void setUsers_related_project(Set<User> users_related_project) {
-		this.users_related_project = users_related_project;
+		this.usersRelatedProject = users_related_project;
 	}
 
 	public User getCreated_user() {
-		return created_user;
+		return createdUser;
 	}
 
 	public void setCreated_user(User created_user) {
-		this.created_user = created_user;
+		this.createdUser = created_user;
 	}
 
 	public Set<Task> getTasks() {
@@ -103,27 +103,27 @@ public class Project implements Serializable {
 	}
 
 	public String getProject_name() {
-		return project_name;
+		return projectName;
 	}
 
 	public void setProject_name(String project_name) {
-		this.project_name = project_name;
+		this.projectName = project_name;
 	}
 
-	public Project_type getProject_type() {
-		return project_type;
+	public ProjectType getProject_type() {
+		return projectType;
 	}
 
-	public void setProject_type(Project_type project_type) {
-		this.project_type = project_type;
+	public void setProject_type(ProjectType project_type) {
+		this.projectType = project_type;
 	}
 
 	public String getProject_description() {
-		return project_description;
+		return projectDescription;
 	}
 
 	public void setProject_description(String project_description) {
-		this.project_description = project_description;
+		this.projectDescription = project_description;
 	}
 
 }
