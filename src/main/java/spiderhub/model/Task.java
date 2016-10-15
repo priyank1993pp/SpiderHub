@@ -36,8 +36,6 @@ public class Task implements Serializable {
 	@ManyToOne
 	Task_priority taskPriority;
 
-	private int group_id;
-
 	@ManyToOne
 	Project project_tasks;
 
@@ -160,14 +158,6 @@ public class Task implements Serializable {
 
 	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
-	}
-
-	public int getGroup_id() {
-		return group_id;
-	}
-
-	public void setGroup_id(int group_id) {
-		this.group_id = group_id;
 	}
 
 	public Project getProject_tasks() {
