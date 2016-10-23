@@ -8,5 +8,8 @@
 </head>
 <body>
 <p>WELCOME TO SpiderHub</p>
+<ul>
+<li><a href="projects/list.html">Project Management</a></li>
+</ul>
 </body>
 </html>
