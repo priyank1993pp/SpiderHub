@@ -54,6 +54,54 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "activityOfTaskByUser")
 	Set<TaskActivity> activities;
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
 	public boolean isDelete() {
 		return isDelete;
 	}
@@ -62,36 +110,12 @@ public class User implements Serializable {
 		this.isDelete = isDelete;
 	}
 
-	public UserRole getUser_role() {
+	public UserRole getUserRole() {
 		return userRole;
 	}
 
-	public void setUser_role(UserRole user_role) {
-		this.userRole = user_role;
-	}
-
-	public Date getCreate_date() {
-		return createDate;
-	}
-
-	public void setCreate_date(Date create_date) {
-		this.createDate = create_date;
-	}
-
-	public Set<Task> getTasks() {
-		return tasks;
-	}
-
-	public void setTasks(Set<Task> tasks) {
-		this.tasks = tasks;
-	}
-
-	public Set<TaskActivity> getActivities() {
-		return activities;
-	}
-
-	public void setActivities(Set<TaskActivity> activities) {
-		this.activities = activities;
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
 	}
 
 	public Set<Project> getProjects() {
@@ -118,43 +142,25 @@ public class User implements Serializable {
 		this.comments = comments;
 	}
 
-	public int getId() {
-		return id;
+	public Set<Task> getTasks() {
+		return tasks;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setTasks(Set<Task> tasks) {
+		this.tasks = tasks;
 	}
 
-	public String getName() {
-		return userName;
+	public Set<TaskActivity> getActivities() {
+		return activities;
 	}
 
-	public void setName(String name) {
-		this.userName = name;
+	public void setActivities(Set<TaskActivity> activities) {
+		this.activities = activities;
 	}
 
-	public String getEmail() {
-		return emailAddress;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
-	public void setEmail(String email) {
-		this.emailAddress = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getPhone_number() {
-		return phoneNumber;
-	}
-
-	public void setPhone_number(String phone_number) {
-		this.phoneNumber = phone_number;
-	}
+	
 }

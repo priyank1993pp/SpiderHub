@@ -27,14 +27,6 @@ public class ProjectType implements Serializable {
 	@OneToMany(mappedBy = "projectType")
 	Set<Project> projects;
 
-	public boolean isDelete() {
-		return isDelete;
-	}
-
-	public void setDelete(boolean isDelete) {
-		this.isDelete = isDelete;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -43,12 +35,20 @@ public class ProjectType implements Serializable {
 		this.id = id;
 	}
 
-	public String getProjectType_name() {
+	public String getProjectType() {
 		return projectType;
 	}
 
-	public void setProjectType_name(String projectType_name) {
-		this.projectType = projectType_name;
+	public void setProjectType(String projectType) {
+		this.projectType = projectType;
+	}
+
+	public boolean isDelete() {
+		return isDelete;
+	}
+
+	public void setDelete(boolean isDelete) {
+		this.isDelete = isDelete;
 	}
 
 	public Set<Project> getProjects() {
@@ -58,4 +58,10 @@ public class ProjectType implements Serializable {
 	public void setProjects(Set<Project> projects) {
 		this.projects = projects;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	
 }

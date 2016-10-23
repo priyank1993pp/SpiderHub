@@ -37,6 +37,8 @@ public class Project implements Serializable {
 
 	private boolean isDelete;
 
+	
+
 	@ManyToMany
 	Set<User> usersRelatedProject;
 
@@ -46,6 +48,10 @@ public class Project implements Serializable {
 	@OneToMany(mappedBy = "projectTasks")
 	Set<Task> tasks;
 
+	
+
+	
+
 	public boolean isDelete() {
 		return isDelete;
 	}
@@ -54,36 +60,40 @@ public class Project implements Serializable {
 		this.isDelete = isDelete;
 	}
 
-	public Date getCreated_date() {
+	
+
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreated_date(Date created_date) {
-		this.createdDate = created_date;
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 
-	public String getProject_gitHubLink() {
+	public String getProjectGitHubLink() {
 		return projectGitHubLink;
 	}
 
-	public void setProject_gitHubLink(String project_gitHubLink) {
-		this.projectGitHubLink = project_gitHubLink;
+	public void setProjectGitHubLink(String projectGitHubLink) {
+		this.projectGitHubLink = projectGitHubLink;
 	}
 
-	public Set<User> getUsers_related_project() {
+	
+
+	public Set<User> getUsersRelatedProject() {
 		return usersRelatedProject;
 	}
 
-	public void setUsers_related_project(Set<User> users_related_project) {
-		this.usersRelatedProject = users_related_project;
+	public void setUsersRelatedProject(Set<User> usersRelatedProject) {
+		this.usersRelatedProject = usersRelatedProject;
 	}
 
-	public User getCreated_user() {
+	public User getCreatedUser() {
 		return createdUser;
 	}
 
-	public void setCreated_user(User created_user) {
-		this.createdUser = created_user;
+	public void setCreatedUser(User createdUser) {
+		this.createdUser = createdUser;
 	}
 
 	public Set<Task> getTasks() {
@@ -102,28 +112,28 @@ public class Project implements Serializable {
 		this.id = id;
 	}
 
-	public String getProject_name() {
+	public String getProjectName() {
 		return projectName;
 	}
 
-	public void setProject_name(String project_name) {
-		this.projectName = project_name;
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 
-	public ProjectType getProject_type() {
+	public ProjectType getProjectType() {
 		return projectType;
 	}
 
-	public void setProject_type(ProjectType project_type) {
-		this.projectType = project_type;
+	public void setProjectType(ProjectType projectType) {
+		this.projectType = projectType;
 	}
 
-	public String getProject_description() {
+	public String getProjectDescription() {
 		return projectDescription;
 	}
 
-	public void setProject_description(String project_description) {
-		this.projectDescription = project_description;
+	public void setProjectDescription(String projectDescription) {
+		this.projectDescription = projectDescription;
 	}
 
 }

@@ -56,44 +56,68 @@ public class Task implements Serializable {
 
 	private boolean isDelete;
 
-	public Date getCreate_date() {
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getTaskName() {
+		return taskName;
+	}
+
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
+	}
+
+	public String getTaskDescription() {
+		return taskDescription;
+	}
+
+	public void setTaskDescription(String taskDescription) {
+		this.taskDescription = taskDescription;
+	}
+
+	public Date getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreate_date(Date create_date) {
-		this.createDate = create_date;
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
-	public boolean isDelete() {
-		return isDelete;
+	public Date getStartDate() {
+		return startDate;
 	}
 
-	public void setDelete(boolean isDelete) {
-		this.isDelete = isDelete;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 
-	public TaskStatus getStatusTasks() {
-		return statusTasks;
+	public Date getEndDate() {
+		return endDate;
 	}
 
-	public void setStatusTasks(TaskStatus statusTasks) {
-		this.statusTasks = statusTasks;
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
-	public Set<TaskActivity> getActivities() {
-		return activities;
+	public TaskPriority getTaskPriority() {
+		return taskPriority;
 	}
 
-	public void setActivities(Set<TaskActivity> activities) {
-		this.activities = activities;
+	public void setTaskPriority(TaskPriority taskPriority) {
+		this.taskPriority = taskPriority;
 	}
 
-	public User getUserTasks() {
-		return userTasks;
+	public Project getProjectTasks() {
+		return projectTasks;
 	}
 
-	public void setUserTasks(User userTasks) {
-		this.userTasks = userTasks;
+	public void setProjectTasks(Project projectTasks) {
+		this.projectTasks = projectTasks;
 	}
 
 	public Set<File> getFiles() {
@@ -112,59 +136,41 @@ public class Task implements Serializable {
 		this.comments = comments;
 	}
 
-	public TaskPriority getTaskPriority() {
-		return taskPriority;
+	public User getUserTasks() {
+		return userTasks;
 	}
 
-	public void setTaskPriority(TaskPriority taskPriority) {
-		this.taskPriority = taskPriority;
+	public void setUserTasks(User userTasks) {
+		this.userTasks = userTasks;
 	}
 
-	public int getId() {
-		return id;
+	public TaskStatus getStatusTasks() {
+		return statusTasks;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setStatusTasks(TaskStatus statusTasks) {
+		this.statusTasks = statusTasks;
 	}
 
-	public String getTask_name() {
-		return taskName;
+	public Set<TaskActivity> getActivities() {
+		return activities;
 	}
 
-	public void setTask_name(String task_name) {
-		this.taskName = task_name;
+	public void setActivities(Set<TaskActivity> activities) {
+		this.activities = activities;
 	}
 
-	public String getTask_description() {
-		return taskDescription;
+	public boolean isDelete() {
+		return isDelete;
 	}
 
-	public void setTask_description(String task_description) {
-		this.taskDescription = task_description;
+	public void setDelete(boolean isDelete) {
+		this.isDelete = isDelete;
 	}
 
-	public Date getStart_date() {
-		return startDate;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
-	public void setStart_date(Date start_date) {
-		this.startDate = start_date;
-	}
-
-	public Date getEnd_date() {
-		return endDate;
-	}
-
-	public void setEnd_date(Date end_date) {
-		this.endDate = end_date;
-	}
-
-	public Project getProject_tasks() {
-		return projectTasks;
-	}
-
-	public void setProject_tasks(Project project_tasks) {
-		this.projectTasks = project_tasks;
-	}
+	
 }

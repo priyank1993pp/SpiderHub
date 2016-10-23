@@ -28,14 +28,6 @@ public class UserRole implements Serializable {
 	@OneToMany(mappedBy = "userRole")
 	Set<User> userType;
 
-	public boolean isDelete() {
-		return isDelete;
-	}
-
-	public void setDelete(boolean isDelete) {
-		this.isDelete = isDelete;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -44,19 +36,33 @@ public class UserRole implements Serializable {
 		this.id = id;
 	}
 
-	public String getUser_role() {
+	public String getUserRole() {
 		return userRole;
 	}
 
-	public void setUser_role(String user_role) {
-		this.userRole = user_role;
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
 	}
 
-	public Set<User> getUser_type() {
+	public boolean isDelete() {
+		return isDelete;
+	}
+
+	public void setDelete(boolean isDelete) {
+		this.isDelete = isDelete;
+	}
+
+	public Set<User> getUserType() {
 		return userType;
 	}
 
-	public void setUser_type(Set<User> user_type) {
-		this.userType = user_type;
+	public void setUserType(Set<User> userType) {
+		this.userType = userType;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	
 }

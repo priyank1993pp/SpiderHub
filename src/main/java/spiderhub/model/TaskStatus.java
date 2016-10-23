@@ -28,14 +28,6 @@ public class TaskStatus implements Serializable {
 	@OneToMany(mappedBy = "statusTasks")
 	Set<Task> tasks;
 
-	public boolean isDelete() {
-		return isDelete;
-	}
-
-	public void setDelete(boolean isDelete) {
-		this.isDelete = isDelete;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -44,12 +36,20 @@ public class TaskStatus implements Serializable {
 		this.id = id;
 	}
 
-	public String getStatus_name() {
+	public String getStatusName() {
 		return statusName;
 	}
 
-	public void setStatus_name(String status_name) {
-		this.statusName = status_name;
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
+	}
+
+	public boolean isDelete() {
+		return isDelete;
+	}
+
+	public void setDelete(boolean isDelete) {
+		this.isDelete = isDelete;
 	}
 
 	public Set<Task> getTasks() {
@@ -60,4 +60,9 @@ public class TaskStatus implements Serializable {
 		this.tasks = tasks;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	
 }

@@ -42,20 +42,20 @@ public class TaskActivity implements Serializable {
 		this.id = id;
 	}
 
-	public Date getStart_time() {
+	public Date getStartTime() {
 		return startTime;
 	}
 
-	public void setStart_time(Date start_time) {
-		this.startTime = start_time;
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
 	}
 
-	public Date getEnd_time() {
+	public Date getEndTime() {
 		return endTime;
 	}
 
-	public void setEnd_time(Date end_time) {
-		this.endTime = end_time;
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
 	public boolean isComplete() {
@@ -81,4 +81,10 @@ public class TaskActivity implements Serializable {
 	public void setActivityOfTaskByUser(User activityOfTaskByUser) {
 		this.activityOfTaskByUser = activityOfTaskByUser;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	
 }
