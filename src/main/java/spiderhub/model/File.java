@@ -36,12 +36,52 @@ public class File implements Serializable {
 	@ManyToOne
 	Task taskFiles;
 
-	public Date getUpload_date() {
+	public int getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(int fileId) {
+		this.fileId = fileId;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getFileType() {
+		return fileType;
+	}
+
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
+
+	public String getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(String fileSize) {
+		this.fileSize = fileSize;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
+	public Date getUploadDate() {
 		return uploadDate;
 	}
 
-	public void setUpload_date(Date upload_date) {
-		this.uploadDate = upload_date;
+	public void setUploadDate(Date uploadDate) {
+		this.uploadDate = uploadDate;
 	}
 
 	public boolean isDelete() {
@@ -52,51 +92,17 @@ public class File implements Serializable {
 		this.isDelete = isDelete;
 	}
 
-	public String getFile_path() {
-		return fileName;
-	}
-
-	public void setFile_path(String file_path) {
-		this.fileName = file_path;
-	}
-
-	public int getFile_id() {
-		return fileId;
-	}
-
-	public void setFile_id(int file_id) {
-		this.fileId = file_id;
-	}
-
-	public String getFile_name() {
-		return fileName;
-	}
-
-	public void setFile_name(String file_name) {
-		this.fileName = file_name;
-	}
-
-	public String getFile_type() {
-		return fileType;
-	}
-
-	public void setFile_type(String file_type) {
-		this.fileType = file_type;
-	}
-
-	public String getFile_size() {
-		return fileSize;
-	}
-
-	public void setFile_size(String file_size) {
-		this.fileSize = file_size;
-	}
-
-	public Task getTask_files() {
+	public Task getTaskFiles() {
 		return taskFiles;
 	}
 
-	public void setTask_files(Task task_files) {
-		this.taskFiles = task_files;
+	public void setTaskFiles(Task taskFiles) {
+		this.taskFiles = taskFiles;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	
 }

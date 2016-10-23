@@ -33,6 +33,22 @@ public class Comment implements Serializable {
 	@ManyToOne
 	Task taskComments;
 
+	public int getCommentId() {
+		return commentId;
+	}
+
+	public void setCommentId(int commentId) {
+		this.commentId = commentId;
+	}
+
+	public String getCommentDesc() {
+		return commentDesc;
+	}
+
+	public void setCommentDesc(String commentDesc) {
+		this.commentDesc = commentDesc;
+	}
+
 	public boolean isDelete() {
 		return isDelete;
 	}
@@ -41,43 +57,33 @@ public class Comment implements Serializable {
 		this.isDelete = isDelete;
 	}
 
-	public Date getCreate_date() {
+	public Date getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreate_date(Date create_date) {
-		this.createDate = create_date;
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
-	public int getCmt_id() {
-		return commentId;
-	}
-
-	public void setCmt_id(int cmt_id) {
-		this.commentId = cmt_id;
-	}
-
-	public String getCmt_desc() {
-		return commentDesc;
-	}
-
-	public void setCmt_desc(String cmt_desc) {
-		this.commentDesc = cmt_desc;
-	}
-
-	public User getUser_comment() {
+	public User getUserComment() {
 		return userComment;
 	}
 
-	public void setUser_comment(User user_comment) {
-		this.userComment = user_comment;
+	public void setUserComment(User userComment) {
+		this.userComment = userComment;
 	}
 
-	public Task getTask_comments() {
+	public Task getTaskComments() {
 		return taskComments;
 	}
 
-	public void setTask_comments(Task task_comments) {
-		this.taskComments = task_comments;
+	public void setTaskComments(Task taskComments) {
+		this.taskComments = taskComments;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	
 }

@@ -31,14 +31,6 @@ public class TaskPriority implements Serializable {
 	@OneToMany(mappedBy = "taskPriority")
 	Set<Task> tasks;
 
-	public Date getCreate_date() {
-		return createDate;
-	}
-
-	public void setCreate_date(Date create_date) {
-		this.createDate = create_date;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -47,20 +39,28 @@ public class TaskPriority implements Serializable {
 		this.id = id;
 	}
 
-	public String getPriority_type() {
+	public String getPriorityType() {
 		return priorityType;
 	}
 
-	public void setPriority_type(String priority_type) {
-		this.priorityType = priority_type;
+	public void setPriorityType(String priorityType) {
+		this.priorityType = priorityType;
 	}
 
-	public int getPriority_num() {
+	public int getPriorityNum() {
 		return priorityNum;
 	}
 
-	public void setPriority_num(int priority_num) {
-		this.priorityNum = priority_num;
+	public void setPriorityNum(int priorityNum) {
+		this.priorityNum = priorityNum;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
 	public Set<Task> getTasks() {
@@ -70,4 +70,10 @@ public class TaskPriority implements Serializable {
 	public void setTasks(Set<Task> tasks) {
 		this.tasks = tasks;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	
 }
