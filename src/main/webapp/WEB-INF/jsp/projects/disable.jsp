@@ -9,9 +9,10 @@
 </head>
 <body>
 	<form:form modelAttribute="project">
-	Project Name: ${projectd.projectName}
+	Project Name: ${project.projectName}
 		<br />
-	Disable: <form:checkbox path="isDelete" /> (Yes/No)
+	Disable: <form:radiobutton path="isDelete" value="true" />
+		<form:radiobutton path="isDelete" value="false" />
 		<br />
 		<input type="submit" name="disable" value="Disable" />
 	</form:form>

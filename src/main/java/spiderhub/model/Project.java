@@ -48,10 +48,6 @@ public class Project implements Serializable {
 	@OneToMany(mappedBy = "projectTasks")
 	Set<Task> tasks;
 
-	
-
-	
-
 	public boolean isDelete() {
 		return isDelete;
 	}
