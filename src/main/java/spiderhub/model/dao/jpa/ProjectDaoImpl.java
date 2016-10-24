@@ -1,34 +1,5 @@
 package spiderhub.model.dao.jpa;
 
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
-import spiderhub.model.Project;
-import spiderhub.model.dao.ProjectDao;
-
-@Repository
-public class ProjectDaoImpl implements ProjectDao {
-
-	@PersistenceContext
-	private EntityManager entityManager;
-
-	@Override
-	public Project getProject(Integer id) {
-		return entityManager.find(Project.class, id);
-	}
-
-	@Override
-	public List<Project> getProjects() {
-		return entityManager.createQuery("from Project order by id", Project.class).getResultList();
-	}
-
-	@Override
-	@Transactional
-	public Project saveProject(Project project) {
-		return entityManager.merge(project);
-	}
+public class ProjectDaoImpl {
 
 }

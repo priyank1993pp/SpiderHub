@@ -1,5 +1,10 @@
 package spiderhub.model.dao;
 
-public interface UserDao {
+import spiderhub.model.User;
 
+public interface UserDao {
+	
+	User saveUser(User user);
+
+	User getUserByUsername(String userName);
 }
