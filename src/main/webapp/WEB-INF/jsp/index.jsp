@@ -8,5 +8,9 @@
 </head>
 <body>
 <p>WELCOME TO SpiderHub</p>
+<ul>
+<li><a href="projects/list.html">Project Management</a></li>
+<li><a href="task/list.html">Task Management</a></li>
+</ul>
 </body>
 </html>
