@@ -3,11 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Add Project</title>
+<meta charset="ISO-8859-1">
+<title>Edit Project</title>
 </head>
 <body>
 	<form:form modelAttribute="project">
-	Project Name: <form:input path="projectName" />
+	Project Name: ${project.projectName}
 		<br />
 	Project Description: <form:input path="projectDescription" />
 		<br />
@@ -15,7 +16,7 @@
 		<br />
 	Date: <form:input path="createdDate" /> (mm/dd/yyyy)
 		<br />
-		<input type="submit" name="add" value="Add" />
+		<input type="submit" name="save" value="Save" />
 	</form:form>
 </body>
 </html>

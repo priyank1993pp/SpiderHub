@@ -34,7 +34,7 @@ public class Project implements Serializable {
 	private String projectDescription;
 
 	private String projectGitHubLink;
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
+
 	private Date createdDate;
 
 	private boolean isDelete;
@@ -47,6 +47,10 @@ public class Project implements Serializable {
 
 	@OneToMany(mappedBy = "projectTasks")
 	Set<Task> tasks;
+
+	
+
+	
 
 	public boolean isDelete() {
 		return isDelete;

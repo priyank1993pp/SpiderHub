@@ -25,12 +25,20 @@
 				<td>${project.createdDate }</td>
 				<td>${project.createdUser }</td>
 				<td>${project.projectGitHubLink }</td>
-				<td>${project.delete }</td>
+				<td><c:if test="${not project.delete }">
+						<a href="disable.html?id=${project.id }"><img
+							src="<%=request.getContextPath()%>/IMAGE/delete.png" /></a>
+					</c:if> <c:if test="${project.delete }">
+					${project.delete }
+					</c:if></td>
 				<td>${project.projectType }</td>
-				<td><a href="edit.html?id=${user.id }">Edit</a></td> 
+				<td><a href="view.html?id=${project.id}">View</a> | <a
+						href="view/${project.id}.html">View2</a> | <a href="edit.html?id=${project.id }">Edit</a></td>
 			</tr>
 		</c:forEach>
 	</table>
-	<p><a href="add.html">Add new project.</a></p>
+	<p>
+		<a href="add.html">Add new project.</a>
+	</p>
 </body>
 </html>
