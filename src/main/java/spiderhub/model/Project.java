@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 //This class is for project details like who created this project, whom working on this project. 
 
 @Entity
@@ -32,12 +34,10 @@ public class Project implements Serializable {
 	private String projectDescription;
 
 	private String projectGitHubLink;
-
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date createdDate;
 
 	private boolean isDelete;
-
-	
 
 	@ManyToMany
 	Set<User> usersRelatedProject;
@@ -48,10 +48,6 @@ public class Project implements Serializable {
 	@OneToMany(mappedBy = "projectTasks")
 	Set<Task> tasks;
 
-	
-
-	
-
 	public boolean isDelete() {
 		return isDelete;
 	}
@@ -59,8 +55,6 @@ public class Project implements Serializable {
 	public void setDelete(boolean isDelete) {
 		this.isDelete = isDelete;
 	}
-
-	
 
 	public Date getCreatedDate() {
 		return createdDate;
@@ -77,8 +71,6 @@ public class Project implements Serializable {
 	public void setProjectGitHubLink(String projectGitHubLink) {
 		this.projectGitHubLink = projectGitHubLink;
 	}
-
-	
 
 	public Set<User> getUsersRelatedProject() {
 		return usersRelatedProject;

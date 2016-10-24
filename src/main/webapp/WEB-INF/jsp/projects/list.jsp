@@ -27,11 +27,10 @@
 				<td>${project.projectGitHubLink }</td>
 				<td>${project.delete }</td>
 				<td>${project.projectType }</td>
-				<td><a href="view.html?id=${user.id}">View</a> | <a
-					href="view/${user.id}.html">View 1</a> | <a href="edit.html?id=${user.id }">Edit</a></td> 
+				<td><a href="edit.html?id=${user.id }">Edit</a></td> 
 			</tr>
 		</c:forEach>
 	</table>
-	<p><a href="add.html">Add new user.</a></p>
+	<p><a href="add.html">Add new project.</a></p>
 </body>
 </html>
