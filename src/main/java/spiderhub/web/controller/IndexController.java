@@ -11,4 +11,16 @@ public class IndexController {
 		models.put("user", "janak");
 		return "index";
 	}
+
+	@RequestMapping("/projects/index.html")
+	public String index1(ModelMap models) {
+		models.put("user", "janak");
+		return "index";
+	}
+
+	@RequestMapping("/task/index.html")
+	public String index2(ModelMap models) {
+		models.put("user", "janak");
+		return "index";
+	}
 }

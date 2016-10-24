@@ -8,9 +8,32 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Task Management</title>
+<style type="text/css">
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+</style>
 </head>
 <body>
 	<h2>Task Management</h2>
+	<div id="header">
+		<h2>
+			<a href="../index.html">SpiderHub</a>
+		</h2>
+	</div>
 	<table border="1">
 		<tr>
 			<th>ID</th>

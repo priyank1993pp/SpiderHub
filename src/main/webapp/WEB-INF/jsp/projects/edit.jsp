@@ -7,6 +7,11 @@
 <title>Edit Project</title>
 </head>
 <body>
+	<div id="header">
+		<h2>
+			<a href="../index.html">SpiderHub</a>
+		</h2>
+	</div>
 	<form:form modelAttribute="project">
 	Project Name: ${project.projectName}
 		<br />
