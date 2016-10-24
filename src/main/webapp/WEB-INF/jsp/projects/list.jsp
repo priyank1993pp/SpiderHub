@@ -2,9 +2,34 @@
 <html>
 <head>
 <title>Projects</title>
+<style type="text/css">
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+th, td {
+	text-align: left;
+	padding: 8px;
+}
+
+tr:nth-child(even) {
+	background-color: #f2f2f2
+}
+
+th {
+	background-color: #4CAF50;
+	color: white;
+}
+</style>
 </head>
 <body>
 	<h2>Project Management</h2>
+	<div id="header">
+		<h2>
+			<a href="../index.html">SpiderHub</a>
+		</h2>
+	</div>
 	<table border="1">
 		<tr>
 			<th>ID</th>
@@ -33,7 +58,8 @@
 					</c:if></td>
 				<td>${project.projectType }</td>
 				<td><a href="view.html?id=${project.id}">View</a> | <a
-						href="view/${project.id}.html">View2</a> | <a href="edit.html?id=${project.id }">Edit</a></td>
+					href="view/${project.id}.html">View2</a> | <a
+					href="edit.html?id=${project.id }">Edit</a></td>
 			</tr>
 		</c:forEach>
 	</table>

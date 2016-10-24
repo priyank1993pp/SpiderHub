@@ -30,8 +30,8 @@ public class ProjectController {
 	// optional required = false
 	public String view(@RequestParam(required = false) Integer id, ModelMap models) {
 		// get user from database and pass it to JSP
-		models.put("task", projectDao.getProject(id));
-		return "task/view";
+		models.put("project", projectDao.getProject(id));
+		return "projects/view";
 
 	}
 
