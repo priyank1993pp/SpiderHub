@@ -66,16 +66,13 @@ public class ProjectController {
 		return "redirect:list.html";
 	}
 
-	@RequestMapping(value = "/projects/disable.html", method = RequestMethod.GET)
-	public String disable(@RequestParam Integer id, ModelMap models) {
-		models.put("project", projectDao.getProject(id));
-		return "projects/disable";
-	}
-
-	@RequestMapping(value = "/projects/disable.html", method = RequestMethod.POST)
-	public String disable(@ModelAttribute Project project, SessionStatus status) {
-		project = projectDao.saveProject(project);
-		status.setComplete();
-		return "projects/list";
+	@RequestMapping(value = "/projects/disable.html")
+	public String disable(@RequestParam Integer id) {
+		Project deleteproject = projectDao.getProject(id);
+		
+		deleteproject.setDelete(true);
+		deleteproject = projectDao.saveProject(deleteproject);
+		
+		return "redirect:list.html";
 	}
 }
