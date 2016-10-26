@@ -14,7 +14,7 @@
 <script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
 </head>
 <body
-	style="background: url(../images/rbg1.jpg) no-repeat center center fixed">
+	style="background: url(<%=request.getContextPath()%>/images/rbg1.jpg) no-repeat center center fixed">
 	<div class="container" style="margin-top: 20px;">
 		<div class="row text-center pad-top ">
 			<div class="col-md-12">
@@ -37,7 +37,7 @@
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-addon">
-										<span class="glyphicon glyphicon-envelope"></span>
+										
 									</div>
 									<form:input path="userName" type="text"
 										placeholder="Enter User Name" class="form-control"
@@ -48,7 +48,7 @@
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-addon">
-										<span class="glyphicon glyphicon-lock"></span>
+										
 									</div>
 									<form:input path="emailAddress" type="text"
 										placeholder="Enter Email Address" class="form-control"
@@ -59,7 +59,7 @@
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-addon">
-										<span class="glyphicon glyphicon-user"></span>
+										
 									</div>
 									<form:input path="password" type="text"
 										placeholder="Enter Password" class="form-control"
@@ -70,7 +70,7 @@
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-addon">
-										<span class="glyphicon glyphicon-user"></span>
+										
 									</div>
 									<form:input path="phoneNumber" type="text"
 										placeholder="Enter Phone Number" class="form-control"
@@ -81,7 +81,7 @@
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-addon">
-										<span class="glyphicon glyphicon-user"></span>
+										
 									</div>
 									<select name="role">
 										<c:forEach items="${UserRole}" var="urole">

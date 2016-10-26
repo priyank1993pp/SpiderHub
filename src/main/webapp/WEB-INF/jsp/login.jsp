@@ -15,7 +15,7 @@
 	<script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/hr.css" />
 </head>
-<body background="../images/bg3.jpg">
+<body background="<%=request.getContextPath()%>/images/bg3.jpg">
 	<div id="loginModal" class="modal show" tabindex="-1" role="dialog"
 		aria-hidden="true">
 		<div class="modal-dialog">

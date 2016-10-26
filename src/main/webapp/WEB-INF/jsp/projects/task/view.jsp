@@ -1,13 +1,12 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html >
-<html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Project</title>
-<link href="<%=request.getContextPath()%>/css/bootstrap.min.css"
-	rel="stylesheet">
+<title>Task</title>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/bootstrap.min.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css" />
 <script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
@@ -17,27 +16,26 @@
 		<nav>
 			<ul class="nav nav-pills pull-right">
 				<li role="presentation" class="active"><a href="../index.html">Home</a></li>
-				<li role="presentation"><a href="task/list.html">Task
-						Management</a></li>
+
 			</ul>
 		</nav>
 
 	</div>
-	<table class="table table-hover">
+	<table class = "table table-hover">
 		<tr>
 			<th>ID</th>
-			<td>${project.id}</td>
+			<td>${task.id}</td>
 		</tr>
 		<tr>
 			<th>TaskName</th>
-			<td>${project.projectName}</td>
+			<td>${task.taskName}</td>
 		</tr>
 		<tr>
 			<th>Description</th>
-			<td>${project.projectDescription}</td>
+			<td>${task.taskDescription}</td>
 		</tr>
 
 	</table>
-	<a href="addUser.html?id=${project.id}">Add User In Project</a>
+	<a href="assign.html?id=${task.id}">Assign</a>
 </body>
 </html>
