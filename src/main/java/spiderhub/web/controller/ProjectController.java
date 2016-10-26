@@ -1,5 +1,7 @@
 package spiderhub.web.controller;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,12 +15,16 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import spiderhub.model.Project;
 import spiderhub.model.dao.ProjectDao;
+import spiderhub.model.dao.UserDao;
 
 @Controller
 @SessionAttributes("project")
 public class ProjectController {
 	@Autowired
 	private ProjectDao projectDao;
+
+	@Autowired
+	private UserDao userDao;
 
 	@RequestMapping("/projects/list.html")
 	public String projects(ModelMap models) {
@@ -35,11 +41,7 @@ public class ProjectController {
 
 	}
 
-	@RequestMapping("/projects/view/{id}.html")
-	public String view1(@PathVariable Integer id, ModelMap models) {
-		// get user from database and pass it to JSP
-		return view(id, models);
-	}
+
 
 	@RequestMapping(value = "/projects/add.html", method = RequestMethod.GET)
 	public String add(ModelMap models) {
@@ -49,6 +51,7 @@ public class ProjectController {
 
 	@RequestMapping(value = "/projects/add.html", method = RequestMethod.POST)
 	public String add(@ModelAttribute Project project) {
+		project.setCreatedDate(new Date());
 		project = projectDao.saveProject(project);
 		return "redirect:list.html";
 	}
@@ -69,10 +72,23 @@ public class ProjectController {
 	@RequestMapping(value = "/projects/disable.html")
 	public String disable(@RequestParam Integer id) {
 		Project deleteproject = projectDao.getProject(id);
-		
+
 		deleteproject.setDelete(true);
 		deleteproject = projectDao.saveProject(deleteproject);
-		
+
+		return "redirect:list.html";
+	}
+
+	@RequestMapping(value = "/projects/addUser.html", method = RequestMethod.GET)
+	public String addUser(@RequestParam Integer id, ModelMap models) {
+		models.put("users", userDao.getUsertoAddInProject());
+		models.put("project", projectDao.getProject(id));
+		return "projects/addUser";
+	}
+
+	@RequestMapping(value = "/projects/addUser.html", method = RequestMethod.POST)
+	public String addUser(@ModelAttribute Project project) {
+		project = projectDao.saveProject(project);
 		return "redirect:list.html";
 	}
 }

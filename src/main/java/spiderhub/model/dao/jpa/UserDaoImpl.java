@@ -25,15 +25,23 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public User getUserByUsername(String userName) {
-		String query = "from User u left join fetch u.userRole "
-	            + "where lower(userName) = :userName ";
+		String query = "from User u left join fetch u.userRole " + "where lower(userName) = :userName ";
 
-		//List<User> users = entityManager.createQuery(query, User.class).setParameter("emailAddress", emailAddress.toLowerCase())
-			//	.getResultList();
-		List<User> users = entityManager.createQuery(query, User.class).setParameter("userName", userName.toLowerCase()).getResultList();
+		// List<User> users = entityManager.createQuery(query,
+		// User.class).setParameter("emailAddress", emailAddress.toLowerCase())
+		// .getResultList();
+		List<User> users = entityManager.createQuery(query, User.class).setParameter("userName", userName.toLowerCase())
+				.getResultList();
 
-		
 		return users.size() == 0 ? null : users.get(0);
 	}
 
+	@Override
+	public List<User> getUsertoAddInProject() {
+
+		String query = "from User u where u.userRole = 1002";
+
+		return entityManager.createQuery(query, User.class).getResultList();
+
+	}
 }

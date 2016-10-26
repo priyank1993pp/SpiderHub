@@ -1,36 +1,29 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Projects</title>
-<style type="text/css">
-table {
-	border-collapse: collapse;
-	width: 100%;
-}
-
-th, td {
-	text-align: left;
-	padding: 8px;
-}
-
-tr:nth-child(even) {
-	background-color: #f2f2f2
-}
-
-th {
-	background-color: #4CAF50;
-	color: white;
-}
-</style>
+<link href="<%=request.getContextPath()%>/css/bootstrap.min.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css" />
+<script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<h2>Project Management</h2>
-	<div id="header">
-		<h2>
-			<a href="../index.html">SpiderHub</a>
-		</h2>
+	<div class="header clearfix">
+		<nav>
+			<ul class="nav nav-pills pull-right">
+				<li role="presentation" class="active"><a href="../index.html">Home</a></li>
+
+			</ul>
+		</nav>
+
 	</div>
-	<table border="1">
+	<h2>Project Management</h2>
+
+	<table class="table table-hover">
 		<tr>
 			<th>ID</th>
 			<th>Name</th>
@@ -54,11 +47,10 @@ th {
 						<a href="disable.html?id=${project.id }"><img
 							src="<%=request.getContextPath()%>/IMAGE/delete.png" /></a>
 					</c:if> <c:if test="${project.delete }">
-					${project.delete }
+					Done
 					</c:if></td>
 				<td>${project.projectType }</td>
 				<td><a href="view.html?id=${project.id}">View</a> | <a
-					href="view/${project.id}.html">View2</a> | <a
 					href="edit.html?id=${project.id }">Edit</a></td>
 			</tr>
 		</c:forEach>

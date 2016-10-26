@@ -3,63 +3,80 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html >
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Add Task</title>
-<style>
-input[type=text], select {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-input[type=submit] {
-    width: 100%;
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-input[type=submit]:hover {
-    background-color: #45a049;
-}
-
-div {
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
-}
-</style>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css" />
+<script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
 </head>
-<body>
-	<div id="header">
-		<h2>
-			<a href="../index.html">SpiderHub</a>
-		</h2>
-	</div>
-	<form:form modelAttribute="task">
-		Task-name  <form:input path="taskName" />
-		<br />
-		Description:<form:input path="taskDescription" />
-		<br /> 
-		Create-Date<form:input path="createDate" />
-		<br /> 
-		Start-Date<form:input path="startDate" />
-		<br /> 
-				End-Date<form:input path="endDate" />
-		<br />
+<body
+	style="background: url(../images/rbg1.jpg) no-repeat center center fixed">
+	<div class="container" style="margin-top: 20px;">
+		<div class="row text-center pad-top ">
+			<div class="col-md-12">
+				<h2 style="color: white;">Add Task</h2>
+			</div>
+		</div>
+		<div class="row  pad-top">
+			<div
+				class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+				<div class="panel panel-success">
+					<div class="panel-heading">
+						<strong> Add Task </strong>
+					</div>
+					<div class="panel-body">
+						<!-- This is a SPRING_MVC Form -->
+						<form:form modelAttribute="task" role="form">
 
-		<input type="submit" name="add" value="Add" />
-	</form:form>
+							<p style="color: red; text-align: center;">${sessionScope.error}</p>
+							<h4 class="text-info">Task-name</h4>
+							<div class="form-group">
+								<div class="input-group">
+									<div class="input-group-addon"></div>
+									<form:input path="taskName" type="text" placeholder="Task Name"
+										class="form-control" required="true" />
+								</div>
+							</div>
+							<h4 class="text-info">Description</h4>
+							<div class="form-group">
+								<div class="input-group">
+									<div class="input-group-addon"></div>
+									<form:input path="taskDescription" type="text"
+										placeholder="Description" class="form-control" required="true" />
+								</div>
+							</div>
+
+							<h4 class="text-info">Start-Date</h4>
+							<div class="form-group">
+								<div class="input-group">
+									<div class="input-group-addon"></div>
+									<form:input path="startDate" type="text"
+										placeholder="Start Date" class="form-control" required="true" />
+								</div>
+							</div>
+							<h4 class="text-info">End-Date</h4>
+							<div class="form-group">
+								<div class="input-group">
+									<div class="input-group-addon"></div>
+									<form:input path="endDate" type="text" placeholder="End Date"
+										class="form-control" required="true" />
+								</div>
+							</div>
+							<input class="btn btn-primary" type="submit" name="register"
+								value="Add Task">
+								<hr />
+						</form:form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

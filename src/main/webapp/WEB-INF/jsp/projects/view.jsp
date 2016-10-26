@@ -1,37 +1,28 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html >
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Project</title>
-<style type="text/css">
-table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-th, td {
-    text-align: left;
-    padding: 8px;
-}
-
-tr:nth-child(even){background-color: #f2f2f2}
-
-th {
-    background-color: #4CAF50;
-    color: white;
-}
-</style>
+<link href="<%=request.getContextPath()%>/css/bootstrap.min.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css" />
+<script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<div id="header">
-		<h2>
-			<a href="../index.html">SpiderHub</a>
-		</h2>
+	<div class="header clearfix">
+		<nav>
+			<ul class="nav nav-pills pull-right">
+				<li role="presentation" class="active"><a href="../index.html">Home</a></li>
+
+			</ul>
+		</nav>
+
 	</div>
-	<table border="1">
+	<table class="table table-hover">
 		<tr>
 			<th>ID</th>
 			<td>${project.id}</td>
@@ -46,5 +37,6 @@ th {
 		</tr>
 
 	</table>
+	<a href="addUser.html?id=${project.id}">Add User In Project</a>
 </body>
 </html>
