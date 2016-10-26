@@ -40,8 +40,8 @@
 
 							<li role="presentation"><a href="projects/list.html">Project
 									Management</a></li>
-							<li role="presentation"><a href="task/list.html">Task
-									Management</a></li>
+							<li role="presentation"><a href="userRegistration.html">Add
+									User</a></li>
 						</security:authorize>
 						<li role="presentation"><security:authorize
 								access="hasRole('MEMBER')">

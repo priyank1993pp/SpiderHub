@@ -16,7 +16,8 @@
 		<nav>
 			<ul class="nav nav-pills pull-right">
 				<li role="presentation" class="active"><a href="../index.html">Home</a></li>
-
+				<li role="presentation"><a href="task/list.html">Task
+						Management</a></li>
 			</ul>
 		</nav>
 

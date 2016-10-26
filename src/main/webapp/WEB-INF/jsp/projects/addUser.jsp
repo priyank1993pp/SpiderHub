@@ -38,20 +38,22 @@
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-addon">
-										<span class="glyphicon glyphicon-envelope"></span>
 									</div>
 									<table class="table table-hover">
 										<tr>
 											<th></th>
 											<th>Users</th>
 										</tr>
-										<tr>
-											<c:forEach items="${users}" var="user">
+
+										<c:forEach items="${users}" var="user">
+											<tr>
 												<td><form:checkbox path="usersRelatedProject"
 														value="${user.id}" /></td>
 												<td>${user.userName}</td>
-											</c:forEach>
-										</tr>
+												<br />
+											</tr>
+										</c:forEach>
+
 									</table>
 								</div>
 							</div>
