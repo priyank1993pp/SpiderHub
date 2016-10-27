@@ -1,5 +1,13 @@
 package spiderhub.model.dao;
 
-public interface TaskDao {
+import java.util.List;
 
+import spiderhub.model.Task;
+
+public interface TaskDao {
+	Task getTask(Integer id);
+
+	List<Task> getTasks();
+
+	Task saveTask(Task task);
 }

@@ -1,18 +1,43 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html >
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Project</title>
+<link href="<%=request.getContextPath()%>/css/bootstrap.min.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css" />
+<script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
 </head>
 <body>
-<table border ="1">
-<tr><th>ID</th><td> ${task.id} </td></tr>
-<tr><th>TaskName</th><td> ${task.taskName} </td></tr>
-<tr><th>Description</th><td> ${task.taskDescription} </td></tr>
+	<div class="header clearfix">
+		<nav>
+			<ul class="nav nav-pills pull-right">
+				<li role="presentation" class="active"><a href="../index.html">Home</a></li>
+				<li role="presentation"><a href="task/list.html">Task
+						Management</a></li>
+			</ul>
+		</nav>
 
-</table>
+	</div>
+	<table class="table table-hover">
+		<tr>
+			<th>ID</th>
+			<td>${project.id}</td>
+		</tr>
+		<tr>
+			<th>TaskName</th>
+			<td>${project.projectName}</td>
+		</tr>
+		<tr>
+			<th>Description</th>
+			<td>${project.projectDescription}</td>
+		</tr>
+
+	</table>
+	<a href="addUser.html?id=${project.id}">Add User In Project</a>
 </body>
 </html>
