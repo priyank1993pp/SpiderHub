@@ -36,24 +36,34 @@
 
 
 					<security:authorize access="authenticated">
-						<security:authorize access="hasAnyRole('ADMIN','MANAGER')">
+						<security:authorize access="hasRole('ADMIN')">
 
-							<li role="presentation"><a href="projects/list.html">Project
+							<li role="presentation"><a href="admin/projects/listProjects.html">Project
 									Management</a></li>
-							<li role="presentation"><a href="userRegistration.html">Add
-									User</a></li>
+							<li role="presentation"><a href="admin/userManagement.html">User Management</a></li>
 						</security:authorize>
-						<li role="presentation"><security:authorize
-								access="hasRole('MEMBER')">
+						<security:authorize access="hasAnyRole('MANAGER')">
 
-								<a href="task/list.html">Task Management</a>
+							<li role="presentation"><a href="manager/projects/listProjects.html">Project
+									Management</a></li>
+							<li role="presentation"><a href="manager/userRegistration.html">Add
+									User</a></li>
 
-							</security:authorize></li>
+						</security:authorize>
+						<security:authorize access="hasRole('MEMBER')">
+							<li role="presentation"><a href="member/projects/listProjects.html">Projects For You.</a></li>
+							<li role="presentation"><a href="member/editProfile.html?id=${user.id}">Edit
+									Profile</a></li>
+						</security:authorize>
+						<h3 class="text-muted">
+							Welcome,
+							<security:authentication property="principal.username" />
+						</h3>
 						<li role="presentation"><a href="<c:url value='/logout' />">Logout</a></li>
 					</security:authorize>
 				</ul>
 			</nav>
-			<h3 class="text-muted">SpiderHub</h3>
+
 		</div>
 
 		<div class="jumbotron">
