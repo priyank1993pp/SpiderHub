@@ -36,6 +36,6 @@
 		</tr>
 
 	</table>
-	<a href="assign.html?id=${task.id}">Assign</a>
+	<a href="assignTask.html?id=${task.id}">Assign</a>
 </body>
 </html>

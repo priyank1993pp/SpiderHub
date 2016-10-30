@@ -16,8 +16,6 @@
 		<nav>
 			<ul class="nav nav-pills pull-right">
 				<li role="presentation" class="active"><a href="../index.html">Home</a></li>
-				<li role="presentation"><a href="task/list.html">Task
-						Management</a></li>
 			</ul>
 		</nav>
 
@@ -51,13 +49,9 @@
 					Done
 					</c:if></td>
 				<td>${project.projectType }</td>
-				<td><a href="view.html?id=${project.id}">View</a> | <a
-					href="edit.html?id=${project.id }">Edit</a></td>
+				<td><a href="viewProject.html?id=${project.id}">View</a></td>
 			</tr>
 		</c:forEach>
 	</table>
-	<p>
-		<a href="add.html">Add new project.</a>
-	</p>
 </body>
 </html>

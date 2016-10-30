@@ -46,7 +46,7 @@
 					</c:if> <c:if test="${user.delete }">
 					Done
 					</c:if></td>
-				<td><a href="editUser.html?id=${user.id }">Edit</a></td>
+				<td><a href="editUser.html?id=${user.id }">Edit User</a></td>
 			</tr>
 		</c:forEach>
 	</table>

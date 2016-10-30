@@ -66,7 +66,7 @@
 										required="true" />
 								</div>
 							</div>
-							<h4 class="text-info">(mm/dd/yyyy)Date:</h4>
+							<h4 class="text-info">Date:</h4>
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-addon">

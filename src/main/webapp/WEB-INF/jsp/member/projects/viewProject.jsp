@@ -17,7 +17,7 @@
 		<nav>
 			<ul class="nav nav-pills pull-right">
 				<li role="presentation" class="active"><a href="../index.html">Home</a></li>
-				<li role="presentation"><a href="task/list.html">Task
+				<li role="presentation"><a href="projects/listTasks.html">Task
 						Management</a></li>
 			</ul>
 		</nav>
@@ -38,6 +38,6 @@
 		</tr>
 
 	</table>
-	<a href="addUser.html?id=${project.id}">Add User In Project</a>
+	
 </body>
 </html>

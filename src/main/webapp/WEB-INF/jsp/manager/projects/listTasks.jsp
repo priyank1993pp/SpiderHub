@@ -41,13 +41,13 @@
 					<td>${task.createDate}</td>
 					<td>${task.startDate}</td>
 					<td>${task.endDate}</td>
-					<td><a href="view.html?id=${task.id}">View</a></td>
+					<td><a href="viewTask.html?id=${task.id}">View</a></td>
 				</tr>
 			</c:forEach>
 		</tr>
 	</table>
 	<p>
-		<a href="add.html">Add new Task</a>
+		<a href="addTask.html">Add new Task</a>
 	</p>
 </body>
 </html>

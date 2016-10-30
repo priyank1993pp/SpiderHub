@@ -93,7 +93,7 @@
 							<input class="btn btn-primary" type="submit" name="save"
 								value="Save">
 							<hr />
-							<!-- Already Registered ? <a href="login.html">Login here</a> -->
+							
 
 						</form:form>
 					</div>
