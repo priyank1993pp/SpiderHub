@@ -47,8 +47,7 @@
 
 							<li role="presentation"><a href="manager/listProjects.html">Project
 									Management</a></li>
-							<li role="presentation"><a
-								href="manager/userRegistration.html">Add User</a></li>
+							
 
 						</security:authorize>
 						<security:authorize access="hasRole('MEMBER')">

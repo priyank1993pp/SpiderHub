@@ -37,26 +37,45 @@
 		</tr>
 
 	</table>
-	
+
 	<h1>Task Details</h1>
 	<table class="table table-hover">
-	<tr>
+		<tr>
 			<th>Task</th>
+			<th>Task Status</th>
 			<th>Operation</th>
 		</tr>
-	
-	<c:forEach items = "${tasks}" var="task">
-		
-		<tr>
-			<td>${task.taskName}</td>
-			<td><a href = "assignTask.html?tid=${task.id}&pid=${project.id}">Assign</a></td>
-		</tr>
 
-	</c:forEach>
+		<c:forEach items="${tasks}" var="task">
+
+			<tr>
+				<td>${task.taskName}</td>
+				<c:choose>
+					<c:when test="${empty task.statusTasks.statusName}">
+						<td>Incomplete</td>
+					</c:when>
+					<c:otherwise>
+						<td>${task.statusTasks.statusName }</td>
+					</c:otherwise>
+				</c:choose>
+				<c:choose>
+					<c:when test="${empty task.userTasks}">
+						<td><a
+							href="assignTask.html?tid=${task.id}&pid=${project.id}">Assign</a></td>
+					</c:when>
+					<c:otherwise>
+						<td>Already Assigned</td>
+					</c:otherwise>
+				</c:choose>
+			</tr>
+
+		</c:forEach>
 	</table>
-	<a href="addUserInProject.html?id=${project.id}">Add User In Project</a><br/>
+	<a href="addUserInProject.html?id=${project.id}">Add User In
+		Project</a>
+	<br />
 	<a href="addTask.html?id=${project.id}">Add Task In Project</a>
-	
-	
+
+
 </body>
 </html>
