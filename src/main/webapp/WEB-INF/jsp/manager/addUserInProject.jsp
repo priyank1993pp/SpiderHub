@@ -37,8 +37,7 @@
 							<h4 class="text-info">Project Name:</h4>
 							<div class="form-group">
 								<div class="input-group">
-									<div class="input-group-addon">
-									</div>
+									<div class="input-group-addon"></div>
 									<table class="table table-hover">
 										<tr>
 											<th></th>
@@ -47,10 +46,10 @@
 
 										<c:forEach items="${users}" var="user">
 											<tr>
-												<td><form:checkbox path="usersRelatedProject"
-														value="${user.id}" /></td>
+												<td><input type="checkbox" id="chk" name="chksms"
+													value="${user.id}" /></td>
 												<td>${user.userName}</td>
-												<br />
+
 											</tr>
 										</c:forEach>
 

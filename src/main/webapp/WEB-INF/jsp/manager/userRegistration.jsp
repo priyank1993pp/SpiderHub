@@ -18,7 +18,7 @@
 	<div class="container" style="margin-top: 20px;">
 		<div class="row text-center pad-top ">
 			<div class="col-md-12">
-				<h2 style="color: white;">Registration For SpiderHub</h2>
+				<h2 style="color: white;">Registration User For SpiderHub</h2>
 			</div>
 		</div>
 		<div class="row  pad-top">
@@ -26,7 +26,7 @@
 				class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
 				<div class="panel panel-success">
 					<div class="panel-heading">
-						<strong> Create A SpiderHub Account </strong>
+						<strong> Create A SpiderHub User </strong>
 					</div>
 					<div class="panel-body">
 						<!-- This is a SPRING_MVC Form -->
@@ -85,7 +85,9 @@
 									</div>
 									<select name="role">
 										<c:forEach items="${UserRole}" var="urole">
-											<option value="${urole.id}">${urole.userRole}</option>
+											<c:if test="${urole.id ne 1000 }">
+												<option value="${urole.id}">${urole.userRole}</option>
+											</c:if>
 										</c:forEach>
 									</select>
 								</div>

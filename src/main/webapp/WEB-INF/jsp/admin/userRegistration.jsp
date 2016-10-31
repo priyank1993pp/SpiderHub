@@ -9,8 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>User Registration</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css" />
 <script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
 </head>
 <body
@@ -36,9 +38,7 @@
 							<h4 class="text-info">User Name</h4>
 							<div class="form-group">
 								<div class="input-group">
-									<div class="input-group-addon">
-										
-									</div>
+									<div class="input-group-addon"></div>
 									<form:input path="userName" type="text"
 										placeholder="Enter User Name" class="form-control"
 										required="true" />
@@ -47,9 +47,7 @@
 							<h4 class="text-info">E-mail</h4>
 							<div class="form-group">
 								<div class="input-group">
-									<div class="input-group-addon">
-										
-									</div>
+									<div class="input-group-addon"></div>
 									<form:input path="emailAddress" type="text"
 										placeholder="Enter Email Address" class="form-control"
 										required="true" />
@@ -58,9 +56,7 @@
 							<h4 class="text-info">Password</h4>
 							<div class="form-group">
 								<div class="input-group">
-									<div class="input-group-addon">
-										
-									</div>
+									<div class="input-group-addon"></div>
 									<form:input path="password" type="text"
 										placeholder="Enter Password" class="form-control"
 										required="true" />
@@ -69,9 +65,7 @@
 							<h4 class="text-info">Phone Number</h4>
 							<div class="form-group">
 								<div class="input-group">
-									<div class="input-group-addon">
-										
-									</div>
+									<div class="input-group-addon"></div>
 									<form:input path="phoneNumber" type="text"
 										placeholder="Enter Phone Number" class="form-control"
 										required="true" />
@@ -80,12 +74,12 @@
 							<h4 class="text-info">Select Role</h4>
 							<div class="form-group">
 								<div class="input-group">
-									<div class="input-group-addon">
-										
-									</div>
+									<div class="input-group-addon"></div>
 									<select name="role">
 										<c:forEach items="${UserRole}" var="urole">
-											<option value="${urole.id}">${urole.userRole}</option>
+											<c:if test="${urole.id ne 1000 }">
+												<option value="${urole.id}">${urole.userRole}</option>
+											</c:if>
 										</c:forEach>
 									</select>
 								</div>
@@ -93,7 +87,7 @@
 							<input class="btn btn-primary" type="submit" name="register"
 								value="ADD User.">
 							<hr />
-							
+
 
 						</form:form>
 					</div>

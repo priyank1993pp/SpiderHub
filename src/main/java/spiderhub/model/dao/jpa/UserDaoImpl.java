@@ -37,11 +37,28 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<User> getUsertoAddInProject() {
-
-		String query = "from User u where u.userRole = 1002";
-
-		return entityManager.createQuery(query, User.class).getResultList();
-
+	public User getUser(Integer id) {
+		return entityManager.find(User.class, id);
 	}
+
+	@Override
+	public List<User> getUsers() {
+		// TODO Auto-generated method stub
+		return entityManager.createQuery("from User order by id", User.class).getResultList();
+	}
+
+	@Override
+	public List<User> getUserToaddInProject() {
+		String query = "from User where userRole.userRole = 'ROLE_MEMBER'";
+		return entityManager.createQuery(query, User.class).getResultList();
+	}
+
+	@Override
+	public List<User> getUsrToAssignTask(Integer id) {
+
+		//String query = "from User u where u.projects.id=:id";
+		String query = "from Project where id = :id";
+		return entityManager.createQuery(query, User.class).setParameter("id", id).getResultList();
+	}
+
 }

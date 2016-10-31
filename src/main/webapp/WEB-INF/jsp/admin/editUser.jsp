@@ -18,7 +18,7 @@
 	<div class="container" style="margin-top: 20px;">
 		<div class="row text-center pad-top ">
 			<div class="col-md-12">
-				<h2 style="color: white;">Edit SpiderHub Profile</h2>
+				<h2 style="color: white;">Edit SpiderHub User</h2>
 			</div>
 		</div>
 		<div class="row  pad-top">
@@ -40,6 +40,8 @@
 										
 									</div>
 									${user.userName}
+									<form:input path="userName" type="hidden"
+										/>
 								</div>
 							</div>
 							<h4 class="text-info">E-mail</h4>
@@ -79,7 +81,9 @@
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-addon">
-										
+									
+							<form:input  path="createDate" type="hidden"
+										/>	
 									</div>
 									<select name="role">
 										<c:forEach items="${UserRole}" var="urole">
