@@ -27,7 +27,7 @@
 		<tr>
 			<th>ID</th>
 			<th>Name</th>
-			
+
 			<th>Phone Number</th>
 			<th>Email Address</th>
 			<th>Status</th>
@@ -37,7 +37,7 @@
 			<tr>
 				<td>${user.id }</td>
 				<td>${user.userName }</td>
-				
+
 				<td>${user.phoneNumber }</td>
 				<td>${user.emailAddress }</td>
 				<td><c:if test="${not user.delete }">
@@ -46,7 +46,12 @@
 					</c:if> <c:if test="${user.delete }">
 					Done
 					</c:if></td>
-				<td><a href="editUser.html?id=${user.id }">Edit User</a></td>
+				<td><c:if test="${not user.delete }">
+						<a href="editUser.html?id=${user.id }">Edit User</a>
+					</c:if>
+					<c:if test="${user.delete }">
+					Done
+					</c:if></td>
 			</tr>
 		</c:forEach>
 	</table>

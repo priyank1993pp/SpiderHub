@@ -49,8 +49,13 @@
 					Done
 					</c:if></td>
 				<td>${project.projectType.projectType }</td>
-				<td><a href="viewProject.html?id=${project.id}">View</a> | <a
-					href="editProject.html?id=${project.id }">Edit</a></td>
+				<td><c:if test="${not project.delete }">
+						<a href="viewProject.html?id=${project.id}">View</a> | <a
+							href="editProject.html?id=${project.id }">Edit</a>
+					</c:if>
+					<c:if test="${project.delete }">
+					Done
+					</c:if></td>
 			</tr>
 		</c:forEach>
 	</table>
