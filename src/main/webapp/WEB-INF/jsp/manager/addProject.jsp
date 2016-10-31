@@ -41,7 +41,9 @@
 									<div class="input-group-addon">
 										<span class="glyphicon glyphicon-envelope"></span>
 									</div>
-									${project.projectName}
+									<form:input path="projectName" type="text"
+										placeholder="Enter Project Name" class="form-control"
+										required="true" />
 								</div>
 							</div>
 							<h4 class="text-info">Project Description:</h4>
@@ -50,11 +52,27 @@
 									<div class="input-group-addon">
 										<span class="glyphicon glyphicon-lock"></span>
 									</div>
-									<form:input path="projectDescription" type="text"
+									<form:textarea path="projectDescription" rows="5" cols="30"
 										placeholder="Enter Project Description" class="form-control"
 										required="true" />
 								</div>
 							</div>
+							<h4 class="text-info">Select Project Type</h4>
+							<div class="form-group">
+								<div class="input-group">
+									<div class="input-group-addon"></div>
+									<select name="projecttype">
+										<c:forEach items="${projecttype}" var="type">
+
+											<option value="${type.id}">${type.projectType}</option>
+
+										</c:forEach>
+									</select>
+								</div>
+							</div>
+							
+
+
 							<h4 class="text-info">Github Link:</h4>
 							<div class="form-group">
 								<div class="input-group">
@@ -63,22 +81,18 @@
 									</div>
 									<form:input path="projectGitHubLink" type="text"
 										placeholder="Enter Github Link" class="form-control"
-										required="true" />
-								</div>
-							</div>
-							<h4 class="text-info">Date:</h4>
-							<div class="form-group">
-								<div class="input-group">
-									<div class="input-group-addon">
-										<span class="glyphicon glyphicon-user"></span>
-									</div>
-									<form:input path="createdDate" type="date"
-										placeholder="Enter Date" class="form-control" required="true" />
+										required="false" />
 								</div>
 							</div>
 
-							<input class="btn btn-primary" type="submit" name="save"
-								value="Save">
+
+
+
+							<input class="btn btn-primary" type="submit" name="add"
+								value="Add">
+							<input class="btn btn-primary" type="reset" name="reset"
+								value="Reset">
+							
 							<hr />
 
 

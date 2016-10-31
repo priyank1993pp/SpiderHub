@@ -31,4 +31,12 @@ public class ProjectDaoImpl implements ProjectDao {
 		return entityManager.merge(project);
 	}
 
+	@Override
+	public List<Project> getProjectofManager(Integer id) {
+		String query = "from Project where createdUser.id = :id";
+		return entityManager.createQuery(query , Project.class).setParameter("id", id).getResultList();
+	}
+
+	
+
 }

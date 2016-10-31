@@ -27,7 +27,7 @@
 		<tr>
 			<th>ID</th>
 			<th>Name</th>
-			<th>Created Date</th>
+			
 			<th>Phone Number</th>
 			<th>Email Address</th>
 			<th>Status</th>
@@ -37,7 +37,7 @@
 			<tr>
 				<td>${user.id }</td>
 				<td>${user.userName }</td>
-				<td>${user.createDate }</td>
+				
 				<td>${user.phoneNumber }</td>
 				<td>${user.emailAddress }</td>
 				<td><c:if test="${not user.delete }">
