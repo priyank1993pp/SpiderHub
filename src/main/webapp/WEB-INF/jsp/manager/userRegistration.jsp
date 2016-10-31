@@ -93,7 +93,7 @@
 								</div>
 							</div>
 							<input class="btn btn-primary" type="submit" name="register"
-								value="Register Me">
+								value="Add User">
 							<hr />
 							
 

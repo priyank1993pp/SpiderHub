@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
+import spiderhub.model.Project;
 import spiderhub.model.User;
 import spiderhub.model.dao.UserDao;
 import spiderhub.model.dao.UserRoleDao;
@@ -63,7 +64,7 @@ public class UserController {
 		user.setCreateDate(new Date());
 		userDao.saveUser(user);
 		models.addAttribute("modalShow", "Saved");
-		return "index";
+		return "redirect:userManagement.html";
 	}
 
 	@RequestMapping(value = "/manager/userRegistration.html", method = RequestMethod.GET)
@@ -82,7 +83,7 @@ public class UserController {
 		user.setCreateDate(new Date());
 		userDao.saveUser(user);
 		models.addAttribute("modalShow", "Saved");
-		return "index";
+		return "redirect:userManagement.html";
 	}
 
 	@RequestMapping(value = "/admin/editUser.html", method = RequestMethod.GET)
@@ -110,4 +111,26 @@ public class UserController {
 
 		return "admin/userManagement";
 	}
+	
+	@RequestMapping(value = "/admin/disableuser.html")
+	public String admindisableuser(@RequestParam Integer id) {
+		
+		User usertobedisabled=userDao.getUser(id);
+		
+		usertobedisabled.setDelete(true);
+		
+		usertobedisabled=userDao.saveUser(usertobedisabled);
+		return "redirect:userManagement.html";
+	}
+	@RequestMapping(value = "/manager/disableuser.html")
+	public String managerdisableuser(@RequestParam Integer id) {
+		
+		User usertobedisabled=userDao.getUser(id);
+		
+		usertobedisabled.setDelete(true);
+		
+		usertobedisabled=userDao.saveUser(usertobedisabled);
+		return "redirect:userManagement.html";
+	}
 }
+

@@ -41,7 +41,7 @@
 				<td>${user.phoneNumber }</td>
 				<td>${user.emailAddress }</td>
 				<td><c:if test="${not user.delete }">
-						<a href="disable.html?id=${user.id }"><img
+						<a href="disableuser.html?id=${user.id }"><img
 							src="<%=request.getContextPath()%>/IMAGE/delete.png" /></a>
 					</c:if> <c:if test="${user.delete }">
 					Done
