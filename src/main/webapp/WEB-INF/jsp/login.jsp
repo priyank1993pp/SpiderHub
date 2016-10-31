@@ -55,7 +55,7 @@
 									name="login" value="Sign in">
 							</div>
 							<div class="form-group pull-right">
-								<a href="userRegistration.html" class="btn btn-success btn-md">Register</a>&nbsp
+								<a href="userRegistration.html" class="btn btn-success btn-md">Register</a>
 								<input class="btn btn-danger btn-md" type="reset" value="Reset" />
 							</div>
 						</form>

@@ -32,7 +32,7 @@
 			<th>Github Link</th>
 			<th>Status</th>
 			<th>Project Type</th>
-			<th>Opertations</th>
+			
 		</tr>
 		<c:forEach items="${projects}" var="project">
 			<tr>
@@ -40,7 +40,7 @@
 				<td>${project.projectName }</td>
 				<td>${project.projectDescription }</td>
 				<td>${project.createdDate }</td>
-				<td>${project.createdUser }</td>
+				<td>${project.createdUser.userName }</td>
 				<td>${project.projectGitHubLink }</td>
 				<td><c:if test="${not project.delete }">
 						<a href="disable.html?id=${project.id }"><img
@@ -48,8 +48,8 @@
 					</c:if> <c:if test="${project.delete }">
 					Done
 					</c:if></td>
-				<td>${project.projectType }</td>
-				<td><a href="viewProject.html?id=${project.id}">View</a></td>
+				<td>${project.projectType.projectType }</td>
+				
 			</tr>
 		</c:forEach>
 	</table>

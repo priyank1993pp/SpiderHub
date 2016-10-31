@@ -1,10 +1,7 @@
 package spiderhub.web.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +16,6 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import spiderhub.model.Project;
 import spiderhub.model.Task;
-import spiderhub.model.TaskPriority;
-import spiderhub.model.User;
 import spiderhub.model.dao.ProjectDao;
 import spiderhub.model.dao.TaskDao;
 import spiderhub.model.dao.TaskPriorityDao;

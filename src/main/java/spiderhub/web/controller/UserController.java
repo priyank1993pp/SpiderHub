@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
-import spiderhub.model.Project;
 import spiderhub.model.User;
 import spiderhub.model.dao.UserDao;
 import spiderhub.model.dao.UserRoleDao;
