@@ -48,10 +48,26 @@
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-addon"></div>
-									<form:input path="taskDescription" type="text area"
+									<form:textarea path="taskDescription" rows="5" cols="30"
 										placeholder="Description" class="form-control" required="true" />
 								</div>
 							</div>
+							<%-- <h4 class="text-info">Start Date</h4>
+							<div class="form-group">
+								<div class="input-group">
+									<div class="input-group-addon"></div>
+									<form:input type="datetime" min="2012-01-01" max="2020-01-01" path="startDate" rows="5" cols="30"
+										placeholder="Start Date" class="form-control" required="true" />
+								</div>
+							</div>
+							<h4 class="text-info">End Date</h4>
+							<div class="form-group">
+								<div class="input-group">
+									<div class="input-group-addon"></div>
+									<form:input type="datetime" path="endDate" rows="5" cols="30"
+										placeholder="End Date" class="form-control" required="true" />
+								</div>
+							</div> --%>
 							<input class="btn btn-primary" type="submit" name="register"
 								value="Add Task">
 								<hr />

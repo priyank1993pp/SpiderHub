@@ -17,13 +17,10 @@
 		<nav>
 			<ul class="nav nav-pills pull-right">
 				<li role="presentation" class="active"><a href="../index.html">Home</a></li>
-				<li role="presentation"><a href="task/list.html">Task
-						Management</a></li>
 			</ul>
 		</nav>
 
 	</div>
-	<h1>Project Details</h1>
 	<table class="table table-hover">
 		<tr>
 			<th>ID</th>
@@ -39,28 +36,5 @@
 		</tr>
 
 	</table>
-	<h1>Task Details</h1>
-	<table class="table table-hover">
-	<tr>
-			<th>Task</th>
-			<th>Operation</th>
-		</tr>
-	
-	<c:forEach items = "${tasks}" var="task">
-		
-		<tr>
-			<td>${task.taskName}</td>
-			<td>Edit|Delete|Assign</td>
-		</tr>
-
-	</c:forEach>
-	</table>
-	
-	<a href="addUser.html?id=${project.id}">Add User In Project</a><br />
-	<a href="task/addTask.html?id=${project.id}">Add Task</a>
-	
-	
-	
-	
 </body>
 </html>

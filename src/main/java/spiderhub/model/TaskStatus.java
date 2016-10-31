@@ -23,7 +23,7 @@ public class TaskStatus implements Serializable {
 
 	private String statusName;
 
-	private boolean isDelete;
+	
 
 	@OneToMany(mappedBy = "statusTasks")
 	Set<Task> tasks;
@@ -44,13 +44,6 @@ public class TaskStatus implements Serializable {
 		this.statusName = statusName;
 	}
 
-	public boolean isDelete() {
-		return isDelete;
-	}
-
-	public void setDelete(boolean isDelete) {
-		this.isDelete = isDelete;
-	}
 
 	public Set<Task> getTasks() {
 		return tasks;

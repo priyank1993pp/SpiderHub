@@ -1,7 +1,6 @@
 package spiderhub.model;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -24,9 +23,7 @@ public class TaskPriority implements Serializable {
 
 	private String priorityType;
 
-	private int priorityNum;
-
-	private Date createDate;
+	
 
 	@OneToMany(mappedBy = "taskPriority")
 	Set<Task> tasks;
@@ -47,21 +44,6 @@ public class TaskPriority implements Serializable {
 		this.priorityType = priorityType;
 	}
 
-	public int getPriorityNum() {
-		return priorityNum;
-	}
-
-	public void setPriorityNum(int priorityNum) {
-		this.priorityNum = priorityNum;
-	}
-
-	public Date getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
 
 	public Set<Task> getTasks() {
 		return tasks;
