@@ -34,10 +34,9 @@
 							<a href="<c:url value='/login.html' />">Login</a>
 						</security:authorize></li>
 
-
 					<security:authorize access="authenticated">
+						
 						<security:authorize access="hasAnyRole('ADMIN','MANAGER')">
-
 							<li role="presentation"><a href="projects/list.html">Project
 									Management</a></li>
 							<li role="presentation"><a href="userRegistration.html">Add
@@ -51,6 +50,8 @@
 							</security:authorize></li>
 						<li role="presentation"><a href="<c:url value='/logout' />">Logout</a></li>
 					</security:authorize>
+					
+					
 				</ul>
 			</nav>
 			<h3 class="text-muted">SpiderHub</h3>

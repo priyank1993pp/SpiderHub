@@ -58,6 +58,7 @@
 	</table>
 	<p>
 		<a href="add.html">Add new project.</a>
+
 	</p>
 </body>
 </html>

@@ -10,5 +10,14 @@ public interface UserDao {
 
 	User getUserByUsername(String userName);
 
-	List<User> getUsertoAddInProject();
+
+	User getUser(Integer id);
+
+	List<User> getUsers();
+	
+	List<User> getUserToaddInProject();
+	
+	List<User> getUsrToAssignTask(Integer id);
+
+	
 }

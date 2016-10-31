@@ -32,4 +32,16 @@ public class TaskDaoImpl implements TaskDao {
 		// TODO Auto-generated method stub
 		return entityManager.merge(task);
 	}
+
+	@Override
+	public List<Task> getTaskByProject(Integer id) {
+		String query = "from Task where projectTasks.id = :id";
+		return entityManager.createQuery(query , Task.class).setParameter("id", id).getResultList();
+	}
+
+	@Override
+	public List<Task> getTaskOfMemberByProject(Integer uId, Integer pId) {
+		String query = "from Task where projectTasks.id = :pId and userTasks.id = :uId";
+		return entityManager.createQuery(query , Task.class).setParameter("pId", pId).setParameter("uId", uId).getResultList();
+	}
 }
