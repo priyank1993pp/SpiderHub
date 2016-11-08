@@ -18,6 +18,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import spiderhub.model.User;
 import spiderhub.model.dao.UserDao;
 import spiderhub.model.dao.UserRoleDao;
+import spiderhub.web.validator.UserValidator;
 
 @Controller
 public class UserController {
@@ -27,6 +28,9 @@ public class UserController {
 
 	@Autowired
 	UserRoleDao roleDao;
+
+	@Autowired
+	UserValidator userValidator;
 
 	@RequestMapping(value = "/userRegistration.html", method = RequestMethod.GET)
 	public String register(ModelMap models) {
@@ -39,6 +43,10 @@ public class UserController {
 	public String register(@ModelAttribute User user, BindingResult bindingResult, ModelMap models,
 			HttpServletRequest request) {
 
+		// for validation
+		userValidator.validate(user, bindingResult);
+		if (bindingResult.hasErrors())
+			return "userRegistration";
 		user.setUserRole(roleDao.getUserRole(Integer.parseInt(request.getParameter("role"))));
 		user.setDelete(false);
 		user.setCreateDate(new Date());
@@ -58,6 +66,11 @@ public class UserController {
 	public String register1(@ModelAttribute User user, BindingResult bindingResult, ModelMap models,
 			HttpServletRequest request) {
 
+		// for validation
+		userValidator.validate(user, bindingResult);
+		if (bindingResult.hasErrors())
+			return "admin/userRegistration";
+
 		user.setUserRole(roleDao.getUserRole(Integer.parseInt(request.getParameter("role"))));
 		user.setDelete(false);
 		user.setCreateDate(new Date());
@@ -76,6 +89,11 @@ public class UserController {
 	@RequestMapping(value = "/manager/userRegistration.html", method = RequestMethod.POST)
 	public String register2(@ModelAttribute User user, BindingResult bindingResult, ModelMap models,
 			HttpServletRequest request) {
+
+		// for validation
+		userValidator.validate(user, bindingResult);
+		if (bindingResult.hasErrors())
+			return "manager/userRegistration";
 
 		user.setUserRole(roleDao.getUserRole(Integer.parseInt(request.getParameter("role"))));
 		user.setDelete(false);
@@ -110,26 +128,26 @@ public class UserController {
 
 		return "admin/userManagement";
 	}
-	
+
 	@RequestMapping(value = "/admin/disableuser.html")
 	public String admindisableuser(@RequestParam Integer id) {
-		
-		User usertobedisabled=userDao.getUser(id);
-		
+
+		User usertobedisabled = userDao.getUser(id);
+
 		usertobedisabled.setDelete(true);
-		
-		usertobedisabled=userDao.saveUser(usertobedisabled);
+
+		usertobedisabled = userDao.saveUser(usertobedisabled);
 		return "redirect:userManagement.html";
 	}
+
 	@RequestMapping(value = "/manager/disableuser.html")
 	public String managerdisableuser(@RequestParam Integer id) {
-		
-		User usertobedisabled=userDao.getUser(id);
-		
+
+		User usertobedisabled = userDao.getUser(id);
+
 		usertobedisabled.setDelete(true);
-		
-		usertobedisabled=userDao.saveUser(usertobedisabled);
+
+		usertobedisabled = userDao.saveUser(usertobedisabled);
 		return "redirect:userManagement.html";
 	}
 }
-
