@@ -60,5 +60,15 @@ public class UserDaoImpl implements UserDao {
 		String query = "from Project where id = :id";
 		return entityManager.createQuery(query, User.class).setParameter("id", id).getResultList();
 	}
+	
+	  
+    @Override
+    public User checkEmailExist( String emailAddress)
+    {
+    	List<User> results =  entityManager.createQuery( "from User where LOWER(emailAddress) = LOWER(:emailAddress)", User.class ).setParameter("emailAddress", emailAddress).getResultList();
+    	
+    	return results.size() == 0 ? null : results.get(0);
+    }
+    
 
 }
