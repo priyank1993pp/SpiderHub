@@ -1,6 +1,8 @@
 package spiderhub.web.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 import spiderhub.model.Project;
 import spiderhub.model.Task;
@@ -27,6 +30,7 @@ import spiderhub.model.dao.UserDao;
 
 @Controller
 public class TaskController {
+
 	@Autowired
 	private TaskDao taskDao;
 
@@ -41,6 +45,7 @@ public class TaskController {
 
 	@Autowired
 	private TaskStatusDao taskstatusDao;
+
 	/*
 	 * Member variables for file upload
 	 */
@@ -101,29 +106,54 @@ public class TaskController {
 		Project temp = projectDao.getProject(pid);
 		models.put("users", temp.getUsersRelatedProject());
 		models.put("priority", taskpriorityDao.getTaskPriority());
-
-		// models.put("users", userDao.getUsertoAddInProject());
 		return "manager/assignTask";
 	}
 
 	// file upload here
 	@RequestMapping(value = "/manager/assignTask.html", method = RequestMethod.POST)
-	public String assign(@RequestParam Integer tid, @RequestParam Integer pid, @ModelAttribute Task task,
-			BindingResult bindingResult, HttpServletRequest request, SessionStatus status) {
+	public String assign(@RequestParam Integer tid, @RequestParam Integer pid, @RequestParam("action") String action,
+			@ModelAttribute Task task, BindingResult bindingResult, HttpServletRequest request, SessionStatus status,
+			ModelMap models, @RequestParam MultipartFile file) throws IllegalStateException, IOException {
 
-		task.setProjectTasks(projectDao.getProject(pid));
-		task.setUserTasks(userDao.getUser(Integer.parseInt(request.getParameter("user"))));
-		task.setTaskPriority(taskpriorityDao.getTaskpriority(Integer.parseInt(request.getParameter("priority"))));
-		task.setStatusTasks(taskstatusDao.getTaskStatus(1));
-		task.setStartDate(new Date());
-		/*
-		 * task.setEndDate(SimpleDateFormat.parse(request.getParameter("enddate"
-		 * )));
-		 */
-		task = taskDao.saveTask(task);
-		status.setComplete();
-		// redirect to user list
-		return "redirect:viewProject.html?id=" + pid;
+		if (action.equals("Upload")) {
+			// handle upload
+
+			models.put("task", taskDao.getTask(tid));
+			Project temp = projectDao.getProject(pid);
+			models.put("users", temp.getUsersRelatedProject());
+			models.put("priority", taskpriorityDao.getTaskPriority());
+
+			// models.put("users", userDao.getUsertoAddInProject());
+
+			// save in web-inf/files
+			file.transferTo(new File(getFileDirectory(), file.getOriginalFilename()));
+			// to save into database
+			// get the name from file file.getOriginalFilename() and save it in
+			// database
+
+			// for multiple files;
+			return "manager/assignTask";
+		} else if (action.equals("Assign")) {
+			// handle renew
+
+			task.setProjectTasks(projectDao.getProject(pid));
+			task.setUserTasks(userDao.getUser(Integer.parseInt(request.getParameter("user"))));
+			task.setTaskPriority(taskpriorityDao.getTaskpriority(Integer.parseInt(request.getParameter("priority"))));
+			task.setStatusTasks(taskstatusDao.getTaskStatus(1));
+			task.setStartDate(new Date());
+
+			/*
+			 * task.setEndDate(SimpleDateFormat.parse(request.getParameter(
+			 * "enddate" )));
+			 */
+
+			task = taskDao.saveTask(task);
+			status.setComplete();
+			// redirect to user list
+			return "redirect:viewProject.html?id=" + pid;
+		}
+		return null;
+
 	}
 
 	@RequestMapping(value = "/member/doneTask.html")

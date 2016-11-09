@@ -85,10 +85,12 @@
 										</select>
 									</div>
 								</div>
-								Upload File: <input type="file" name="fileName"
-									class='input-file uniform_on' id='fileInput' /> <input
-									class="btn btn-primary" type="submit" name="save"
-									value="Assign">
+								<%-- 	<jsp:include page="upload.jsp" /> <br />
+ --%>
+
+								File Upload: <input type="file" name="file" /> <input type="submit"
+									name="action" value="Upload" /><input class="btn btn-primary"
+									type="submit" name="action" value="Assign">
 								<hr />
 						</form:form>
 					</div>
