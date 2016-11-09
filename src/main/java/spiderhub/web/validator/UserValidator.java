@@ -8,7 +8,7 @@ import org.springframework.validation.Validator;
 import spiderhub.model.User;
 
 @Component
-public class UserValidator implements Validator{
+public class UserValidator implements Validator {
 
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -18,15 +18,18 @@ public class UserValidator implements Validator{
 	@Override
 	public void validate(Object target, Errors errors) {
 		User user = (User) target;
-		if( !StringUtils.hasText(user.getUserName()) )
+		if (!StringUtils.hasText(user.getUserName()))
 			errors.rejectValue("userName", "error.field.empty");
-		if( !StringUtils.hasText(user.getPassword()) )
+		if (!StringUtils.hasText(user.getPassword()))
 			errors.rejectValue("password", "error.field.empty");
-		if( !StringUtils.hasText(user.getEmailAddress()) )
+		if (!StringUtils.hasText(user.getEmailAddress()))
 			errors.rejectValue("emailAddress", "error.field.empty");
-		if( !StringUtils.hasText(user.getPhoneNumber()) )
+		if (!StringUtils.hasText(user.getPhoneNumber()))
 			errors.rejectValue("phoneNumber", "error.field.empty");
-		
+		if (StringUtils.hasText(user.getEmailAddress()))
+		{
+			errors.rejectValue("emailAddress", "error.field.email");
+		}
 	}
 
 }
