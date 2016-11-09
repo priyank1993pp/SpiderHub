@@ -1,7 +1,10 @@
 package spiderhub.web.controller;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +41,23 @@ public class TaskController {
 
 	@Autowired
 	private TaskStatusDao taskstatusDao;
+	/*
+	 * Member variables for file upload
+	 */
+	@Autowired
+	private ServletContext context;
+
+	private static final int BUFFER_SIZE = 4096;
+	private String filePath = "/WEB-INF/files/";
+
+	/*
+	 * helper method for file upload to get the file path
+	 */
+
+	private File getFileDirectory() {
+		String path = context.getRealPath("/WEB-INF/files");
+		return new File(path);
+	}
 
 	@RequestMapping("/manager/listTasks.html")
 	public String managerlist(ModelMap models) {
@@ -48,8 +68,6 @@ public class TaskController {
 		return "manager/listTasks";
 	}
 
-	
-
 	@RequestMapping("/manager/viewTask.html")
 	// optional required = false
 	public String managerview(@RequestParam(required = false) Integer id, ModelMap models) {
@@ -58,8 +76,6 @@ public class TaskController {
 		return "manager/viewTask";
 
 	}
-
-	
 
 	@RequestMapping(value = "/manager/addTask.html", method = RequestMethod.GET)
 	public String add(ModelMap models) {
@@ -90,6 +106,7 @@ public class TaskController {
 		return "manager/assignTask";
 	}
 
+	// file upload here
 	@RequestMapping(value = "/manager/assignTask.html", method = RequestMethod.POST)
 	public String assign(@RequestParam Integer tid, @RequestParam Integer pid, @ModelAttribute Task task,
 			BindingResult bindingResult, HttpServletRequest request, SessionStatus status) {
@@ -111,12 +128,12 @@ public class TaskController {
 
 	@RequestMapping(value = "/member/doneTask.html")
 	public String managerdisable(@RequestParam Integer tid) {
-		
-		Task changestatusoftask=taskDao.getTask(tid);
-		
+
+		Task changestatusoftask = taskDao.getTask(tid);
+
 		changestatusoftask.setStatusTasks(taskstatusDao.getTaskStatus(2));
-		
-		changestatusoftask=taskDao.saveTask(changestatusoftask);
+
+		changestatusoftask = taskDao.saveTask(changestatusoftask);
 
 		return "redirect:listProjects.html";
 	}

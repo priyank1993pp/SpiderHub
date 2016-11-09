@@ -8,12 +8,15 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>SpiderHub Login</title>
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css" />
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/loginStyle.css" />
-	<script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/hr.css" />
+<title>SpiderHub Login</title>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/loginStyle.css" />
+<script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/hr.css" />
 </head>
 <body background="<%=request.getContextPath()%>/images/bg3.jpg">
 	<div id="loginModal" class="modal show" tabindex="-1" role="dialog"
@@ -27,44 +30,40 @@
 					<h3 class="text-center">Login</h3>
 				</div>
 				<hr class="colorgraph">
-					<p class="text-center bg-success" style="padding: 0px 2px">
-						<strong>${registrationSuccess} ${user.firstname}
-							${user.lastname}</strong>
-					</p>
 
-					<div class="modal-body">
-						<form action="login" method="post">
-							<p style="color: red; text-align: center;">${sessionScope.error}</p>
-							<div class="form-group">
-								<div class="input-group">
-									<span class="input-group-addon"><i
-										class="glyphicon glyphicon-envelope"></i></span> <label
-										for="username">Username: </label> <input type="text"
-										name="username" id="username" />
-								</div>
+
+				<div class="modal-body">
+					<form action="login" method="post">
+						<p style="color: red; text-align: center;">${sessionScope.error}</p>
+						<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon"><i
+									class="glyphicon glyphicon-envelope"></i></span> <label for="username">Username:
+								</label> <input type="text" name="username" id="username" />
 							</div>
-							<div class="form-group">
-								<div class="input-group">
-									<span class="input-group-addon"><i
-										class="glyphicon glyphicon-lock"></i></span> <label for="password">Password:</label>
-									<input type="password" name="password" id="password" />
-								</div>
-							</div>
-							<div class="form-group">
-								<input class="btn btn-primary center-block" type="submit"
-									name="login" value="Sign in">
-							</div>
-							<div class="form-group pull-right">
-								<a href="userRegistration.html" class="btn btn-success btn-md">Register</a>
-								<input class="btn btn-danger btn-md" type="reset" value="Reset" />
-							</div>
-						</form>
-					</div>
-					<div class="modal-footer">
-						<div class="col-md-12">
-							<p>&copy; SpiderHub</p>
 						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon"><i
+									class="glyphicon glyphicon-lock"></i></span> <label for="password">Password:</label>
+								<input type="password" name="password" id="password" />
+							</div>
+						</div>
+						<div class="form-group">
+							<input class="btn btn-primary center-block" type="submit"
+								name="login" value="Sign in">
+						</div>
+						<div class="form-group pull-right">
+							<a href="userRegistration.html" class="btn btn-success btn-md">Register</a>
+							<input class="btn btn-danger btn-md" type="reset" value="Reset" />
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<div class="col-md-12">
+						<p>&copy; SpiderHub</p>
 					</div>
+				</div>
 			</div>
 		</div>
 	</div>
