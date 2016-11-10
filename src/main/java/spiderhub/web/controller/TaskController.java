@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import spiderhub.model.Project;
 import spiderhub.model.Task;
+import spiderhub.model.dao.FileDao;
 import spiderhub.model.dao.ProjectDao;
 import spiderhub.model.dao.TaskDao;
 import spiderhub.model.dao.TaskPriorityDao;
@@ -45,6 +46,9 @@ public class TaskController {
 
 	@Autowired
 	private TaskStatusDao taskstatusDao;
+
+	@Autowired
+	private FileDao fileDao;
 
 	/*
 	 * Member variables for file upload
@@ -106,6 +110,7 @@ public class TaskController {
 		Project temp = projectDao.getProject(pid);
 		models.put("users", temp.getUsersRelatedProject());
 		models.put("priority", taskpriorityDao.getTaskPriority());
+		// no files to show first time
 		return "manager/assignTask";
 	}
 
@@ -113,7 +118,10 @@ public class TaskController {
 	@RequestMapping(value = "/manager/assignTask.html", method = RequestMethod.POST)
 	public String assign(@RequestParam Integer tid, @RequestParam Integer pid, @RequestParam("action") String action,
 			@ModelAttribute Task task, BindingResult bindingResult, HttpServletRequest request, SessionStatus status,
-			ModelMap models, @RequestParam MultipartFile file) throws IllegalStateException, IOException {
+			ModelMap models,
+			@RequestParam MultipartFile file/*
+											 * , @ModelAttribute File fileModel
+											 */) throws IllegalStateException, IOException {
 
 		if (action.equals("Upload")) {
 			// handle upload
@@ -123,11 +131,36 @@ public class TaskController {
 			models.put("users", temp.getUsersRelatedProject());
 			models.put("priority", taskpriorityDao.getTaskPriority());
 
+			// for display of files
+			models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
+
 			// models.put("users", userDao.getUsertoAddInProject());
 
+			String fileName = "";
+			String filePath = "";
+			String fileType = "";
+			String fileSize = "";
 			// save in web-inf/files
-			file.transferTo(new File(getFileDirectory(), file.getOriginalFilename()));
+			if (file.getOriginalFilename() != null) {
+				String[] fileNameSplit = file.getOriginalFilename().split("[.]");
+				fileName = fileNameSplit[0];
+				fileType = fileNameSplit[1];
+				// for testing fileType is fileName
+				fileSize = String.valueOf(file.getSize());
+				filePath = context.getRealPath("/WEB-INF/files");
+				file.transferTo(new File(getFileDirectory(), file.getOriginalFilename()));
+			}
+
 			// to save into database
+			spiderhub.model.File fileModel = new spiderhub.model.File();
+			fileModel.setDelete(false);
+			fileModel.setFileName(fileName);
+			fileModel.setFilePath(filePath);
+			fileModel.setFileSize(fileSize);
+			fileModel.setFileType(fileType);
+			fileModel.setUploadDate(new Date());
+			fileModel.setTaskFiles(taskDao.getTask(tid));
+			fileDao.saveFile(fileModel);
 			// get the name from file file.getOriginalFilename() and save it in
 			// database
 

@@ -89,7 +89,28 @@
  --%>
 
 								File Upload: <input type="file" name="file" /> <input type="submit"
-									name="action" value="Upload" /><input class="btn btn-primary"
+									name="action" value="Upload" />
+									
+										<table class="table table-hover">
+											<tr>
+												<th>File Name</th>
+												<th>File Type</th>
+												<th>File Path</th>
+												<th>File Upload Date</th>
+											</tr>
+											<c:forEach items="${fileModel}" var="file">
+												<tr>
+
+													<%-- <td><input type="radio" name="files" value="${file.id}" /></td> --%>
+													<td>${file.fileName}</td>
+													<td>${file.fileType}</td>
+													<td>${file.filePath}</td>
+													<td>${file.uploadDate}</td>
+
+												</tr>
+											</c:forEach>
+										</table>
+									<input class="btn btn-primary"
 									type="submit" name="action" value="Assign">
 								<hr />
 						</form:form>
