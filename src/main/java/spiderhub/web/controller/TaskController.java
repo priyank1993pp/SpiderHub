@@ -1,13 +1,16 @@
 package spiderhub.web.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -200,4 +203,39 @@ public class TaskController {
 
 		return "redirect:listProjects.html";
 	}
+
+	@RequestMapping("/member/viewTask.html")
+	// optional required = false
+	public String memberView(@RequestParam Integer tid, ModelMap models) {
+		// get user from database and pass it to JSP
+		models.put("task", taskDao.getTask(tid));
+		// for display of files
+		models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
+		return "member/viewTask";
+
+	}
+
+	@RequestMapping("/member/download.html")
+	public String download(@RequestParam String file, HttpServletResponse response)
+			throws IOException {	
+		
+		
+		//read in the file
+		String fullPath ="/" + file;
+
+				FileInputStream in = new FileInputStream(new File(getFileDirectory(), fullPath));
+				OutputStream out = response.getOutputStream();
+				//write it to response
+				System.out.println("fileDownload--------*********");
+				byte[] buffer = new byte[2048];
+				int bytesRead;
+				while( (bytesRead = in.read(buffer)) > 0 ){
+					out.write(buffer, 0, bytesRead);
+				}
+				in.close();
+				
+		return null;
+
+	}
+
 }
