@@ -11,16 +11,20 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import spiderhub.model.User;
 import spiderhub.model.dao.UserDao;
 import spiderhub.model.dao.UserRoleDao;
+import spiderhub.web.validator.UserValidator;
 
 @Controller
+@SessionAttributes("user")
 public class UserController {
 
 	@Autowired
@@ -31,6 +35,7 @@ public class UserController {
 
 	@Autowired
 	private MailSender mailSender;
+	UserValidator userValidator;
 
 	@RequestMapping(value = "/userRegistration.html", method = RequestMethod.GET)
 	public String register(ModelMap models) {
@@ -63,6 +68,14 @@ public class UserController {
 	public String register(@ModelAttribute User user, BindingResult bindingResult, ModelMap models,
 			HttpServletRequest request) {
 
+		// for validation
+		userValidator.validate(user, bindingResult);
+		if (bindingResult.hasErrors()) {
+		//	models.put("user", new User());
+			models.put("UserRole", roleDao.getUserRoles());
+			System.out.println("validation done");
+			return "userRegistration";
+		}
 		user.setUserRole(roleDao.getUserRole(Integer.parseInt(request.getParameter("role"))));
 		user.setDelete(false);
 		user.setValidate(false);
@@ -83,6 +96,13 @@ public class UserController {
 	public String register1(@ModelAttribute User user, BindingResult bindingResult, ModelMap models,
 			HttpServletRequest request) {
 
+		// for validation
+		userValidator.validate(user, bindingResult);
+		if (bindingResult.hasErrors()) {
+			models.put("user", new User());
+			models.put("UserRole", roleDao.getUserRoles());
+			return "admin/userRegistration";
+		}
 		user.setUserRole(roleDao.getUserRole(Integer.parseInt(request.getParameter("role"))));
 		user.setDelete(false);
 		user.setCreateDate(new Date());
@@ -101,6 +121,11 @@ public class UserController {
 	@RequestMapping(value = "/manager/userRegistration.html", method = RequestMethod.POST)
 	public String register2(@ModelAttribute User user, BindingResult bindingResult, ModelMap models,
 			HttpServletRequest request) {
+
+		// for validation
+		userValidator.validate(user, bindingResult);
+		if (bindingResult.hasErrors())
+			return "manager/userRegistration";
 
 		user.setUserRole(roleDao.getUserRole(Integer.parseInt(request.getParameter("role"))));
 		user.setDelete(false);

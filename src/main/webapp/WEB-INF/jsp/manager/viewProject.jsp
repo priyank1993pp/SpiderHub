@@ -52,6 +52,15 @@
 				<td>${task.taskName}</td>
 				<td>${task.statusTasks.statusName }</td>
 
+
+				<c:choose>
+					<c:when test="${empty task.statusTasks.statusName}">
+						<td>Incomplete</td>
+					</c:when>
+					<c:otherwise>
+						<td>${task.statusTasks.statusName }</td>
+					</c:otherwise>
+				</c:choose>
 				<c:choose>
 					<c:when test="${empty task.userTasks}">
 						<td><a

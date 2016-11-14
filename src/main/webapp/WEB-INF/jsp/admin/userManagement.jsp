@@ -34,7 +34,9 @@
 			<th>Opertations</th>
 		</tr>
 		<c:forEach items="${users}" var="user">
+			
 			<tr>
+			
 				<td>${user.id }</td>
 				<td>${user.userName }</td>
 
@@ -48,6 +50,12 @@
 					</c:if></td>
 				<td><a href="editUser.html?id=${user.id }">Edit User</a> | <a
 					href="validate.html?id=${user.id }">Validate</a></td>
+				<td><c:if test="${not user.delete }">
+						<a href="editUser.html?id=${user.id }">Edit User</a>
+					</c:if>
+					<c:if test="${user.delete }">
+					Done
+					</c:if></td>
 			</tr>
 		</c:forEach>
 	</table>
