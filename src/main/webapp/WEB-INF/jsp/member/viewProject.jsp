@@ -54,11 +54,20 @@
 					</c:if> <c:if test="${task.statusTasks.id==2 }">
 					Done
 					</c:if></td>
-					<td><td><a
-							href="viewTask.html?tid=${task.id}&pid=${project.id}">View</a></td></td>
+				<td>
+				<td><a href="viewTask.html?tid=${task.id}&pid=${project.id}">View</a></td>
+				</td>
 			</tr>
 
 		</c:forEach>
+	</table>
+
+	<!--FOR TOTAL NO OF TASK -->
+	<table>
+		<th>Ongoing Task</th>
+		<th>Completed task</th>
+		<th>Total No of task</th>
+		<td><input type="text" name="ongoingtask" value=${}></td>
 	</table>
 
 </body>

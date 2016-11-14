@@ -25,7 +25,8 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public User getUserByUsername(String userName) {
-		String query = "from User u left join fetch u.userRole " + "where lower(userName) = :userName and u.isDelete= 'false' ";
+		String query = "from User u left join fetch u.userRole "
+				+ "where lower(userName) = :userName and u.isDelete= 'false' ";
 
 		// List<User> users = entityManager.createQuery(query,
 		// User.class).setParameter("emailAddress", emailAddress.toLowerCase())
@@ -43,7 +44,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public List<User> getUsers() {
-		// TODO Auto-generated method stub
+
 		return entityManager.createQuery("from User order by id", User.class).getResultList();
 	}
 
@@ -53,22 +54,22 @@ public class UserDaoImpl implements UserDao {
 		return entityManager.createQuery(query, User.class).getResultList();
 	}
 
+
 	@Override
 	public List<User> getUsrToAssignTask(Integer id) {
 
-		//String query = "from User u where u.projects.id=:id";
+		// String query = "from User u where u.projects.id=:id";
 		String query = "from Project where id = :id";
 		return entityManager.createQuery(query, User.class).setParameter("id", id).getResultList();
 	}
-	
-	  
-    @Override
-    public User checkEmailExist( String emailAddress)
-    {
-    	List<User> results =  entityManager.createQuery( "from User where LOWER(emailAddress) = LOWER(:emailAddress)", User.class ).setParameter("emailAddress", emailAddress).getResultList();
-    	
-    	return results.size() == 0 ? null : results.get(0);
-    }
-    
+
+	@Override
+	public User checkEmailExist(String emailAddress) {
+		List<User> results = entityManager
+				.createQuery("from User where LOWER(emailAddress) = LOWER(:emailAddress)", User.class)
+				.setParameter("emailAddress", emailAddress).getResultList();
+
+		return results.size() == 0 ? null : results.get(0);
+	}
 
 }
