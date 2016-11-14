@@ -29,7 +29,13 @@ public class User implements Serializable , UserDetails{
 	@Id
 	@GeneratedValue
 	private int id;
-
+	
+	private String firstName;
+	
+	private String lastName;
+	
+	private String companyName;
+	
 	private String userName;
 
 	private String emailAddress;
@@ -39,6 +45,8 @@ public class User implements Serializable , UserDetails{
 	private String phoneNumber;
 
 	private Date createDate;
+	
+	private boolean isValidate;
 
 	private boolean isDelete;
 
@@ -66,6 +74,10 @@ public class User implements Serializable , UserDetails{
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public String getName(){
+		return firstName + " " + lastName;
 	}
 
 	public String getUserName() {
@@ -205,6 +217,38 @@ public class User implements Serializable , UserDetails{
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public boolean isValidate() {
+		return isValidate;
+	}
+
+	public void setValidate(boolean isValidate) {
+		this.isValidate = isValidate;
 	}
 
 	

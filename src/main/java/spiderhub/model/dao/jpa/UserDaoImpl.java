@@ -25,7 +25,8 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public User getUserByUsername(String userName) {
-		String query = "from User u left join fetch u.userRole " + "where lower(userName) = :userName ";
+		String query = "from User u left join fetch u.userRole "
+				+ "where lower(userName) = :userName and isValidate = 'true' ";
 
 		// List<User> users = entityManager.createQuery(query,
 		// User.class).setParameter("emailAddress", emailAddress.toLowerCase())
@@ -56,7 +57,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<User> getUsrToAssignTask(Integer id) {
 
-		//String query = "from User u where u.projects.id=:id";
+		// String query = "from User u where u.projects.id=:id";
 		String query = "from Project where id = :id";
 		return entityManager.createQuery(query, User.class).setParameter("id", id).getResultList();
 	}

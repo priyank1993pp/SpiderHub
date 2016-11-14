@@ -5,7 +5,9 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.mail.MailException;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -14,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
-
 import spiderhub.model.User;
 import spiderhub.model.dao.UserDao;
 import spiderhub.model.dao.UserRoleDao;
@@ -28,11 +29,34 @@ public class UserController {
 	@Autowired
 	UserRoleDao roleDao;
 
+	@Autowired
+	private MailSender mailSender;
+
 	@RequestMapping(value = "/userRegistration.html", method = RequestMethod.GET)
 	public String register(ModelMap models) {
 		models.put("user", new User());
 		models.put("UserRole", roleDao.getUserRoles());
 		return "userRegistration";
+	}
+
+	@RequestMapping(value = "/admin/validate.html")
+	public String validation(@ModelAttribute User user, @RequestParam Integer id, ModelMap models , SessionStatus status) {
+		user = userDao.getUser(id);
+		user.setValidate(true);
+		userDao.saveUser(user);
+		status.setComplete();
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setTo(user.getEmailAddress());
+		message.setFrom("testspiderhub@gmail.com");
+		message.setText("Dear" + user.getUserName() + ", Now you are authorize to login.");
+		try {
+            this.mailSender.send(message);
+        }
+        catch (MailException ex) {
+            // simply log it and go on...
+            System.err.println(ex.getMessage());
+        }
+		return "redirect:userManagement.html";
 	}
 
 	@RequestMapping(value = "/userRegistration.html", method = RequestMethod.POST)
@@ -41,6 +65,7 @@ public class UserController {
 
 		user.setUserRole(roleDao.getUserRole(Integer.parseInt(request.getParameter("role"))));
 		user.setDelete(false);
+		user.setValidate(false);
 		user.setCreateDate(new Date());
 		userDao.saveUser(user);
 		models.addAttribute("modalShow", "Saved");
@@ -110,26 +135,26 @@ public class UserController {
 
 		return "admin/userManagement";
 	}
-	
+
 	@RequestMapping(value = "/admin/disableuser.html")
 	public String admindisableuser(@RequestParam Integer id) {
-		
-		User usertobedisabled=userDao.getUser(id);
-		
+
+		User usertobedisabled = userDao.getUser(id);
+
 		usertobedisabled.setDelete(true);
-		
-		usertobedisabled=userDao.saveUser(usertobedisabled);
+
+		usertobedisabled = userDao.saveUser(usertobedisabled);
 		return "redirect:userManagement.html";
 	}
+
 	@RequestMapping(value = "/manager/disableuser.html")
 	public String managerdisableuser(@RequestParam Integer id) {
-		
-		User usertobedisabled=userDao.getUser(id);
-		
+
+		User usertobedisabled = userDao.getUser(id);
+
 		usertobedisabled.setDelete(true);
-		
-		usertobedisabled=userDao.saveUser(usertobedisabled);
+
+		usertobedisabled = userDao.saveUser(usertobedisabled);
 		return "redirect:userManagement.html";
 	}
 }
-

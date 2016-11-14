@@ -41,7 +41,8 @@ public class ProjectController {
 	@Autowired
 	private TaskDao taskDao;
 	
-
+	Set<User> users = new HashSet<>();
+	
 	@RequestMapping("/admin/listProjects.html")
 	public String adminprojects(ModelMap models) {
 		models.put("projects", projectDao.getProjects());
@@ -164,12 +165,13 @@ public class ProjectController {
 		String[] chkSms = request.getParameterValues("chksms");
 	     int[] value = new int[chkSms.length];
 	     
+	     
 	     for(int i=0; i<chkSms.length; i++)
 	         value[i] = Integer.parseInt(chkSms[i]);
 	     
 	     
 		System.out.println("adding user to project"+chkSms);
-		Set<User> users = new HashSet<>();
+		
 		
 		for(int i = 0; i < value.length; i++) {
 			users.add(userDao.getUser(value[i]));
