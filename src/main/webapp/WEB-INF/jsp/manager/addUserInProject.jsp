@@ -2,34 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Add User In Project</title>
-</head>
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/bootstrap.min.css" />
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css" />
-<script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
-
-<body
-	<%-- style="background: url(<%=request.getContextPath()%>/images/rbg1.jpg) no-repeat center center fixed" --%>>
-	<div class="container" style="margin-top: 20px;">
-		<nav>
-			<ul class="nav nav-pills pull-right">
-				<li role="presentation" class="active"><a href="../index.html">Home</a></li>
-			</ul>
-		</nav>
-		<security:authorize access="authenticated">
-			<h3 class="text-muted">
-				Welcome,
-				<security:authentication property="principal.username" />
-			</h3>
-		</security:authorize>
 		<div class="jumbotron">
 		<div class="row text-center pad-top ">
 			<div class="col-md-12">
@@ -83,8 +55,3 @@
 			</div>
 			</div>
 		</div>
-		<jsp:include page="/WEB-INF/jsp/footer.jsp" />
-	</div>
-	
-</body>
-</html>
