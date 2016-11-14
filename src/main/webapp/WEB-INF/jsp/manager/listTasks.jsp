@@ -49,5 +49,6 @@
 	<p>
 		<a href="addTask.html">Add new Task</a>
 	</p>
+	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
 </body>
 </html>
