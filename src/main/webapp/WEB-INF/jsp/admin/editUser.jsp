@@ -2,6 +2,8 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html >
 <html>
 <head>
@@ -9,16 +11,30 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>User Registration</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css" />
 <script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
 </head>
 <body
-	style="background: url(<%=request.getContextPath()%>/images/rbg1.jpg) no-repeat center center fixed">
+	<%-- style="background: url(<%=request.getContextPath()%>/images/rbg1.jpg) no-repeat center center fixed" --%>>
 	<div class="container" style="margin-top: 20px;">
+		<nav>
+			<ul class="nav nav-pills pull-right">
+				<li role="presentation" class="active"><a href="../index.html">Home</a></li>
+			</ul>
+		</nav>
+		<security:authorize access="authenticated">
+			<h3 class="text-muted">
+				Welcome,
+				<security:authentication property="principal.username" />
+			</h3>
+		</security:authorize>
+		<div class="jumbotron">
 		<div class="row text-center pad-top ">
 			<div class="col-md-12">
-				<h2 style="color: white;">Edit SpiderHub User</h2>
+				<h2 style="color: black;">Edit SpiderHub User</h2>
 			</div>
 		</div>
 		<div class="row  pad-top">
@@ -36,20 +52,15 @@
 							<h4 class="text-info">User Name</h4>
 							<div class="form-group">
 								<div class="input-group">
-									<div class="input-group-addon">
-										
-									</div>
+									<div class="input-group-addon"></div>
 									${user.userName}
-									<form:input path="userName" type="hidden"
-										/>
+									<form:input path="userName" type="hidden" />
 								</div>
 							</div>
 							<h4 class="text-info">E-mail</h4>
 							<div class="form-group">
 								<div class="input-group">
-									<div class="input-group-addon">
-										
-									</div>
+									<div class="input-group-addon"></div>
 									<form:input path="emailAddress" type="text"
 										placeholder="Enter Email Address" class="form-control"
 										required="true" />
@@ -58,9 +69,7 @@
 							<h4 class="text-info">Password</h4>
 							<div class="form-group">
 								<div class="input-group">
-									<div class="input-group-addon">
-										
-									</div>
+									<div class="input-group-addon"></div>
 									<form:input path="password" type="text"
 										placeholder="Enter Password" class="form-control"
 										required="true" />
@@ -69,9 +78,7 @@
 							<h4 class="text-info">Phone Number</h4>
 							<div class="form-group">
 								<div class="input-group">
-									<div class="input-group-addon">
-										
-									</div>
+									<div class="input-group-addon"></div>
 									<form:input path="phoneNumber" type="text"
 										placeholder="Enter Phone Number" class="form-control"
 										required="true" />
@@ -81,9 +88,8 @@
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-addon">
-									
-							<form:input  path="createDate" type="hidden"
-										/>	
+
+										<form:input path="createDate" type="hidden" />
 									</div>
 									<select name="role">
 										<c:forEach items="${UserRole}" var="urole">
@@ -97,14 +103,16 @@
 							<input class="btn btn-primary" type="submit" name="save"
 								value="Save">
 							<hr />
-							
+
 
 						</form:form>
 					</div>
 				</div>
 			</div>
+			</div>
 		</div>
+		<jsp:include page="/WEB-INF/jsp/footer.jsp" />
 	</div>
-	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
+	
 </body>
 </html>

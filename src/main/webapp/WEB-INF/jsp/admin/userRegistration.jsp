@@ -2,6 +2,8 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html >
 <html>
 <head>
@@ -15,12 +17,23 @@
 	href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css" />
 <script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
 </head>
-<body
-	style="background: url(<%=request.getContextPath()%>/images/rbg1.jpg) no-repeat center center fixed">
+<body<%-- style="background: url(<%=request.getContextPath()%>/images/rbg1.jpg) no-repeat center center fixed" --%>>
 	<div class="container" style="margin-top: 20px;">
+		<nav>
+			<ul class="nav nav-pills pull-right">
+				<li role="presentation" class="active"><a href="../index.html">Home</a></li>
+			</ul>
+		</nav>
+		<security:authorize access="authenticated">
+			<h3 class="text-muted">
+				Welcome,
+				<security:authentication property="principal.username" />
+			</h3>
+		</security:authorize>
+		<div class="jumbotron">
 		<div class="row text-center pad-top ">
 			<div class="col-md-12">
-				<h2 style="color: white;">Registration For SpiderHub</h2>
+				<h2 style="color: black;">Registration For SpiderHub</h2>
 			</div>
 		</div>
 		<div class="row  pad-top">
@@ -94,7 +107,9 @@
 				</div>
 			</div>
 		</div>
+		</div>
+		<jsp:include page="/WEB-INF/jsp/footer.jsp" />
 	</div>
-	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
+
 </body>
 </html>
