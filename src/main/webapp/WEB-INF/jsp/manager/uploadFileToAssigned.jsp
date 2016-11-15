@@ -15,7 +15,6 @@ File Upload: <input type="file" name="file" required=required />
 		<tr>
 			<th>File Name</th>
 			<th>File Type</th>
-			<th>File Path</th>
 			<th>File Upload Date</th>
 		</tr>
 		<c:forEach items="${fileModel}" var="file">
@@ -24,7 +23,6 @@ File Upload: <input type="file" name="file" required=required />
 				<%-- <td><input type="radio" name="files" value="${file.id}" /></td> --%>
 				<td>${file.fileName}</td>
 				<td>${file.fileType}</td>
-				<td>${file.filePath}</td>
 				<td>${file.uploadDate}</td>
 
 			</tr>

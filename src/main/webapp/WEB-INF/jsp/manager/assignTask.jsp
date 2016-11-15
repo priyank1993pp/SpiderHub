@@ -17,8 +17,7 @@
 				</div>
 				<div class="panel-body">
 					<!-- This is a SPRING_MVC Form -->
-					<form:form modelAttribute="task" role="form"
-						enctype="multipart/form-data">
+					<form:form modelAttribute="task" role="form">
 
 						<p style="color: red; text-align: center;">${sessionScope.error}</p>
 						<h4 class="text-info">Task Name:</h4>
@@ -30,6 +29,9 @@
 									value="${task.taskDescription}" />
 								<form:input path="projectTasks" type="hidden"
 									value="${task.projectTasks }" />
+								<form:input path="taskName" type="hidden"
+									value="${task.taskName }" />
+
 								${task.taskName }
 							</div>
 							<h4 class="text-info">Assign User For Task</h4>
@@ -98,7 +100,7 @@
 								</c:forEach>
 							</table>
  --%>
-							<input class="btn btn-primary" type="submit" name="save"
+							<input class="btn btn-primary" type="submit" name="action"
 								value="Assign">
 							<hr />
 					</form:form>

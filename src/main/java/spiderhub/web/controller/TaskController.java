@@ -120,10 +120,7 @@ public class TaskController {
 	@RequestMapping(value = "/manager/assignTask.html", method = RequestMethod.POST)
 	public String assign(@RequestParam Integer tid, @RequestParam Integer pid, @RequestParam("action") String action,
 			@ModelAttribute Task task, BindingResult bindingResult, HttpServletRequest request, SessionStatus status,
-			ModelMap models,
-			@RequestParam MultipartFile file/*
-											 * , @ModelAttribute File fileModel
-											 */) throws IllegalStateException, IOException {
+			ModelMap models) {
 
 		if (action.equals("Assign")) {
 			// handle renew
@@ -147,7 +144,8 @@ public class TaskController {
 		return null;
 
 	}
-//file upload
+
+	// file upload
 	@RequestMapping(value = "/manager/uploadFileToAssigned.html", method = RequestMethod.GET)
 	public String fileUpload(@RequestParam Integer tid, @RequestParam Integer pid, ModelMap models) {
 		models.put("task", taskDao.getTask(tid));
@@ -159,9 +157,9 @@ public class TaskController {
 
 	// file upload here
 	@RequestMapping(value = "/manager/uploadFileToAssigned.html", method = RequestMethod.POST)
-	public String fileUpload(@RequestParam Integer tid, @RequestParam Integer pid, @RequestParam("action") String action,
-			@ModelAttribute Task task, BindingResult bindingResult, HttpServletRequest request, SessionStatus status,
-			ModelMap models,
+	public String fileUpload(@RequestParam Integer tid, @RequestParam Integer pid,
+			@RequestParam("action") String action, @ModelAttribute Task task, BindingResult bindingResult,
+			HttpServletRequest request, SessionStatus status, ModelMap models,
 			@RequestParam MultipartFile file/*
 											 * , @ModelAttribute File fileModel
 											 */) throws IllegalStateException, IOException {
@@ -169,7 +167,7 @@ public class TaskController {
 
 		if (action.equals("Upload")) {
 			// handle upload
-			//System.out.println("***************Inside if");
+			// System.out.println("***************Inside if");
 			models.put("task", taskDao.getTask(tid));
 			Project temp = projectDao.getProject(pid);
 			models.put("users", temp.getUsersRelatedProject());
