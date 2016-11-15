@@ -19,6 +19,7 @@
 		</tr>
 
 	</table>
+	
 
 	<h1>Task Details</h1>
 	<table class="table table-hover">
@@ -52,6 +53,24 @@
 							href="uploadFileToAssigned.html?tid=${task.id}&pid=${project.id}">Upload</a></td>
 					</c:otherwise>
 				</c:choose>
+			</tr>
+
+		</c:forEach>
+	</table>
+	
+	<h1>User Detail</h1>
+	<table class="table table-hover">
+		<tr>
+			<th>User Name</th>
+			<th>Operation</th>
+
+		</tr>
+
+		<c:forEach items="${user}" var="projectUser">
+
+			<tr>
+				<td>${projectUser.userName}</td>
+				<td><a href="remove.html?id=${projectUser.id}&pid=${project.id}"><img src="<%=request.getContextPath()%>/IMAGE/delete.png" /></a>
 			</tr>
 
 		</c:forEach>
