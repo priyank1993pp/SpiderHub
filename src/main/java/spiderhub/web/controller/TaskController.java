@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -25,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import spiderhub.model.Project;
 import spiderhub.model.Task;
+import spiderhub.model.User;
 import spiderhub.model.dao.FileDao;
 import spiderhub.model.dao.ProjectDao;
 import spiderhub.model.dao.TaskDao;
@@ -52,6 +56,9 @@ public class TaskController {
 
 	@Autowired
 	private FileDao fileDao;
+	
+	@Autowired
+	private MailSender mailSender;
 
 	/*
 	 * Member variables for file upload
@@ -138,6 +145,18 @@ public class TaskController {
 
 			task = taskDao.saveTask(task);
 			status.setComplete();
+			SimpleMailMessage message = new SimpleMailMessage();
+			User user = userDao.getUser(Integer.parseInt(request.getParameter("user")));
+			message.setTo(user.getEmailAddress());
+			message.setFrom("testspiderhub@gmail.com");
+			message.setText("Dear" + user.getUserName() + ", You have New Task.");
+			try {
+	            this.mailSender.send(message);
+	        }
+	        catch (MailException ex) {
+	            // simply log it and go on...
+	            System.err.println(ex.getMessage());
+	        }
 			// redirect to user list
 			return "redirect:viewProject.html?id=" + pid;
 		}
