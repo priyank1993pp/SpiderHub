@@ -5,75 +5,84 @@
 
 <tiles-definitions>
 
-    <definition name="member/listProjects" template="/WEB-INF/jsp/template.jsp">
-        <put-attribute name="title" value="Projects" />
-        <put-attribute name="content" value="/WEB-INF/jsp/member/listProjects.jsp" />
-    </definition>
+	<definition name="member/listProjects" template="/WEB-INF/jsp/template.jsp">
+		<put-attribute name="title" value="Projects" />
+		<put-attribute name="content"
+			value="/WEB-INF/jsp/member/listProjects.jsp" />
+	</definition>
 	<definition name="member/viewProject" template="/WEB-INF/jsp/template.jsp">
-        <put-attribute name="title" value="Project" />
-        <put-attribute name="content" value="/WEB-INF/jsp/member/viewProject.jsp" />
-    </definition>
-    <definition name="admin/listProjects" template="/WEB-INF/jsp/template.jsp">
-        <put-attribute name="title" value="Projects" />
-        <put-attribute name="content" value="/WEB-INF/jsp/admin/listProjects.jsp" />
-    </definition>
-    <definition name="admin/userManagement" template="/WEB-INF/jsp/template.jsp">
-        <put-attribute name="title" value="User Management" />
-        <put-attribute name="content" value="/WEB-INF/jsp/admin/userManagement.jsp" />
-    </definition>
-    <definition name="admin/userRegistration" template="/WEB-INF/jsp/template.jsp">
-        <put-attribute name="title" value="User Registration" />
-        <put-attribute name="content" value="/WEB-INF/jsp/admin/userRegistration.jsp" />
-    </definition>
-    <definition name="admin/editUser" template="/WEB-INF/jsp/template.jsp">
-        <put-attribute name="title" value="Edit User" />
-        <put-attribute name="content" value="/WEB-INF/jsp/admin/editUser.jsp" />
-    </definition>
-    <definition name="manager/listProjects" template="/WEB-INF/jsp/template.jsp">
-        <put-attribute name="title" value="Projects" />
-        <put-attribute name="content" value="/WEB-INF/jsp/manager/listProjects.jsp" />
-    </definition>
-    <definition name="manager/viewProject" template="/WEB-INF/jsp/template.jsp">
-        <put-attribute name="title" value="Project" />
-        <put-attribute name="content" value="/WEB-INF/jsp/manager/viewProject.jsp" />
-    </definition>
-    <definition name="manager/editProject" template="/WEB-INF/jsp/template.jsp">
-        <put-attribute name="title" value="Edit Project" />
-        <put-attribute name="content" value="/WEB-INF/jsp/manager/editProject.jsp" />
-    </definition>
-    <definition name="manager/addProject" template="/WEB-INF/jsp/template.jsp">
-        <put-attribute name="title" value="Add Project" />
-        <put-attribute name="content" value="/WEB-INF/jsp/manager/addProject.jsp" />
-    </definition>
-    <definition name="manager/assignTask" template="/WEB-INF/jsp/template.jsp">
-        <put-attribute name="title" value="Assign Task" />
-        <put-attribute name="content" value="/WEB-INF/jsp/manager/assignTask.jsp" />
-    </definition>
-    <definition name="manager/addTask" template="/WEB-INF/jsp/template.jsp">
-        <put-attribute name="title" value="Add Task" />
-        <put-attribute name="content" value="/WEB-INF/jsp/manager/addTask.jsp" />
-    </definition>
-    <definition name="manager/addUserInProject" template="/WEB-INF/jsp/template.jsp">
-        <put-attribute name="title" value="Add User In Project" />
-        <put-attribute name="content" value="/WEB-INF/jsp/manager/addUserInProject.jsp" />
-    </definition>
-    <definition name="member/viewTask" template="/WEB-INF/jsp/template.jsp">
-        <put-attribute name="title" value="View Task" />
-        <put-attribute name="content" value="/WEB-INF/jsp/member/viewTask.jsp" />
-    </definition>
-   <!--  <definition name="user/view" template="/WEB-INF/jsp/template.jsp">
-        <put-attribute name="title" value="View User" />
-        <put-attribute name="content" value="/WEB-INF/jsp/user/view.jsp" />
-    </definition>
-
-    <definition name="user/add" template="/WEB-INF/jsp/template.jsp">
-        <put-attribute name="title" value="Add User" />
-        <put-attribute name="content" value="/WEB-INF/jsp/user/add.jsp" />
-    </definition>
-
-    <definition name="user/edit" template="/WEB-INF/jsp/template.jsp">
-        <put-attribute name="title" value="Edit User" />
-        <put-attribute name="content" value="/WEB-INF/jsp/user/edit.jsp" />
-    </definition>
- -->
+		<put-attribute name="title" value="Project" />
+		<put-attribute name="content"
+			value="/WEB-INF/jsp/member/viewProject.jsp" />
+	</definition>
+	<definition name="admin/listProjects" template="/WEB-INF/jsp/template.jsp">
+		<put-attribute name="title" value="Projects" />
+		<put-attribute name="content"
+			value="/WEB-INF/jsp/admin/listProjects.jsp" />
+	</definition>
+	<definition name="admin/userManagement" template="/WEB-INF/jsp/template.jsp">
+		<put-attribute name="title" value="User Management" />
+		<put-attribute name="content"
+			value="/WEB-INF/jsp/admin/userManagement.jsp" />
+	</definition>
+	<definition name="admin/userRegistration" template="/WEB-INF/jsp/template.jsp">
+		<put-attribute name="title" value="User Registration" />
+		<put-attribute name="content"
+			value="/WEB-INF/jsp/admin/userRegistration.jsp" />
+	</definition>
+	<definition name="admin/editUser" template="/WEB-INF/jsp/template.jsp">
+		<put-attribute name="title" value="Edit User" />
+		<put-attribute name="content" value="/WEB-INF/jsp/admin/editUser.jsp" />
+	</definition>
+	<definition name="manager/listProjects" template="/WEB-INF/jsp/template.jsp">
+		<put-attribute name="title" value="Projects" />
+		<put-attribute name="content"
+			value="/WEB-INF/jsp/manager/listProjects.jsp" />
+	</definition>
+	<definition name="manager/viewProject" template="/WEB-INF/jsp/template.jsp">
+		<put-attribute name="title" value="Project" />
+		<put-attribute name="content"
+			value="/WEB-INF/jsp/manager/viewProject.jsp" />
+	</definition>
+	<definition name="manager/editProject" template="/WEB-INF/jsp/template.jsp">
+		<put-attribute name="title" value="Edit Project" />
+		<put-attribute name="content"
+			value="/WEB-INF/jsp/manager/editProject.jsp" />
+	</definition>
+	<definition name="manager/addProject" template="/WEB-INF/jsp/template.jsp">
+		<put-attribute name="title" value="Add Project" />
+		<put-attribute name="content"
+			value="/WEB-INF/jsp/manager/addProject.jsp" />
+	</definition>
+	<definition name="manager/assignTask" template="/WEB-INF/jsp/template.jsp">
+		<put-attribute name="title" value="Assign Task" />
+		<put-attribute name="content"
+			value="/WEB-INF/jsp/manager/assignTask.jsp" />
+	</definition>
+	<definition name="manager/addTask" template="/WEB-INF/jsp/template.jsp">
+		<put-attribute name="title" value="Add Task" />
+		<put-attribute name="content" value="/WEB-INF/jsp/manager/addTask.jsp" />
+	</definition>
+	<definition name="manager/addUserInProject" template="/WEB-INF/jsp/template.jsp">
+		<put-attribute name="title" value="Add User In Project" />
+		<put-attribute name="content"
+			value="/WEB-INF/jsp/manager/addUserInProject.jsp" />
+	</definition>
+	<definition name="member/viewTask" template="/WEB-INF/jsp/template.jsp">
+		<put-attribute name="title" value="View Task" />
+		<put-attribute name="content" value="/WEB-INF/jsp/member/viewTask.jsp" />
+	</definition>
+	<definition name="manager/uploadFileToAssigned" template="/WEB-INF/jsp/template.jsp">
+		<put-attribute name="title" value="Upload File" />
+		<put-attribute name="content"
+			value="/WEB-INF/jsp/manager/uploadFileToAssigned.jsp" />
+	</definition>
+	<!-- <definition name="user/view" template="/WEB-INF/jsp/template.jsp"> 
+		<put-attribute name="title" value="View User" /> <put-attribute name="content" 
+		value="/WEB-INF/jsp/user/view.jsp" /> </definition> <definition name="user/add" 
+		template="/WEB-INF/jsp/template.jsp"> <put-attribute name="title" value="Add 
+		User" /> <put-attribute name="content" value="/WEB-INF/jsp/user/add.jsp" 
+		/> </definition> <definition name="user/edit" template="/WEB-INF/jsp/template.jsp"> 
+		<put-attribute name="title" value="Edit User" /> <put-attribute name="content" 
+		value="/WEB-INF/jsp/user/edit.jsp" /> </definition> -->
 </tiles-definitions>

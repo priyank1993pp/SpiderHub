@@ -26,6 +26,7 @@
 			<th>Task</th>
 			<th>Task Status</th>
 			<th>Operation</th>
+			<th>Assign Files</th>
 		</tr>
 
 		<c:forEach items="${tasks}" var="task">
@@ -47,6 +48,8 @@
 					</c:when>
 					<c:otherwise>
 						<td>Already Assigned</td>
+						<td><a
+							href="uploadFileToAssigned.html?tid=${task.id}&pid=${project.id}">Upload</a></td>
 					</c:otherwise>
 				</c:choose>
 			</tr>

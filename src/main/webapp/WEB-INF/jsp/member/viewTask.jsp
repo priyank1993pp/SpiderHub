@@ -34,7 +34,7 @@
 					<td>${file.fileType}</td>
 					<td>${file.filePath}</td>
 					<td>${file.uploadDate}</td>
-					<td><a href="download.html?file=${file.fileName}.${file.fileType}">File Download</a></td>
+					<td><a href="download.html?file=${file.fileName}.${file.fileType}">Download</a></td>
 
 
 				</tr>

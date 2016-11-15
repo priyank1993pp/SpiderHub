@@ -117,7 +117,6 @@ public class TaskController {
 		return "manager/assignTask";
 	}
 
-	// file upload here
 	@RequestMapping(value = "/manager/assignTask.html", method = RequestMethod.POST)
 	public String assign(@RequestParam Integer tid, @RequestParam Integer pid, @RequestParam("action") String action,
 			@ModelAttribute Task task, BindingResult bindingResult, HttpServletRequest request, SessionStatus status,
@@ -126,9 +125,51 @@ public class TaskController {
 											 * , @ModelAttribute File fileModel
 											 */) throws IllegalStateException, IOException {
 
+		if (action.equals("Assign")) {
+			// handle renew
+
+			task.setProjectTasks(projectDao.getProject(pid));
+			task.setUserTasks(userDao.getUser(Integer.parseInt(request.getParameter("user"))));
+			task.setTaskPriority(taskpriorityDao.getTaskpriority(Integer.parseInt(request.getParameter("priority"))));
+			task.setStatusTasks(taskstatusDao.getTaskStatus(1));
+			task.setStartDate(new Date());
+
+			/*
+			 * task.setEndDate(SimpleDateFormat.parse(request.getParameter(
+			 * "enddate" )));
+			 */
+
+			task = taskDao.saveTask(task);
+			status.setComplete();
+			// redirect to user list
+			return "redirect:viewProject.html?id=" + pid;
+		}
+		return null;
+
+	}
+//file upload
+	@RequestMapping(value = "/manager/uploadFileToAssigned.html", method = RequestMethod.GET)
+	public String fileUpload(@RequestParam Integer tid, @RequestParam Integer pid, ModelMap models) {
+		models.put("task", taskDao.getTask(tid));
+		// for display of files
+		models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
+		// no files to show first time
+		return "manager/uploadFileToAssigned";
+	}
+
+	// file upload here
+	@RequestMapping(value = "/manager/uploadFileToAssigned.html", method = RequestMethod.POST)
+	public String fileUpload(@RequestParam Integer tid, @RequestParam Integer pid, @RequestParam("action") String action,
+			@ModelAttribute Task task, BindingResult bindingResult, HttpServletRequest request, SessionStatus status,
+			ModelMap models,
+			@RequestParam MultipartFile file/*
+											 * , @ModelAttribute File fileModel
+											 */) throws IllegalStateException, IOException {
+		System.out.println("***************Inside if");
+
 		if (action.equals("Upload")) {
 			// handle upload
-
+			//System.out.println("***************Inside if");
 			models.put("task", taskDao.getTask(tid));
 			Project temp = projectDao.getProject(pid);
 			models.put("users", temp.getUsersRelatedProject());
@@ -168,23 +209,6 @@ public class TaskController {
 			// database
 
 			// for multiple files;
-			return "manager/assignTask";
-		} else if (action.equals("Assign")) {
-			// handle renew
-
-			task.setProjectTasks(projectDao.getProject(pid));
-			task.setUserTasks(userDao.getUser(Integer.parseInt(request.getParameter("user"))));
-			task.setTaskPriority(taskpriorityDao.getTaskpriority(Integer.parseInt(request.getParameter("priority"))));
-			task.setStatusTasks(taskstatusDao.getTaskStatus(1));
-			task.setStartDate(new Date());
-
-			/*
-			 * task.setEndDate(SimpleDateFormat.parse(request.getParameter(
-			 * "enddate" )));
-			 */
-
-			task = taskDao.saveTask(task);
-			status.setComplete();
 			// redirect to user list
 			return "redirect:viewProject.html?id=" + pid;
 		}
@@ -216,24 +240,22 @@ public class TaskController {
 	}
 
 	@RequestMapping("/member/download.html")
-	public String download(@RequestParam String file, HttpServletResponse response)
-			throws IOException {	
-		
-		
-		//read in the file
-		String fullPath ="/" + file;
+	public String download(@RequestParam String file, HttpServletResponse response) throws IOException {
 
-				FileInputStream in = new FileInputStream(new File(getFileDirectory(), fullPath));
-				OutputStream out = response.getOutputStream();
-				//write it to response
-				System.out.println("fileDownload--------*********");
-				byte[] buffer = new byte[2048];
-				int bytesRead;
-				while( (bytesRead = in.read(buffer)) > 0 ){
-					out.write(buffer, 0, bytesRead);
-				}
-				in.close();
-				
+		// read in the file
+		String fullPath = "/" + file;
+
+		FileInputStream in = new FileInputStream(new File(getFileDirectory(), fullPath));
+		OutputStream out = response.getOutputStream();
+		// write it to response
+		System.out.println("fileDownload--------*********");
+		byte[] buffer = new byte[2048];
+		int bytesRead;
+		while ((bytesRead = in.read(buffer)) > 0) {
+			out.write(buffer, 0, bytesRead);
+		}
+		in.close();
+
 		return null;
 
 	}

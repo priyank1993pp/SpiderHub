@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import spiderhub.model.Project;
+import spiderhub.model.User;
 import spiderhub.model.dao.ProjectDao;
 
 @Repository
@@ -34,9 +35,16 @@ public class ProjectDaoImpl implements ProjectDao {
 	@Override
 	public List<Project> getProjectofManager(Integer id) {
 		String query = "from Project where createdUser.id = :id";
-		return entityManager.createQuery(query , Project.class).setParameter("id", id).getResultList();
+		return entityManager.createQuery(query, Project.class).setParameter("id", id).getResultList();
 	}
 
-	
+	@Override
+	public Project checkLinkExist(String projectGitHubLink) {
+		List<Project> results = entityManager
+				.createQuery("from Project where LOWER(projectGitHubLink) = LOWER(:projectGitHubLink)", Project.class)
+				.setParameter("projectGitHubLink", projectGitHubLink).getResultList();
+
+		return results.size() == 0 ? null : results.get(0);
+	}
 
 }

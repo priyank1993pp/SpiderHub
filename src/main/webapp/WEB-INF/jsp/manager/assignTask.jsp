@@ -17,7 +17,8 @@
 				</div>
 				<div class="panel-body">
 					<!-- This is a SPRING_MVC Form -->
-					<form:form modelAttribute="task" role="form">
+					<form:form modelAttribute="task" role="form"
+						enctype="multipart/form-data">
 
 						<p style="color: red; text-align: center;">${sessionScope.error}</p>
 						<h4 class="text-info">Task Name:</h4>
@@ -29,8 +30,7 @@
 									value="${task.taskDescription}" />
 								<form:input path="projectTasks" type="hidden"
 									value="${task.projectTasks }" />
-								<form:input path="taskName" type="text"
-									value="${task.taskName }" required="true" />
+								${task.taskName }
 							</div>
 							<h4 class="text-info">Assign User For Task</h4>
 							<div class="form-group">
@@ -75,7 +75,7 @@
 							<%-- 	<jsp:include page="upload.jsp" /> <br />
  --%>
 
-							File Upload: <input type="file" name="file" /> <input
+							<%-- File Upload: <input type="file" name="file" /> <input
 								type="submit" name="action" value="Upload" />
 
 							<table class="table table-hover">
@@ -88,7 +88,7 @@
 								<c:forEach items="${fileModel}" var="file">
 									<tr>
 
-										<%-- <td><input type="radio" name="files" value="${file.id}" /></td> --%>
+										<td><input type="radio" name="files" value="${file.id}" /></td>
 										<td>${file.fileName}</td>
 										<td>${file.fileType}</td>
 										<td>${file.filePath}</td>
@@ -97,6 +97,7 @@
 									</tr>
 								</c:forEach>
 							</table>
+ --%>
 							<input class="btn btn-primary" type="submit" name="save"
 								value="Assign">
 							<hr />

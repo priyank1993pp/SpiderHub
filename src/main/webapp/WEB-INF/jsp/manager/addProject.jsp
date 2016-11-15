@@ -69,6 +69,8 @@
 										<form:input path="projectGitHubLink" type="text"
 											placeholder="Enter Github Link" class="form-control"
 											required="false" />
+											<br /> <b><form:errors path="projectGitHubLink"
+											style="font-size:22px; color:blue;" /></b>
 									</div>
 								</div>
 
