@@ -28,6 +28,7 @@
 				</div>
 				<hr class="colorgraph">
 					
+
 					<div class="modal-body">
 						<form action="login" method="post">
 							<p style="color: red; text-align: center;">${sessionScope.error}</p>

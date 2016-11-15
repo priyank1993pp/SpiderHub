@@ -22,7 +22,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "Users")
-public class User implements Serializable , UserDetails{
+public class User implements Serializable, UserDetails {
 
 	private static final long serialVersionUID = 1L;
 
@@ -207,5 +207,4 @@ public class User implements Serializable , UserDetails{
 		return true;
 	}
 
-	
 }
