@@ -17,6 +17,15 @@
 			<th>Description</th>
 			<td>${project.projectDescription}</td>
 		</tr>
+		
+		<tr>
+			<th>Project Progress</th>
+			<td><div class="progress">
+					<div class="progress-bar" role="progressbar" aria-valuenow="70"
+						aria-valuemin="0" aria-valuemax="100" style="width: ${progress}%">
+						${progress}%</div>
+				</div></td>
+		</tr>
 
 	</table>
 	

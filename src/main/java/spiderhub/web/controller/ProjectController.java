@@ -38,7 +38,6 @@ public class ProjectController {
 	@Autowired
 	private ProjectDao projectDao;
 
-	
 	@Autowired
 	private UserDao userDao;
 
@@ -90,6 +89,14 @@ public class ProjectController {
 		models.put("project", projectDao.getProject(id));
 		models.put("tasks", taskDao.getTaskByProject(id));
 		models.put("user", projectDao.getProject(id).getUsersRelatedProject());
+		if(taskDao.getTotalNofTaskinProject(id) == 0){
+			models.put("progress", 0);
+			System.out.println("---0");
+		}
+		else{
+		models.put("progress", taskDao.getNoOfCompletedTaskinProject(id) * 100 / taskDao.getTotalNofTaskinProject(id));
+		System.out.println("++++"+taskDao.getNoOfCompletedTaskinProject(id) * 100 / taskDao.getTotalNofTaskinProject(id));
+		}
 		return "manager/viewProject";
 
 	}
@@ -134,7 +141,7 @@ public class ProjectController {
 		// for validation
 		projectValidator.validate(project, bindingResult);
 		if (bindingResult.hasErrors()) {
-			//models.put("project", new Project());
+			// models.put("project", new Project());
 			models.put("projecttype", projecttypeDao.getProjectType());
 			return "manager/addProject";
 		}
@@ -181,21 +188,18 @@ public class ProjectController {
 		return "redirect:listProjects.html";
 	}
 
-
 	@RequestMapping(value = "/manager/addUserInProject.html", method = RequestMethod.GET)
 	public String addUser(@RequestParam Integer id, ModelMap models) {
-		
-		
+
 		List<User> projectNotInProject = userDao.getUserToaddInProject();
 		Project project = projectDao.getProject(id);
 		Set<User> detail = project.getUsersRelatedProject();
-		
+
 		projectNotInProject.removeAll(detail);
-		
+
 		models.put("users", projectNotInProject);
 		models.put("project", projectDao.getProject(id));
-		
-		
+
 		return "manager/addUserInProject";
 	}
 
@@ -204,7 +208,7 @@ public class ProjectController {
 			SessionStatus sessionStatus, ModelMap models) {
 
 		Set<User> detail = projectDao.getProject(id).getUsersRelatedProject();
-		
+
 		String[] chkSms = request.getParameterValues("chksms");
 		int[] value = new int[chkSms.length];
 
@@ -222,9 +226,11 @@ public class ProjectController {
 		project.setUsersRelatedProject(users);
 		project = projectDao.saveProject(project);
 
-		return "redirect:listProjects.html";
+		return "redirect:viewProject.html?id=" + id;
+
 
 	}
+
 	@RequestMapping(value = "/manager/remove.html")
 	public String userRemove(@RequestParam Integer id, @RequestParam Integer pid) {
 		Project project = projectDao.getProject(pid);

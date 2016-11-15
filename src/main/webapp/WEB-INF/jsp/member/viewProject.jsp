@@ -34,7 +34,7 @@
 				<td>${task.taskName}</td>
 				<td>${task.taskDescription}</td>
 				<td><c:if test="${task.statusTasks.id==1 }">
-						<a href="doneTask.html?tid=${task.id}"><img
+						<a href="doneTask.html?tid=${task.id}&pid=${project.id}"><img
 							src="<%=request.getContextPath()%>/IMAGE/delete.png" /></a>
 					</c:if> <c:if test="${task.statusTasks.id==2 }">
 					Done

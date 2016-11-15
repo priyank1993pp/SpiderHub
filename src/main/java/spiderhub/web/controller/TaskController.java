@@ -215,7 +215,7 @@ public class TaskController {
 	}
 
 	@RequestMapping(value = "/member/doneTask.html")
-	public String managerdisable(@RequestParam Integer tid) {
+	public String managerdisable(@RequestParam Integer pid,@RequestParam Integer tid) {
 
 		Task changestatusoftask = taskDao.getTask(tid);
 
@@ -223,7 +223,7 @@ public class TaskController {
 
 		changestatusoftask = taskDao.saveTask(changestatusoftask);
 
-		return "redirect:listProjects.html";
+		return "redirect:viewProject.html?id=" + pid;
 	}
 
 	@RequestMapping("/member/viewTask.html")

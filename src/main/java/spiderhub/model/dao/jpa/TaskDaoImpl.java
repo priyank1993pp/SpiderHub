@@ -70,4 +70,27 @@ public class TaskDaoImpl implements TaskDao {
 				.setParameter("uId", uId).getSingleResult();
 		return count;
 	}
+	
+	@Override
+	public long getNoOfOngoingTaskinProject(Integer pId) {
+		long count = (long) entityManager
+				.createQuery("select count(*) from Task where projectTasks.id = :pId and statusTasks.id=1")
+				.setParameter("pId", pId).getSingleResult();
+		return count;
+	}
+
+	@Override
+	public long getNoOfCompletedTaskinProject(Integer pId) {
+		long count = (long) entityManager
+				.createQuery("select count(*) from Task where projectTasks.id = :pId and statusTasks.id=2")
+				.setParameter("pId", pId).getSingleResult();
+		return count;
+	}
+
+	@Override
+	public long getTotalNofTaskinProject(Integer pId) {
+		long count = (long) entityManager.createQuery("select count(*) from Task where projectTasks.id = :pId")
+				.setParameter("pId", pId).getSingleResult();
+		return count;
+	}
 }
