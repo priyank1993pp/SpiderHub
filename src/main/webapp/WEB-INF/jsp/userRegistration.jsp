@@ -40,8 +40,8 @@
 								<div class="input-group">
 									<div class="input-group-addon"></div>
 									<form:input path="userName" type="text"
-										placeholder="Enter User Name" class="form-control"
-										/><br /> <b><form:errors path="userName"
+										placeholder="Enter User Name" class="form-control" />
+									<br /> <b><form:errors path="userName"
 											style="font-size:22px; color:blue;" /></b>
 								</div>
 							</div>
@@ -50,8 +50,7 @@
 								<div class="input-group">
 									<div class="input-group-addon"></div>
 									<form:input path="emailAddress" type="text"
-										placeholder="Enter Email Address" class="form-control"
-										 />
+										placeholder="Enter Email Address" class="form-control" />
 									<br /> <b><form:errors path="emailAddress"
 											style="font-size:22px; color:blue;" /></b>
 								</div>
@@ -61,8 +60,8 @@
 								<div class="input-group">
 									<div class="input-group-addon"></div>
 									<form:input path="password" type="text"
-										placeholder="Enter Password" class="form-control"
-										/><br /> <b><form:errors path="password"
+										placeholder="Enter Password" class="form-control" />
+									<br /> <b><form:errors path="password"
 											style="font-size:22px; color:blue;" /></b>
 								</div>
 							</div>
@@ -71,8 +70,8 @@
 								<div class="input-group">
 									<div class="input-group-addon"></div>
 									<form:input path="phoneNumber" type="text"
-										placeholder="Enter Phone Number" class="form-control"
-										required="true" /><br /> <b><form:errors path="phoneNumber"
+										placeholder="Enter Phone Number" class="form-control" />
+									<br /> <b><form:errors path="phoneNumber"
 											style="font-size:22px; color:blue;" /></b>
 								</div>
 							</div>
