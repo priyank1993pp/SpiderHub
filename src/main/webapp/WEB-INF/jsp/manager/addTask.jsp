@@ -2,26 +2,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
-<!DOCTYPE html >
-<html>
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Add Task</title>
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/bootstrap.min.css" />
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css" />
-<script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
-</head>
-<body
-	style="background: url(../images/rbg1.jpg) no-repeat center center fixed">
-	<div class="container" style="margin-top: 20px;">
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
+		<div class="jumbotron">
 		<div class="row text-center pad-top ">
 			<div class="col-md-12">
-				<h2 style="color: white;">Add Task</h2>
+				<h2 style="color: black;">Add Task</h2>
 			</div>
 		</div>
 		<div class="row  pad-top">
@@ -70,12 +56,10 @@
 							</div> --%>
 							<input class="btn btn-primary" type="submit" name="register"
 								value="Add Task">
-								<hr />
+							<hr />
 						</form:form>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</body>
-</html>
+		</div>

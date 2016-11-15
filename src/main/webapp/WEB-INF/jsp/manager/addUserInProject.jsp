@@ -1,25 +1,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Add User In Project</title>
-</head>
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/bootstrap.min.css" />
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css" />
-<script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
-
-<body
-	style="background: url(<%=request.getContextPath()%>/images/rbg1.jpg) no-repeat center center fixed">
-	<div class="container" style="margin-top: 20px;">
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
+		<div class="jumbotron">
 		<div class="row text-center pad-top ">
 			<div class="col-md-12">
-				<h2 style="color: white;">Add User In Project</h2>
+				<h2 style="color: black;">Add User In Project</h2>
 			</div>
 		</div>
 		<div class="row  pad-top">
@@ -67,7 +53,5 @@
 					</div>
 				</div>
 			</div>
+			</div>
 		</div>
-	</div>
-</body>
-</html>

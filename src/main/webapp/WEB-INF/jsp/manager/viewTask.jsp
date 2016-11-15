@@ -37,5 +37,6 @@
 
 	</table>
 	<a href="assignTask.html?id=${task.id}">Assign</a>
+	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
 </body>
 </html>

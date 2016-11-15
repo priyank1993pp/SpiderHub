@@ -1,26 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html >
-<html>
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Project</title>
-<link href="<%=request.getContextPath()%>/css/bootstrap.min.css"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css" />
-<script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
-</head>
-<body>
-	<div class="header clearfix">
-		<nav>
-			<ul class="nav nav-pills pull-right">
-				<li role="presentation" class="active"><a href="../index.html">Home</a></li>
-			</ul>
-		</nav>
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 
-	</div>
+<div class="jumbotron">
 	<h1>Project Details</h1>
 	<table class="table table-hover">
 		<tr>
@@ -54,15 +36,11 @@
 					</c:if> <c:if test="${task.statusTasks.id==2 }">
 					Done
 					</c:if></td>
-				<td>
+
 				<td><a href="viewTask.html?tid=${task.id}&pid=${project.id}">View</a></td>
-				
+
 			</tr>
 
 		</c:forEach>
 	</table>
-
-	
-
-</body>
-</html>
+</div>
