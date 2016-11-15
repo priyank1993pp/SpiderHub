@@ -18,6 +18,7 @@ public interface UserDao {
 	List<User> getUserToaddInProject();
 	
 	List<User> getUsrToAssignTask(Integer id);
-
+	
+	User checkEmailExist(String emailAddress);
 	
 }
