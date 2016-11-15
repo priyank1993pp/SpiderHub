@@ -2,6 +2,7 @@ package spiderhub.web.controller;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +30,9 @@ import spiderhub.model.dao.UserDao;
 @Controller
 @SessionAttributes("project")
 public class ProjectController {
+	
+	Set<User> users = new HashSet<>();
+	
 	@Autowired
 	private ProjectDao projectDao;
 
@@ -79,6 +83,8 @@ public class ProjectController {
 		// get user from database and pass it to JSP
 		models.put("project", projectDao.getProject(id));
 		models.put("tasks", taskDao.getTaskByProject(id));
+		models.put("user", projectDao.getProject(id).getUsersRelatedProject());
+		
 		return "manager/viewProject";
 
 	}
@@ -165,16 +171,26 @@ public class ProjectController {
 	@RequestMapping(value = "/manager/addUserInProject.html", method = RequestMethod.GET)
 	public String addUser(@RequestParam Integer id, ModelMap models) {
 		
-		//
-		models.put("users", userDao.getUserToaddInProject());
 		
+		List<User> projectNotInProject = userDao.getUserToaddInProject();
+		Project project = projectDao.getProject(id);
+		Set<User> detail = project.getUsersRelatedProject();
 		
+		projectNotInProject.removeAll(detail);
+		
+		models.put("users", projectNotInProject);
 		models.put("project", projectDao.getProject(id));
+		
+		
 		return "manager/addUserInProject";
 	}
 
 	@RequestMapping(value = "/manager/addUserInProject.html", method = RequestMethod.POST)
-	public String addUser(@ModelAttribute Project project, HttpServletRequest request) {
+	public String addUser(@ModelAttribute Project project, HttpServletRequest request, @RequestParam Integer id,
+			SessionStatus sessionStatus, ModelMap models) {
+
+		Set<User> detail = projectDao.getProject(id).getUsersRelatedProject();
+		
 		String[] chkSms = request.getParameterValues("chksms");
 		int[] value = new int[chkSms.length];
 
@@ -182,7 +198,8 @@ public class ProjectController {
 			value[i] = Integer.parseInt(chkSms[i]);
 
 		System.out.println("adding user to project" + chkSms);
-		Set<User> users = new HashSet<>();
+
+		users.addAll(detail);
 
 		for (int i = 0; i < value.length; i++) {
 			users.add(userDao.getUser(value[i]));
@@ -190,7 +207,25 @@ public class ProjectController {
 
 		project.setUsersRelatedProject(users);
 		project = projectDao.saveProject(project);
+
 		return "redirect:listProjects.html";
 
+	}
+
+	@RequestMapping(value = "/manager/remove.html")
+	public String userRemove(@RequestParam Integer id, @RequestParam Integer pid) {
+		Project project = projectDao.getProject(pid);
+		Set<User> detail = project.getUsersRelatedProject();
+		User removeUser = null;
+		for (User u : detail) {
+			if (u.getId() == id) {
+				removeUser = u;
+				break;
+			}
+		}
+		detail.remove(removeUser);
+		project.setUsersRelatedProject(detail);
+		projectDao.saveProject(project);
+		return "redirect:listProjects.html";
 	}
 }

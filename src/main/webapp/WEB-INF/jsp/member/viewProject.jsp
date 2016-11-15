@@ -23,21 +23,23 @@
 	<table class="table table-hover">
 		<tr>
 			<th>Task</th>
+			<th>Task Description</th>
 			<th>Operation</th>
+			<th>Assigned By</th>
 		</tr>
 
 		<c:forEach items="${task}" var="task">
 
 			<tr>
 				<td>${task.taskName}</td>
+				<td>${task.taskDescription}</td>
 				<td><c:if test="${task.statusTasks.id==1 }">
-						<a href="doneTask.html?tid=${task.id}"><img
-							src="<%=request.getContextPath()%>/IMAGE/delete.png" /></a>
+						<a href="doneTask.html?tid=${task.id}"><img src="<%=request.getContextPath()%>/IMAGE/delete.png" /></a>
 					</c:if> <c:if test="${task.statusTasks.id==2 }">
 					Done
 					</c:if></td>
-
-				<td><a href="viewTask.html?tid=${task.id}&pid=${project.id}">View</a></td>
+				<td>${project.createdUser.userName}</td>
+			</tr>
 
 			</tr>
 
