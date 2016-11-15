@@ -57,6 +57,10 @@
         <put-attribute name="title" value="Add User In Project" />
         <put-attribute name="content" value="/WEB-INF/jsp/manager/addUserInProject.jsp" />
     </definition>
+    <definition name="member/viewTask" template="/WEB-INF/jsp/template.jsp">
+        <put-attribute name="title" value="View Task" />
+        <put-attribute name="content" value="/WEB-INF/jsp/member/viewTask.jsp" />
+    </definition>
    <!--  <definition name="user/view" template="/WEB-INF/jsp/template.jsp">
         <put-attribute name="title" value="View User" />
         <put-attribute name="content" value="/WEB-INF/jsp/user/view.jsp" />

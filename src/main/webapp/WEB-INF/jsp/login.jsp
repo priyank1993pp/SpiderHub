@@ -27,10 +27,7 @@
 					<h3 class="text-center">Login</h3>
 				</div>
 				<hr class="colorgraph">
-					<p class="text-center bg-success" style="padding: 0px 2px">
-						<strong>${registrationSuccess} ${user.firstname}
-							${user.lastname}</strong>
-					</p>
+					
 
 					<div class="modal-body">
 						<form action="login" method="post">
