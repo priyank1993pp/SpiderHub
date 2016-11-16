@@ -17,37 +17,11 @@
 				</div>
 				<div class="panel-body">
 					<!-- This is a SPRING_MVC Form -->
-					<form:form modelAttribute="task" role="form"
-						enctype="multipart/form-data">
+					<form:form modelAttribute="task" role="form">
 
 						<p style="color: red; text-align: center;">${sessionScope.error}</p>
-						
+						<h4 class="text-info">Task Name:</h4>
 						<div class="form-group">
-							<div class="input-group">
-								File Upload: <input type="file" name="file" /> <input
-									type="submit" name="action" value="Upload" />
-
-								<table class="table table-hover">
-									<tr>
-										<th>File Name</th>
-										<th>File Type</th>
-										<th>File Path</th>
-										<th>File Upload Date</th>
-									</tr>
-									<c:forEach items="${fileModel}" var="file">
-										<tr>
-
-											<%-- <td><input type="radio" name="files" value="${file.id}" /></td> --%>
-											<td>${file.fileName}</td>
-											<td>${file.fileType}</td>
-											<td>${file.filePath}</td>
-											<td>${file.uploadDate}</td>
-
-										</tr>
-									</c:forEach>
-								</table>
-							</div>
-							<h4 class="text-info">Task Name:</h4>
 							<div class="input-group">
 								<div class="input-group-addon"></div>
 								<form:input path="id" type="hidden" value="${task.id }" />
@@ -55,8 +29,10 @@
 									value="${task.taskDescription}" />
 								<form:input path="projectTasks" type="hidden"
 									value="${task.projectTasks }" />
-								<form:input path="taskName" type="text"
-									value="${task.taskName }" required="true" />
+								<form:input path="taskName" type="hidden"
+									value="${task.taskName }" />
+
+								${task.taskName }
 							</div>
 							<h4 class="text-info">Assign User For Task</h4>
 							<div class="form-group">
@@ -101,6 +77,29 @@
 							<%-- 	<jsp:include page="upload.jsp" /> <br />
  --%>
 
+							<%-- File Upload: <input type="file" name="file" /> <input
+								type="submit" name="action" value="Upload" />
+
+							<table class="table table-hover">
+								<tr>
+									<th>File Name</th>
+									<th>File Type</th>
+									<th>File Path</th>
+									<th>File Upload Date</th>
+								</tr>
+								<c:forEach items="${fileModel}" var="file">
+									<tr>
+
+										<td><input type="radio" name="files" value="${file.id}" /></td>
+										<td>${file.fileName}</td>
+										<td>${file.fileType}</td>
+										<td>${file.filePath}</td>
+										<td>${file.uploadDate}</td>
+
+									</tr>
+								</c:forEach>
+							</table>
+ --%>
 							<input class="btn btn-primary" type="submit" name="action"
 								value="Assign">
 							<hr />
