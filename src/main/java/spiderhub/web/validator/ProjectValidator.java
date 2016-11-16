@@ -14,6 +14,7 @@ import spiderhub.model.dao.ProjectDao;
 
 @Component
 public class ProjectValidator implements Validator {
+	//taken from stackoverflow
 	private static final String linkPattern = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
 	private Pattern pattern;
 	private Matcher matcher;
