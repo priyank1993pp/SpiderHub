@@ -27,4 +27,10 @@ public interface TaskDao {
 	
 	long getTotalNofTask(Integer uId);
 	
+	
+	long getNoOfOngoingTaskinProject(Integer pId);
+
+	long getNoOfCompletedTaskinProject(Integer pId);
+
+	long getTotalNofTaskinProject(Integer pId);
 }

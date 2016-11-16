@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,13 +27,14 @@ import spiderhub.model.dao.ProjectDao;
 import spiderhub.model.dao.ProjectTypeDao;
 import spiderhub.model.dao.TaskDao;
 import spiderhub.model.dao.UserDao;
+import spiderhub.web.validator.ProjectValidator;
 
 @Controller
 @SessionAttributes("project")
 public class ProjectController {
-	
+
 	Set<User> users = new HashSet<>();
-	
+
 	@Autowired
 	private ProjectDao projectDao;
 
@@ -44,6 +46,9 @@ public class ProjectController {
 
 	@Autowired
 	private TaskDao taskDao;
+
+	@Autowired
+	ProjectValidator projectValidator;
 
 	@RequestMapping("/admin/listProjects.html")
 	public String adminprojects(ModelMap models) {
@@ -84,7 +89,14 @@ public class ProjectController {
 		models.put("project", projectDao.getProject(id));
 		models.put("tasks", taskDao.getTaskByProject(id));
 		models.put("user", projectDao.getProject(id).getUsersRelatedProject());
-		
+		if(taskDao.getTotalNofTaskinProject(id) == 0){
+			models.put("progress", 0);
+			System.out.println("---0");
+		}
+		else{
+		models.put("progress", taskDao.getNoOfCompletedTaskinProject(id) * 100 / taskDao.getTotalNofTaskinProject(id));
+		System.out.println("++++"+taskDao.getNoOfCompletedTaskinProject(id) * 100 / taskDao.getTotalNofTaskinProject(id));
+		}
 		return "manager/viewProject";
 
 	}
@@ -104,7 +116,7 @@ public class ProjectController {
 		// for adding the task functionality
 		System.out.println("no of ongoing task: " + taskDao.getNoOfOngoingTask(uid));
 		models.put("ongoingTask", taskDao.getNoOfOngoingTask(uid));
-		
+
 		// no of completed task
 		System.out.println("no of completed task: " + taskDao.getNoOfCompletedTask(uid));
 		models.put("completedTask", taskDao.getNoOfCompletedTask(uid));
@@ -123,8 +135,16 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/manager/addProject.html", method = RequestMethod.POST)
-	public String manageradd(@ModelAttribute Project project, HttpServletRequest request) {
+	public String manageradd(@ModelAttribute Project project, BindingResult bindingResult, ModelMap models,
+			HttpServletRequest request) {
 
+		// for validation
+		projectValidator.validate(project, bindingResult);
+		if (bindingResult.hasErrors()) {
+			// models.put("project", new Project());
+			models.put("projecttype", projecttypeDao.getProjectType());
+			return "manager/addProject";
+		}
 		project.setProjectType(projecttypeDao.getPerojectType(Integer.parseInt(request.getParameter("projecttype"))));
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User User = (User) auth.getPrincipal();
@@ -170,18 +190,16 @@ public class ProjectController {
 
 	@RequestMapping(value = "/manager/addUserInProject.html", method = RequestMethod.GET)
 	public String addUser(@RequestParam Integer id, ModelMap models) {
-		
-		
+
 		List<User> projectNotInProject = userDao.getUserToaddInProject();
 		Project project = projectDao.getProject(id);
 		Set<User> detail = project.getUsersRelatedProject();
-		
+
 		projectNotInProject.removeAll(detail);
-		
+
 		models.put("users", projectNotInProject);
 		models.put("project", projectDao.getProject(id));
-		
-		
+
 		return "manager/addUserInProject";
 	}
 
@@ -190,7 +208,7 @@ public class ProjectController {
 			SessionStatus sessionStatus, ModelMap models) {
 
 		Set<User> detail = projectDao.getProject(id).getUsersRelatedProject();
-		
+
 		String[] chkSms = request.getParameterValues("chksms");
 		int[] value = new int[chkSms.length];
 
@@ -208,7 +226,8 @@ public class ProjectController {
 		project.setUsersRelatedProject(users);
 		project = projectDao.saveProject(project);
 
-		return "redirect:listProjects.html";
+		return "redirect:viewProject.html?id=" + id;
+
 
 	}
 

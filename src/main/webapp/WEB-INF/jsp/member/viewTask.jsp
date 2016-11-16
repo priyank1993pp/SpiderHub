@@ -18,11 +18,10 @@
 			<th>Description</th>
 			<td>${task.taskDescription}</td>
 		</tr>
-		<table class="table table-hover">
+		<table class="table table-hover" >
 			<tr>
 				<th>File Name</th>
 				<th>File Type</th>
-				<th>File Path</th>
 				<th>File Upload Date</th>
 				<th>File Download</th>
 			</tr>
@@ -32,9 +31,8 @@
 					<%-- <td><input type="radio" name="files" value="${file.id}" /></td> --%>
 					<td>${file.fileName}</td>
 					<td>${file.fileType}</td>
-					<td>${file.filePath}</td>
 					<td>${file.uploadDate}</td>
-					<td><a href="download.html?file=${file.fileName}.${file.fileType}">File Download</a></td>
+					<td><a href="download.html?file=${file.fileName}.${file.fileType}">Download</a></td>
 
 
 				</tr>

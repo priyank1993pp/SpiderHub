@@ -13,6 +13,31 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
+<!-- <script type="text/javascript"
+	src="https://www.gstatic.com/charts/loader.js"></script> -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+		var x = ${complete};
+		var y = ${remaining};
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Counts'],
+          ['Completed Task', x],
+          ['Ongoing Task',  y]]);
+
+        var options = {
+          title: 'Workload'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+
 
 <title>SpiderHub</title>
 
@@ -78,6 +103,10 @@
 				</security:authorize>
 			</p>
 		</div>
+		<security:authorize access="hasRole('MEMBER')">
+			<div id="piechart" style="width: 500px; height: 300px"></div>
+		</security:authorize>
+
 
 		<!-- <footer class="footer">
 			<p>&copy; SpiderHub Company, Inc.</p>

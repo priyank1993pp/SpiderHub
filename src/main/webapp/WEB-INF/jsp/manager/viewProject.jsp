@@ -17,8 +17,18 @@
 			<th>Description</th>
 			<td>${project.projectDescription}</td>
 		</tr>
+		
+		<tr>
+			<th>Project Progress</th>
+			<td><div class="progress">
+					<div class="progress-bar" role="progressbar" aria-valuenow="70"
+						aria-valuemin="0" aria-valuemax="100" style="width: ${progress}%">
+						${progress}%</div>
+				</div></td>
+		</tr>
 
 	</table>
+	
 
 	<h1>Task Details</h1>
 	<table class="table table-hover">
@@ -26,6 +36,7 @@
 			<th>Task</th>
 			<th>Task Status</th>
 			<th>Operation</th>
+			<th>Assign Files</th>
 		</tr>
 
 		<c:forEach items="${tasks}" var="task">
@@ -47,12 +58,15 @@
 					</c:when>
 					<c:otherwise>
 						<td>Already Assigned</td>
+						<td><a
+							href="uploadFileToAssigned.html?tid=${task.id}&pid=${project.id}">Upload</a></td>
 					</c:otherwise>
 				</c:choose>
 			</tr>
 
 		</c:forEach>
 	</table>
+	
 	<h1>User Detail</h1>
 	<table class="table table-hover">
 		<tr>

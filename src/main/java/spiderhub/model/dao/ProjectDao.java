@@ -12,6 +12,8 @@ public interface ProjectDao {
 	Project saveProject(Project project);
 	
 	List<Project> getProjectofManager(Integer id);
+
+	Project checkLinkExist(String link);
 	
 
 	
