@@ -11,6 +11,7 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css" />
 <script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 	<div class="header clearfix">
@@ -36,5 +37,6 @@
 		</tr>
 
 	</table>
+	<div id="chart_div" style="width: 400px; height: 120px;"></div>
 </body>
 </html>

@@ -14,6 +14,27 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+		var x = ${com};
+		var y = ${rem};
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['Work', x],
+          ['Eat',  y]]);
+
+        var options = {
+          title: 'My Daily Activities'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
 
 <title>SpiderHub</title>
 
@@ -48,7 +69,7 @@
 
 							<li role="presentation"><a href="manager/listProjects.html">Project
 									Management</a></li>
-							
+
 
 						</security:authorize>
 						<security:authorize access="hasRole('MEMBER')">
@@ -61,10 +82,10 @@
 				</ul>
 			</nav>
 			<security:authorize access="authenticated">
-			<h3 class="text-muted">
-				Welcome,
-				<security:authentication property="principal.username" />
-			</h3>
+				<h3 class="text-muted">
+					Welcome,
+					<security:authentication property="principal.username" />
+				</h3>
 			</security:authorize>
 		</div>
 
@@ -79,6 +100,10 @@
 				</security:authorize>
 			</p>
 		</div>
+
+		
+			<div id="piechart" style="width: 500px; height: 300px;"></div>
+		
 
 		<footer class="footer">
 			<p>&copy; SpiderHub Company, Inc.</p>

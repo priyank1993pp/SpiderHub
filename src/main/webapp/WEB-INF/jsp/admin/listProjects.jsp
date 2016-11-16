@@ -31,8 +31,11 @@
 			<th>Created By</th>
 			<th>Github Link</th>
 			<th>Status</th>
+			<th>Project Progress</th>
 			<th>Project Type</th>
-			
+			<th>Project Report</th>
+
+
 		</tr>
 		<c:forEach items="${projects}" var="project">
 			<tr>
@@ -42,14 +45,20 @@
 				<td>${project.createdDate }</td>
 				<td>${project.createdUser.userName }</td>
 				<td>${project.projectGitHubLink }</td>
+				
 				<td><c:if test="${not project.delete }">
 						<a href="disable.html?id=${project.id }"><img
 							src="<%=request.getContextPath()%>/IMAGE/delete.png" /></a>
 					</c:if> <c:if test="${project.delete }">
 					Done
 					</c:if></td>
+					<td><div class="progress">
+						<div class="progress-bar" role="progressbar" aria-valuenow="70"
+							aria-valuemin="0" aria-valuemax="100" style="width: 70%">
+							70%</div></div></td>
 				<td>${project.projectType.projectType }</td>
-				
+				<td><a href="reportgeneration.html?id=${project.id}">Report</a></td>
+
 			</tr>
 		</c:forEach>
 	</table>

@@ -7,7 +7,9 @@ import spiderhub.model.TaskPriority;
 public interface TaskPriorityDao {
 
 	List<TaskPriority> getTaskPriority();
-	
+
 	TaskPriority getTaskpriority(Integer id);
+
 	
+
 }
