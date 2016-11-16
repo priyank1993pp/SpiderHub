@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html >
 <html>
 <head>
@@ -13,13 +15,18 @@
 <script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<div class="header clearfix">
+	<div class="container">
 		<nav>
 			<ul class="nav nav-pills pull-right">
 				<li role="presentation" class="active"><a href="../index.html">Home</a></li>
 			</ul>
 		</nav>
-
+		<security:authorize access="authenticated">
+			<h3 class="text-muted">
+				Welcome,
+				<security:authentication property="principal.username" />
+			</h3>
+		</security:authorize>
 	</div>
 	<table class="table table-hover">
 		<tr>
@@ -36,5 +43,6 @@
 		</tr>
 
 	</table>
+	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
 </body>
 </html>

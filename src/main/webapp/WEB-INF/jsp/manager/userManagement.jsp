@@ -53,5 +53,6 @@
 	<p>
 		<a href="userRegistration.html">Add new user.</a>
 	</p>
+	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
 </body>
 </html>

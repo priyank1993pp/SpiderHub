@@ -27,10 +27,7 @@
 					<h3 class="text-center">Login</h3>
 				</div>
 				<hr class="colorgraph">
-					<p class="text-center bg-success" style="padding: 0px 2px">
-						<strong>${registrationSuccess} ${user.firstname}
-							${user.lastname}</strong>
-					</p>
+					
 
 					<div class="modal-body">
 						<form action="login" method="post">
@@ -40,14 +37,14 @@
 									<span class="input-group-addon"><i
 										class="glyphicon glyphicon-envelope"></i></span> <label
 										for="username">Username: </label> <input type="text"
-										name="username" id="username" />
+										name="username" id="username" required=required/>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="input-group">
 									<span class="input-group-addon"><i
 										class="glyphicon glyphicon-lock"></i></span> <label for="password">Password:</label>
-									<input type="password" name="password" id="password" />
+									<input type="password" name="password" id="password" required=required/>
 								</div>
 							</div>
 							<div class="form-group">
@@ -59,6 +56,9 @@
 								<input class="btn btn-danger btn-md" type="reset" value="Reset" />
 							</div>
 						</form>
+						<c:if test="${param.error !=null }">
+						<p>Please Try Again.</p>
+						</c:if>
 					</div>
 					<div class="modal-footer">
 						<div class="col-md-12">

@@ -1,26 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html >
-<html>
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Project</title>
-<link href="<%=request.getContextPath()%>/css/bootstrap.min.css"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css" />
-<script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
-</head>
-<body>
-	<div class="header clearfix">
-		<nav>
-			<ul class="nav nav-pills pull-right">
-				<li role="presentation" class="active"><a href="../index.html">Home</a></li>
-			</ul>
-		</nav>
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 
-	</div>
+<div class="jumbotron">
 	<h1>Project Details</h1>
 	<table class="table table-hover">
 		<tr>
@@ -35,8 +17,18 @@
 			<th>Description</th>
 			<td>${project.projectDescription}</td>
 		</tr>
+		
+		<tr>
+			<th>Project Progress</th>
+			<td><div class="progress">
+					<div class="progress-bar" role="progressbar" aria-valuenow="70"
+						aria-valuemin="0" aria-valuemax="100" style="width: ${progress}%">
+						${progress}%</div>
+				</div></td>
+		</tr>
 
 	</table>
+	
 
 	<h1>Task Details</h1>
 	<table class="table table-hover">
@@ -44,14 +36,21 @@
 			<th>Task</th>
 			<th>Task Status</th>
 			<th>Operation</th>
+			<th>Assign Files</th>
 		</tr>
 
 		<c:forEach items="${tasks}" var="task">
 
 			<tr>
 				<td>${task.taskName}</td>
-				<td>${task.statusTasks.statusName }</td>
-
+				<c:choose>
+					<c:when test="${empty task.statusTasks.statusName}">
+						<td>Incomplete</td>
+					</c:when>
+					<c:otherwise>
+						<td>${task.statusTasks.statusName }</td>
+					</c:otherwise>
+				</c:choose>
 				<c:choose>
 					<c:when test="${empty task.userTasks}">
 						<td><a
@@ -59,17 +58,33 @@
 					</c:when>
 					<c:otherwise>
 						<td>Already Assigned</td>
+						<td><a
+							href="uploadFileToAssigned.html?tid=${task.id}&pid=${project.id}">Upload</a></td>
 					</c:otherwise>
 				</c:choose>
 			</tr>
 
 		</c:forEach>
 	</table>
+	
+	<h1>User Detail</h1>
+	<table class="table table-hover">
+		<tr>
+			<th>User Name</th>
+			<th>Operation</th>
+
+		</tr>
+
+		<c:forEach items="${user}" var="projectUser">
+
+			<tr>
+				<td>${projectUser.userName}</td>
+				<td><a href="remove.html?id=${projectUser.id}&pid=${project.id}"><img src="<%=request.getContextPath()%>/IMAGE/delete.png" /></a>
+			</tr>
+
+		</c:forEach>
+	</table>
 	<a href="addUserInProject.html?id=${project.id}">Add User In
-		Project</a>
-	<br />
-	<a href="addTask.html?id=${project.id}">Add Task In Project</a>
-
-
-</body>
-</html>
+		Project</a> <br /> <a href="addTask.html?id=${project.id}">Add Task
+		In Project</a>
+</div>

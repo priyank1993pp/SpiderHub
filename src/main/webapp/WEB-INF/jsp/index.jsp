@@ -13,6 +13,31 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
+<!-- <script type="text/javascript"
+	src="https://www.gstatic.com/charts/loader.js"></script> -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+		var x = ${complete};
+		var y = ${remaining};
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Counts'],
+          ['Completed Task', x],
+          ['Ongoing Task',  y]]);
+
+        var options = {
+          title: 'Workload'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+
 
 <title>SpiderHub</title>
 
@@ -25,7 +50,7 @@
 <body>
 
 	<div class="container">
-		<div class="header clearfix">
+		<%-- <div class="header clearfix">
 			<nav>
 				<ul class="nav nav-pills pull-right">
 					<li role="presentation" class="active"><a href="index.html">Home</a></li>
@@ -47,7 +72,7 @@
 
 							<li role="presentation"><a href="manager/listProjects.html">Project
 									Management</a></li>
-							
+
 
 						</security:authorize>
 						<security:authorize access="hasRole('MEMBER')">
@@ -60,13 +85,13 @@
 				</ul>
 			</nav>
 			<security:authorize access="authenticated">
-			<h3 class="text-muted">
-				Welcome,
-				<security:authentication property="principal.username" />
-			</h3>
+				<h3 class="text-muted">
+					Welcome,
+					<security:authentication property="principal.username" />
+				</h3>
 			</security:authorize>
-		</div>
-
+		</div> --%>
+		<jsp:include page="/WEB-INF/jsp/menu.jsp" />
 		<div class="jumbotron">
 			<h1>SpiderHub</h1>
 			<p class="lead">Competition makes us faster, Collaboration makes
@@ -78,11 +103,15 @@
 				</security:authorize>
 			</p>
 		</div>
+		<security:authorize access="hasRole('MEMBER')">
+			<div id="piechart" style="width: 500px; height: 300px"></div>
+		</security:authorize>
 
-		<footer class="footer">
+
+		<!-- <footer class="footer">
 			<p>&copy; SpiderHub Company, Inc.</p>
-		</footer>
-
+		</footer> -->
+		<jsp:include page="/WEB-INF/jsp/footer.jsp" />
 	</div>
 	<!-- /container -->
 

@@ -29,19 +29,68 @@ public class TaskDaoImpl implements TaskDao {
 	@Override
 	@Transactional
 	public Task saveTask(Task task) {
-		// TODO Auto-generated method stub
 		return entityManager.merge(task);
 	}
 
 	@Override
 	public List<Task> getTaskByProject(Integer id) {
 		String query = "from Task where projectTasks.id = :id";
-		return entityManager.createQuery(query , Task.class).setParameter("id", id).getResultList();
+		return entityManager.createQuery(query, Task.class).setParameter("id", id).getResultList();
 	}
 
 	@Override
 	public List<Task> getTaskOfMemberByProject(Integer uId, Integer pId) {
 		String query = "from Task where projectTasks.id = :pId and userTasks.id = :uId";
-		return entityManager.createQuery(query , Task.class).setParameter("pId", pId).setParameter("uId", uId).getResultList();
+		return entityManager.createQuery(query, Task.class).setParameter("pId", pId).setParameter("uId", uId)
+				.getResultList();
+	}
+
+	@Override
+	public long getNoOfOngoingTask(Integer uId) {
+		// TODO Auto-generated method stub
+		long count = (long) entityManager
+				.createQuery("select count(*) from Task where userTasks.id = :uId and statusTasks.id=1")
+				.setParameter("uId", uId).getSingleResult();
+		return count;
+	}
+
+	@Override
+	public long getNoOfCompletedTask(Integer uId) {
+		// TODO Auto-generated method stub
+		long count = (long) entityManager
+				.createQuery("select count(*) from Task where userTasks.id = :uId and statusTasks.id=2")
+				.setParameter("uId", uId).getSingleResult();
+		return count;
+	}
+
+	@Override
+	public long getTotalNofTask(Integer uId) {
+		// TODO Auto-generated method stub
+		long count = (long) entityManager.createQuery("select count(*) from Task where userTasks.id = :uId")
+				.setParameter("uId", uId).getSingleResult();
+		return count;
+	}
+	
+	@Override
+	public long getNoOfOngoingTaskinProject(Integer pId) {
+		long count = (long) entityManager
+				.createQuery("select count(*) from Task where projectTasks.id = :pId and statusTasks.id=1")
+				.setParameter("pId", pId).getSingleResult();
+		return count;
+	}
+
+	@Override
+	public long getNoOfCompletedTaskinProject(Integer pId) {
+		long count = (long) entityManager
+				.createQuery("select count(*) from Task where projectTasks.id = :pId and statusTasks.id=2")
+				.setParameter("pId", pId).getSingleResult();
+		return count;
+	}
+
+	@Override
+	public long getTotalNofTaskinProject(Integer pId) {
+		long count = (long) entityManager.createQuery("select count(*) from Task where projectTasks.id = :pId")
+				.setParameter("pId", pId).getSingleResult();
+		return count;
 	}
 }

@@ -2,6 +2,7 @@ package spiderhub.web.controller;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,41 +27,47 @@ import spiderhub.model.dao.ProjectDao;
 import spiderhub.model.dao.ProjectTypeDao;
 import spiderhub.model.dao.TaskDao;
 import spiderhub.model.dao.UserDao;
+import spiderhub.web.validator.ProjectValidator;
 
 @Controller
 @SessionAttributes("project")
 public class ProjectController {
+
+	Set<User> users = new HashSet<>();
+
 	@Autowired
 	private ProjectDao projectDao;
 
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Autowired
 	private ProjectTypeDao projecttypeDao;
-	
+
 	@Autowired
 	private TaskDao taskDao;
-	
+
+	@Autowired
+	ProjectValidator projectValidator;
 
 	@RequestMapping("/admin/listProjects.html")
 	public String adminprojects(ModelMap models) {
 		models.put("projects", projectDao.getProjects());
 		return "admin/listProjects";
 	}
-	
+
 	@RequestMapping("/manager/listProjects.html")
 	public String managerprojects(ModelMap models) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User User = (User)auth.getPrincipal();
+		User User = (User) auth.getPrincipal();
 		models.put("projects", projectDao.getProjectofManager(User.getId()));
 		return "manager/listProjects";
 	}
-	
+
 	@RequestMapping("/member/listProjects.html")
 	public String projects(ModelMap models) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User User = (User)auth.getPrincipal();
+		User User = (User) auth.getPrincipal();
 		int id = User.getId();
 		models.put("projects", userDao.getUser(id).getProjects());
 		return "member/listProjects";
@@ -73,32 +81,52 @@ public class ProjectController {
 		return "admin/viewProject";
 
 	}
-	
+
 	@RequestMapping("/manager/viewProject.html")
 	// optional required = false
 	public String managerview(@RequestParam(required = false) Integer id, ModelMap models) {
 		// get user from database and pass it to JSP
 		models.put("project", projectDao.getProject(id));
-		models.put("tasks" , taskDao.getTaskByProject(id));
+		models.put("tasks", taskDao.getTaskByProject(id));
+		models.put("user", projectDao.getProject(id).getUsersRelatedProject());
+		if(taskDao.getTotalNofTaskinProject(id) == 0){
+			models.put("progress", 0);
+			System.out.println("---0");
+		}
+		else{
+		models.put("progress", taskDao.getNoOfCompletedTaskinProject(id) * 100 / taskDao.getTotalNofTaskinProject(id));
+		System.out.println("++++"+taskDao.getNoOfCompletedTaskinProject(id) * 100 / taskDao.getTotalNofTaskinProject(id));
+		}
 		return "manager/viewProject";
 
 	}
-	
+
 	@RequestMapping("/member/viewProject.html")
 	// optional required = false
 	public String view(@RequestParam Integer id, ModelMap models) {
 		// get user from database and pass it to JSP
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User User = (User)auth.getPrincipal();
+		User User = (User) auth.getPrincipal();
 		int uid = User.getId();
 		System.out.println(uid);
 		System.out.println(id);
 		models.put("project", projectDao.getProject(id));
 		models.put("task", taskDao.getTaskOfMemberByProject(uid, id));
+
+		// for adding the task functionality
+		System.out.println("no of ongoing task: " + taskDao.getNoOfOngoingTask(uid));
+		models.put("ongoingTask", taskDao.getNoOfOngoingTask(uid));
+
+		// no of completed task
+		System.out.println("no of completed task: " + taskDao.getNoOfCompletedTask(uid));
+		models.put("completedTask", taskDao.getNoOfCompletedTask(uid));
+		// no of total task
+		System.out.println("no of total task: " + taskDao.getTotalNofTask(uid));
+		models.put("totalTask", taskDao.getTotalNofTask(uid));
 		return "member/viewProject";
 
 	}
-	
+
 	@RequestMapping(value = "/manager/addProject.html", method = RequestMethod.GET)
 	public String manageradd(ModelMap models) {
 		models.put("project", new Project());
@@ -107,18 +135,26 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/manager/addProject.html", method = RequestMethod.POST)
-	public String manageradd(@ModelAttribute Project project , HttpServletRequest request) {
-		
+	public String manageradd(@ModelAttribute Project project, BindingResult bindingResult, ModelMap models,
+			HttpServletRequest request) {
+
+		// for validation
+		projectValidator.validate(project, bindingResult);
+		if (bindingResult.hasErrors()) {
+			// models.put("project", new Project());
+			models.put("projecttype", projecttypeDao.getProjectType());
+			return "manager/addProject";
+		}
 		project.setProjectType(projecttypeDao.getPerojectType(Integer.parseInt(request.getParameter("projecttype"))));
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User User = (User)auth.getPrincipal();
+		User User = (User) auth.getPrincipal();
 		int userId = User.getId();
 		project.setCreatedUser(userDao.getUser(userId));
 		project.setCreatedDate(new Date());
 		project = projectDao.saveProject(project);
 		return "redirect:listProjects.html";
 	}
-	
+
 	@RequestMapping(value = "/manager/editProject.html", method = RequestMethod.GET)
 	public String edit(@RequestParam Integer id, ModelMap models) {
 		models.put("project", projectDao.getProject(id));
@@ -141,7 +177,7 @@ public class ProjectController {
 
 		return "redirect:listProjects.html";
 	}
-	
+
 	@RequestMapping(value = "/manager/disable.html")
 	public String managerdisable(@RequestParam Integer id) {
 		Project deleteproject = projectDao.getProject(id);
@@ -151,33 +187,64 @@ public class ProjectController {
 
 		return "redirect:listProjects.html";
 	}
-	
+
 	@RequestMapping(value = "/manager/addUserInProject.html", method = RequestMethod.GET)
 	public String addUser(@RequestParam Integer id, ModelMap models) {
-		models.put("users", userDao.getUserToaddInProject());
+
+		List<User> projectNotInProject = userDao.getUserToaddInProject();
+		Project project = projectDao.getProject(id);
+		Set<User> detail = project.getUsersRelatedProject();
+
+		projectNotInProject.removeAll(detail);
+
+		models.put("users", projectNotInProject);
 		models.put("project", projectDao.getProject(id));
+
 		return "manager/addUserInProject";
 	}
 
 	@RequestMapping(value = "/manager/addUserInProject.html", method = RequestMethod.POST)
-	public String addUser(@ModelAttribute Project project , HttpServletRequest request) {
+	public String addUser(@ModelAttribute Project project, HttpServletRequest request, @RequestParam Integer id,
+			SessionStatus sessionStatus, ModelMap models) {
+
+		Set<User> detail = projectDao.getProject(id).getUsersRelatedProject();
+
 		String[] chkSms = request.getParameterValues("chksms");
-	     int[] value = new int[chkSms.length];
-	     
-	     for(int i=0; i<chkSms.length; i++)
-	         value[i] = Integer.parseInt(chkSms[i]);
-	     
-	     
-		System.out.println("adding user to project"+chkSms);
-		Set<User> users = new HashSet<>();
-		
-		for(int i = 0; i < value.length; i++) {
+		int[] value = new int[chkSms.length];
+
+		for (int i = 0; i < chkSms.length; i++)
+			value[i] = Integer.parseInt(chkSms[i]);
+
+		System.out.println("adding user to project" + chkSms);
+
+		users.addAll(detail);
+
+		for (int i = 0; i < value.length; i++) {
 			users.add(userDao.getUser(value[i]));
 		}
-		
+
 		project.setUsersRelatedProject(users);
 		project = projectDao.saveProject(project);
+
+		return "redirect:viewProject.html?id=" + id;
+
+
+	}
+
+	@RequestMapping(value = "/manager/remove.html")
+	public String userRemove(@RequestParam Integer id, @RequestParam Integer pid) {
+		Project project = projectDao.getProject(pid);
+		Set<User> detail = project.getUsersRelatedProject();
+		User removeUser = null;
+		for (User u : detail) {
+			if (u.getId() == id) {
+				removeUser = u;
+				break;
+			}
+		}
+		detail.remove(removeUser);
+		project.setUsersRelatedProject(detail);
+		projectDao.saveProject(project);
 		return "redirect:listProjects.html";
-		
 	}
 }
