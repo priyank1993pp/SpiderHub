@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -56,7 +57,7 @@ public class TaskController {
 
 	@Autowired
 	private FileDao fileDao;
-	
+
 	@Autowired
 	private MailSender mailSender;
 
@@ -151,12 +152,11 @@ public class TaskController {
 			message.setFrom("testspiderhub@gmail.com");
 			message.setText("Dear" + user.getUserName() + ", You have New Task.");
 			try {
-	            this.mailSender.send(message);
-	        }
-	        catch (MailException ex) {
-	            // simply log it and go on...
-	            System.err.println(ex.getMessage());
-	        }
+				this.mailSender.send(message);
+			} catch (MailException ex) {
+				// simply log it and go on...
+				System.err.println(ex.getMessage());
+			}
 			// redirect to user list
 			return "redirect:viewProject.html?id=" + pid;
 		}
@@ -234,7 +234,7 @@ public class TaskController {
 	}
 
 	@RequestMapping(value = "/member/doneTask.html")
-	public String managerdisable(@RequestParam Integer pid,@RequestParam Integer tid) {
+	public String managerdisable(@RequestParam Integer pid, @RequestParam Integer tid) {
 
 		Task changestatusoftask = taskDao.getTask(tid);
 
@@ -247,11 +247,21 @@ public class TaskController {
 
 	@RequestMapping("/member/viewTask.html")
 	// optional required = false
-	public String memberView(@RequestParam Integer tid, ModelMap models) {
+	public String memberView(@RequestParam Integer tid, @RequestParam Integer pid, ModelMap models) {
 		// get user from database and pass it to JSP
 		models.put("task", taskDao.getTask(tid));
+
 		// for display of files
 		models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
+
+		// to display all members in the project
+		Project project = projectDao.getProject(pid);
+		Set<User> allUsersRelatedToProject = project.getUsersRelatedProject();
+		allUsersRelatedToProject.add(project.getCreatedUser());
+		//remove the current member from the task
+		Task task = taskDao.getTask(tid);
+		allUsersRelatedToProject.remove(userDao.getUser(task.getUserTasks().getId()));
+		models.put("taskMembers", allUsersRelatedToProject);
 		return "member/viewTask";
 
 	}
