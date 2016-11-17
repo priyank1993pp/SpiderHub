@@ -17,7 +17,7 @@
 			<th>Description</th>
 			<td>${project.projectDescription}</td>
 		</tr>
-		
+
 		<tr>
 			<th>Project Progress</th>
 			<td><div class="progress">
@@ -28,15 +28,15 @@
 		</tr>
 
 	</table>
-	
+
 
 	<h1>Task Details</h1>
 	<table class="table table-hover">
 		<tr>
 			<th>Task</th>
 			<th>Task Status</th>
-			<th>Operation</th>
-			<th>Assign Files</th>
+			<th>Assign</th>
+			<th>Upload Files</th>
 		</tr>
 
 		<c:forEach items="${tasks}" var="task">
@@ -57,7 +57,7 @@
 							href="assignTask.html?tid=${task.id}&pid=${project.id}">Assign</a></td>
 					</c:when>
 					<c:otherwise>
-						<td>Already Assigned</td>
+						<td>${task.userTasks.userName}</td>
 						<td><a
 							href="uploadFileToAssigned.html?tid=${task.id}&pid=${project.id}">Upload</a></td>
 					</c:otherwise>
@@ -66,7 +66,7 @@
 
 		</c:forEach>
 	</table>
-	
+
 	<h1>User Detail</h1>
 	<table class="table table-hover">
 		<tr>
@@ -79,7 +79,9 @@
 
 			<tr>
 				<td>${projectUser.userName}</td>
-				<td><a href="remove.html?id=${projectUser.id}&pid=${project.id}"><img src="<%=request.getContextPath()%>/IMAGE/delete.png" /></a>
+				<td><a
+					href="remove.html?id=${projectUser.id}&pid=${project.id}"><img
+						src="<%=request.getContextPath()%>/IMAGE/delete.png" /></a>
 			</tr>
 
 		</c:forEach>

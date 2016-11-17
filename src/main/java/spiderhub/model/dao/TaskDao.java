@@ -10,24 +10,22 @@ public interface TaskDao {
 	List<Task> getTasks();
 
 	Task saveTask(Task task);
-	
+
 	List<Task> getTaskByProject(Integer id);
-	
-	List<Task> getTaskOfMemberByProject(Integer uId , Integer pId);
-	
-	//to get no of ongoing task
+
+	List<Task> getTaskOfMemberByProject(Integer uId, Integer pId);
+
+	// to get no of ongoing task
 	long getNoOfOngoingTask(Integer uId);
-	
-	//to get No Of Completed Task
-	
+
+	// to get No Of Completed Task
+
 	long getNoOfCompletedTask(Integer uId);
-	
-	
-	//To get total no of task
-	
+
+	// To get total no of task
+
 	long getTotalNofTask(Integer uId);
-	
-	
+
 	long getNoOfOngoingTaskinProject(Integer pId);
 
 	long getNoOfCompletedTaskinProject(Integer pId);
