@@ -59,9 +59,9 @@
 		<div class="panel-body">
 			<div class="list-group">
 				<c:forEach items="${task}" var="task">
-					<a href="#" class="list-group-item"> <span class="badge">just
-							now</span> <i class="fa fa-fw fa-calendar"></i> ${task.taskName}
+					<a href="#" class="list-group-item"> <span class="badge">${task.startDate }</span> <i class="fa fa-fw fa-calendar"></i> ${task.taskName}
 					</a>
+					
 				</c:forEach>
 				<!-- <a href="#" class="list-group-item"> <span class="badge">4
 							minutes ago</span> <i class="fa fa-fw fa-comment"></i> Commented on a
