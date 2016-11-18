@@ -4,19 +4,18 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -27,9 +26,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import spiderhub.model.Comment;
 import spiderhub.model.Project;
 import spiderhub.model.Task;
 import spiderhub.model.User;
+import spiderhub.model.dao.CommentDao;
 import spiderhub.model.dao.FileDao;
 import spiderhub.model.dao.ProjectDao;
 import spiderhub.model.dao.TaskDao;
@@ -61,14 +62,14 @@ public class TaskController {
 	@Autowired
 	private MailSender mailSender;
 
+	@Autowired
+	private CommentDao commentDao;
+
 	/*
 	 * Member variables for file upload
 	 */
 	@Autowired
 	private ServletContext context;
-
-	private static final int BUFFER_SIZE = 4096;
-	private String filePath = "/WEB-INF/files/";
 
 	/*
 	 * helper method for file upload to get the file path
@@ -108,7 +109,7 @@ public class TaskController {
 
 		// save user to database
 		task.setProjectTasks(projectDao.getProject(id));
-		/* task.setCreateDate(new Date()); */
+		task.setCreateDate(new Date());
 		task = taskDao.saveTask(task);
 		// redirect to user list
 
@@ -128,22 +129,28 @@ public class TaskController {
 	@RequestMapping(value = "/manager/assignTask.html", method = RequestMethod.POST)
 	public String assign(@RequestParam Integer tid, @RequestParam Integer pid, @RequestParam("action") String action,
 			@ModelAttribute Task task, BindingResult bindingResult, HttpServletRequest request, SessionStatus status,
-			ModelMap models) {
+			ModelMap models) throws ParseException {
 
 		if (action.equals("Assign")) {
 			// handle renew
 
+			/*
+			 * SimpleDateFormat dateFormat = new SimpleDateFormat(
+			 * "yyyy-MM-dd hh:mm a");
+			 * task.setEndDate(dateFormat.parse(request.getParameter("endDate"))
+			 * );
+			 */
+
+			// to set create date again before saving
+			task = taskDao.getTask(tid);
 			task.setProjectTasks(projectDao.getProject(pid));
 			task.setUserTasks(userDao.getUser(Integer.parseInt(request.getParameter("user"))));
 			task.setTaskPriority(taskpriorityDao.getTaskpriority(Integer.parseInt(request.getParameter("priority"))));
 			task.setStatusTasks(taskstatusDao.getTaskStatus(1));
 			task.setStartDate(new Date());
 
-			/*
-			 * task.setEndDate(SimpleDateFormat.parse(request.getParameter(
-			 * "enddate" )));
-			 */
-
+			Date createDate = task.getCreateDate();
+			task.setCreateDate(createDate);
 			task = taskDao.saveTask(task);
 			status.setComplete();
 			SimpleMailMessage message = new SimpleMailMessage();
@@ -164,27 +171,14 @@ public class TaskController {
 
 	}
 
-	// file upload
-	@RequestMapping(value = "/manager/uploadFileToAssigned.html", method = RequestMethod.GET)
-	public String fileUpload(@RequestParam Integer tid, @RequestParam Integer pid, ModelMap models) {
-		models.put("task", taskDao.getTask(tid));
-		// for display of files
-		models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
-		// no files to show first time
-		return "manager/uploadFileToAssigned";
-	}
-
 	// file upload here
-	@RequestMapping(value = "/manager/uploadFileToAssigned.html", method = RequestMethod.POST)
-	public String fileUpload(@RequestParam Integer tid, @RequestParam Integer pid,
-			@RequestParam("action") String action, @ModelAttribute Task task, BindingResult bindingResult,
-			HttpServletRequest request, SessionStatus status, ModelMap models,
-			@RequestParam MultipartFile file/*
-											 * , @ModelAttribute File fileModel
-											 */) throws IllegalStateException, IOException {
+	@RequestMapping(value = "/manager/uploadFileToAssigned.html", method = { RequestMethod.GET, RequestMethod.POST })
+	public String fileUpload(@RequestParam Integer tid, @RequestParam Integer pid, @ModelAttribute Task task,
+			BindingResult bindingResult, HttpServletRequest request, SessionStatus status, ModelMap models,
+			@RequestParam(required = false) MultipartFile file) throws IllegalStateException, IOException {
 		System.out.println("***************Inside if");
 
-		if (action.equals("Upload")) {
+		if ("POST".equals(request.getMethod())) {
 			// handle upload
 			// System.out.println("***************Inside if");
 			models.put("task", taskDao.getTask(tid));
@@ -222,14 +216,13 @@ public class TaskController {
 			fileModel.setUploadDate(new Date());
 			fileModel.setTaskFiles(taskDao.getTask(tid));
 			fileDao.saveFile(fileModel);
-			// get the name from file file.getOriginalFilename() and save it in
-			// database
-
-			// for multiple files;
-			// redirect to user list
-			return "redirect:viewProject.html?id=" + pid;
 		}
-		return null;
+
+		models.put("task", taskDao.getTask(tid));
+		// for display of files
+		models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
+
+		return "manager/uploadFileToAssigned";
 
 	}
 
@@ -245,24 +238,90 @@ public class TaskController {
 		return "redirect:viewProject.html?id=" + pid;
 	}
 
-	@RequestMapping("/member/viewTask.html")
+	@RequestMapping(value = "/member/viewTask.html", method = { RequestMethod.GET, RequestMethod.POST })
 	// optional required = false
-	public String memberView(@RequestParam Integer tid, @RequestParam Integer pid, ModelMap models) {
-		// get user from database and pass it to JSP
-		models.put("task", taskDao.getTask(tid));
+	public String memberView(@RequestParam(required = false) Integer tid, @ModelAttribute Comment comment,
+			ModelMap models, HttpServletRequest request, HttpServletResponse response) {
+		if ("GET".equals(request.getMethod())) {
+			// get user from database and pass it to JSP
+			models.put("task", taskDao.getTask(tid));
+			// for display of files
+			models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
+			models.put("comments", commentDao.getComment(tid));
+			models.put("comment", new Comment());
+		} else if ("POST".equals(request.getMethod())) {
 
-		// for display of files
-		models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
+			comment.setTaskComments(taskDao.getTask(tid));
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			User User = (User) auth.getPrincipal();
+			int uid = User.getId();
+			comment.setUserComment(userDao.getUser(uid));
+			comment.setCreateDate(new Date());
+			comment.setDelete(false);
+			commentDao.saveComment(comment);
+			SimpleMailMessage message = new SimpleMailMessage();
+			Project proj = taskDao.getTask(tid).getProjectTasks();
+			User user = proj.getCreatedUser();
+			message.setTo(user.getEmailAddress());
+			message.setFrom("testspiderhub@gmail.com");
+			message.setText("Dear " + user.getUserName() + ", You have new Comment in task "
+					+ taskDao.getTask(tid).getTaskName() + ".");
+			try {
+				this.mailSender.send(message);
+			} catch (MailException ex) {
+				// simply log it and go on...
+				System.err.println(ex.getMessage());
+			}
+			models.put("task", taskDao.getTask(tid));
+			// for display of files
+			models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
+			models.put("comments", commentDao.getComment(tid));
 
-		// to display all members in the project
-		Project project = projectDao.getProject(pid);
-		Set<User> allUsersRelatedToProject = project.getUsersRelatedProject();
-		allUsersRelatedToProject.add(project.getCreatedUser());
-		//remove the current member from the task
-		Task task = taskDao.getTask(tid);
-		allUsersRelatedToProject.remove(userDao.getUser(task.getUserTasks().getId()));
-		models.put("taskMembers", allUsersRelatedToProject);
+		}
 		return "member/viewTask";
+
+	}
+
+	@RequestMapping(value = "/manager/viewTask.html", method = { RequestMethod.GET, RequestMethod.POST })
+	// optional required = false
+	public String managerView(@RequestParam(required = false) Integer tid, @ModelAttribute Comment comment,
+			ModelMap models, HttpServletRequest request, HttpServletResponse response) {
+		if ("GET".equals(request.getMethod())) {
+			// get user from database and pass it to JSP
+			models.put("task", taskDao.getTask(tid));
+			// for display of files
+			models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
+			models.put("comments", commentDao.getComment(tid));
+			models.put("comment", new Comment());
+		} else if ("POST".equals(request.getMethod())) {
+
+			comment.setTaskComments(taskDao.getTask(tid));
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			User User = (User) auth.getPrincipal();
+			int uid = User.getId();
+			comment.setUserComment(userDao.getUser(uid));
+			comment.setCreateDate(new Date());
+			comment.setDelete(false);
+			commentDao.saveComment(comment);
+			SimpleMailMessage message = new SimpleMailMessage();
+			User user = taskDao.getTask(tid).getUserTasks();
+			message.setTo(user.getEmailAddress());
+			message.setFrom("testspiderhub@gmail.com");
+			message.setText("Dear " + user.getUserName() + ", You have new Comment in task "
+					+ taskDao.getTask(tid).getTaskName() + ".");
+			try {
+				this.mailSender.send(message);
+			} catch (MailException ex) {
+				// simply log it and go on...
+				System.err.println(ex.getMessage());
+			}
+			models.put("task", taskDao.getTask(tid));
+			// for display of files
+			models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
+			models.put("comments", commentDao.getComment(tid));
+
+		}
+		return "manager/viewTask";
 
 	}
 
