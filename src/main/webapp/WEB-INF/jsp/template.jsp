@@ -19,7 +19,7 @@
 	<div class="container">
 		<nav>
 				<ul class="nav nav-pills pull-right">
-					<li role="presentation" class="active"><a href="../index.html">Home</a></li>
+					<li role="presentation" ><a href="../index.html">Home</a></li>
 
 					<li role="presentation"><security:authorize access="anonymous">
 							<a href="<c:url value='/login.html' />">Login</a>
