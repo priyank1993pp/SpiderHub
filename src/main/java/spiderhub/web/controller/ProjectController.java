@@ -63,9 +63,9 @@ public class ProjectController {
 		models.put("projects", projectDao.getProjectofManager(User.getId()));
 		return "manager/listProjects";
 	}
-	
+
 	@RequestMapping("/manager/report.html")
-	public String projectreport(ModelMap models , @RequestParam Integer id) {
+	public String projectreport(ModelMap models, @RequestParam Integer id) {
 		models.put("project", projectDao.getProject(id));
 		models.put("tasks", projectDao.getProject(id).getTasks());
 		return "manager/report";
@@ -95,14 +95,16 @@ public class ProjectController {
 		// get user from database and pass it to JSP
 		models.put("project", projectDao.getProject(id));
 		models.put("tasks", taskDao.getTaskByProject(id));
-		models.put("user", projectDao.getProject(id).getUsersRelatedProject());
-		if(taskDao.getTotalNofTaskinProject(id) == 0){
+		if (projectDao.getProject(id).getUsersRelatedProject() != null)
+			models.put("user", projectDao.getProject(id).getUsersRelatedProject());
+		if (taskDao.getTotalNofTaskinProject(id) == 0) {
 			models.put("progress", 0);
 			System.out.println("---0");
-		}
-		else{
-		models.put("progress", taskDao.getNoOfCompletedTaskinProject(id) * 100 / taskDao.getTotalNofTaskinProject(id));
-		System.out.println("++++"+taskDao.getNoOfCompletedTaskinProject(id) * 100 / taskDao.getTotalNofTaskinProject(id));
+		} else {
+			models.put("progress",
+					taskDao.getNoOfCompletedTaskinProject(id) * 100 / taskDao.getTotalNofTaskinProject(id));
+			System.out.println(
+					"++++" + taskDao.getNoOfCompletedTaskinProject(id) * 100 / taskDao.getTotalNofTaskinProject(id));
 		}
 		return "manager/viewProject";
 
@@ -234,7 +236,6 @@ public class ProjectController {
 		project = projectDao.saveProject(project);
 
 		return "redirect:viewProject.html?id=" + id;
-
 
 	}
 
