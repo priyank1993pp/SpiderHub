@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletContext;
@@ -127,47 +130,46 @@ public class TaskController {
 	}
 
 	@RequestMapping(value = "/manager/assignTask.html", method = RequestMethod.POST)
-	public String assign(@RequestParam Integer tid, @RequestParam Integer pid, @RequestParam("action") String action,
-			@ModelAttribute Task task, BindingResult bindingResult, HttpServletRequest request, SessionStatus status,
-			ModelMap models) throws ParseException {
+	public String assign(@RequestParam Integer tid, @RequestParam Integer pid, @ModelAttribute Task task,
+			BindingResult bindingResult, HttpServletRequest request, SessionStatus status, ModelMap models)
+			throws ParseException {
+		task = taskDao.getTask(tid);
 
-		if (action.equals("Assign")) {
-			// handle renew
+		String endDate = request.getParameter("endDate");
+		String endTime = request.getParameter("endTime");
+		endDate = endDate + " " + endTime;
+		System.out.println("endDate: " + endDate + " endTime : " + endTime);
 
-			/*
-			 * SimpleDateFormat dateFormat = new SimpleDateFormat(
-			 * "yyyy-MM-dd hh:mm a");
-			 * task.setEndDate(dateFormat.parse(request.getParameter("endDate"))
-			 * );
-			 */
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-			// to set create date again before saving
-			task = taskDao.getTask(tid);
-			task.setProjectTasks(projectDao.getProject(pid));
-			task.setUserTasks(userDao.getUser(Integer.parseInt(request.getParameter("user"))));
-			task.setTaskPriority(taskpriorityDao.getTaskpriority(Integer.parseInt(request.getParameter("priority"))));
-			task.setStatusTasks(taskstatusDao.getTaskStatus(1));
-			task.setStartDate(new Date());
+		Date formattedDate = null;
+		formattedDate = dateFormat.parse(endDate);
 
-			Date createDate = task.getCreateDate();
-			task.setCreateDate(createDate);
-			task = taskDao.saveTask(task);
-			status.setComplete();
-			SimpleMailMessage message = new SimpleMailMessage();
-			User user = userDao.getUser(Integer.parseInt(request.getParameter("user")));
-			message.setTo(user.getEmailAddress());
-			message.setFrom("testspiderhub@gmail.com");
-			message.setText("Dear" + user.getUserName() + ", You have New Task.");
-			try {
-				this.mailSender.send(message);
-			} catch (MailException ex) {
-				// simply log it and go on...
-				System.err.println(ex.getMessage());
-			}
-			// redirect to user list
-			return "redirect:viewProject.html?id=" + pid;
+		task.setEndDate(formattedDate);
+		task.setProjectTasks(projectDao.getProject(pid));
+		task.setUserTasks(userDao.getUser(Integer.parseInt(request.getParameter("user"))));
+		task.setTaskPriority(taskpriorityDao.getTaskpriority(Integer.parseInt(request.getParameter("priority"))));
+		task.setStatusTasks(taskstatusDao.getTaskStatus(1));
+
+		Date createDate = task.getCreateDate();
+
+		task.setCreateDate(createDate);
+		task.setStartDate(new Date());
+		task = taskDao.saveTask(task);
+		status.setComplete();
+		SimpleMailMessage message = new SimpleMailMessage();
+		User user = userDao.getUser(Integer.parseInt(request.getParameter("user")));
+		message.setTo(user.getEmailAddress());
+		message.setFrom("testspiderhub@gmail.com");
+		message.setText("Dear" + user.getUserName() + ", You have New Task.");
+		try {
+			this.mailSender.send(message);
+		} catch (MailException ex) {
+			// simply log it and go on...
+			System.err.println(ex.getMessage());
 		}
-		return null;
+		// redirect to user list
+		return "redirect:viewProject.html?id=" + pid;
 
 	}
 

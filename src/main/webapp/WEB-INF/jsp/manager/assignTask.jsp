@@ -31,7 +31,6 @@
 									value="${task.projectTasks }" />
 								<form:input path="taskName" type="hidden"
 									value="${task.taskName }" />
-
 								${task.taskName }
 							</div>
 						</div>
@@ -59,7 +58,7 @@
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-addon"></div>
-								<input type="date" name="enddate" placeholder="YYYY/mm/dd"
+								<input type="date" name="endDate" placeholder="YYYY/mm/dd"
 									class="form-control" required="true" />
 							</div>
 						</div>
@@ -67,7 +66,7 @@
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-addon"></div>
-								<input type="time" name="endtime" class="form-control"
+								<input type="time" name="endTime" class="form-control"
 									required="true" />
 							</div>
 						</div>
