@@ -32,7 +32,6 @@ import spiderhub.model.Comment;
 import spiderhub.model.Project;
 import spiderhub.model.Task;
 import spiderhub.model.User;
-import spiderhub.model.dao.CommentDao;
 import spiderhub.model.dao.FileDao;
 import spiderhub.model.dao.ProjectDao;
 import spiderhub.model.dao.TaskDao;
@@ -64,8 +63,6 @@ public class TaskController {
 	@Autowired
 	private MailSender mailSender;
 
-	@Autowired
-	private CommentDao commentDao;
 
 	/*
 	 * Member variables for file upload
