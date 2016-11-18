@@ -34,8 +34,6 @@
 					<td>${file.uploadDate}</td>
 					<td><a
 						href="download.html?file=${file.fileName}.${file.fileType}">Download</a></td>
-
-
 				</tr>
 			</c:forEach>
 		</table>
