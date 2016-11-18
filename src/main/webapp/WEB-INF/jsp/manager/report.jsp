@@ -76,6 +76,7 @@ function demoFromHTML() {
             </tr>
             </c:forEach>
 </div>
-<button onclick="javascript:demoFromHTML();">PDF</button>
+<button onclick="javascript:demoFromHTML();">PDF</button><br/>
+<a href = "listProjects.html">Back To Projects</a>
 </body>
 </html>
