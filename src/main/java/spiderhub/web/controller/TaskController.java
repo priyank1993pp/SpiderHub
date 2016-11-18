@@ -257,30 +257,6 @@ public class TaskController {
 		return "redirect:viewProject.html?id=" + pid;
 	}
 
-	@RequestMapping(value = "/member/viewTask.html", method = RequestMethod.GET)
-	// optional required = false
-	public String memberViewGet(@RequestParam Integer tid, @RequestParam Integer pid, ModelMap models) {
-		// get user from database and pass it to JSP
-		models.put("task", taskDao.getTask(tid));
-
-		// for display of comments
-		models.put("comments", commentDao.getCommentByTask(tid));
-
-		// for display of files
-		models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
-
-		// to display all members in the project
-		Project project = projectDao.getProject(pid);
-		Set<User> allUsersRelatedToProject = project.getUsersRelatedProject();
-		allUsersRelatedToProject.add(project.getCreatedUser());
-		// remove the current member from the task
-		Task task = taskDao.getTask(tid);
-		allUsersRelatedToProject.remove(userDao.getUser(task.getUserTasks().getId()));
-		models.put("taskMembers", allUsersRelatedToProject);
-		return "member/viewTask";
-
-	}
-
 	@RequestMapping("/member/download.html")
 	public String download(@RequestParam String file, HttpServletResponse response) throws IOException {
 
