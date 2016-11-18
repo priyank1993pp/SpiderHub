@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -27,9 +28,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import spiderhub.model.Comment;
 import spiderhub.model.Project;
 import spiderhub.model.Task;
 import spiderhub.model.User;
+import spiderhub.model.dao.CommentDao;
 import spiderhub.model.dao.FileDao;
 import spiderhub.model.dao.ProjectDao;
 import spiderhub.model.dao.TaskDao;
@@ -60,6 +63,9 @@ public class TaskController {
 
 	@Autowired
 	private MailSender mailSender;
+
+	@Autowired
+	private CommentDao commentDao;
 
 	/*
 	 * Member variables for file upload
@@ -108,7 +114,7 @@ public class TaskController {
 
 		// save user to database
 		task.setProjectTasks(projectDao.getProject(id));
-		/* task.setCreateDate(new Date()); */
+		task.setCreateDate(new Date());
 		task = taskDao.saveTask(task);
 		// redirect to user list
 
@@ -128,22 +134,28 @@ public class TaskController {
 	@RequestMapping(value = "/manager/assignTask.html", method = RequestMethod.POST)
 	public String assign(@RequestParam Integer tid, @RequestParam Integer pid, @RequestParam("action") String action,
 			@ModelAttribute Task task, BindingResult bindingResult, HttpServletRequest request, SessionStatus status,
-			ModelMap models) {
+			ModelMap models) throws ParseException {
 
 		if (action.equals("Assign")) {
 			// handle renew
 
+			/*
+			 * SimpleDateFormat dateFormat = new SimpleDateFormat(
+			 * "yyyy-MM-dd hh:mm a");
+			 * task.setEndDate(dateFormat.parse(request.getParameter("endDate"))
+			 * );
+			 */
+
+			// to set create date again before saving
+			task = taskDao.getTask(tid);
 			task.setProjectTasks(projectDao.getProject(pid));
 			task.setUserTasks(userDao.getUser(Integer.parseInt(request.getParameter("user"))));
 			task.setTaskPriority(taskpriorityDao.getTaskpriority(Integer.parseInt(request.getParameter("priority"))));
 			task.setStatusTasks(taskstatusDao.getTaskStatus(1));
 			task.setStartDate(new Date());
 
-			/*
-			 * task.setEndDate(SimpleDateFormat.parse(request.getParameter(
-			 * "enddate" )));
-			 */
-
+			Date createDate = task.getCreateDate();
+			task.setCreateDate(createDate);
 			task = taskDao.saveTask(task);
 			status.setComplete();
 			SimpleMailMessage message = new SimpleMailMessage();
@@ -245,11 +257,14 @@ public class TaskController {
 		return "redirect:viewProject.html?id=" + pid;
 	}
 
-	@RequestMapping("/member/viewTask.html")
+	@RequestMapping(value = "/member/viewTask.html", method = RequestMethod.GET)
 	// optional required = false
-	public String memberView(@RequestParam Integer tid, @RequestParam Integer pid, ModelMap models) {
+	public String memberViewGet(@RequestParam Integer tid, @RequestParam Integer pid, ModelMap models) {
 		// get user from database and pass it to JSP
 		models.put("task", taskDao.getTask(tid));
+
+		// for display of comments
+		models.put("comments", commentDao.getCommentByTask(tid));
 
 		// for display of files
 		models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
@@ -258,7 +273,7 @@ public class TaskController {
 		Project project = projectDao.getProject(pid);
 		Set<User> allUsersRelatedToProject = project.getUsersRelatedProject();
 		allUsersRelatedToProject.add(project.getCreatedUser());
-		//remove the current member from the task
+		// remove the current member from the task
 		Task task = taskDao.getTask(tid);
 		allUsersRelatedToProject.remove(userDao.getUser(task.getUserTasks().getId()));
 		models.put("taskMembers", allUsersRelatedToProject);

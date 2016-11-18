@@ -41,7 +41,7 @@
 		</table>
 	</table>
 
-	<form role="form">
+	<form:form modelAttribute="comment" role="form">
 		<div class="form-group">
 			<label>Selects</label> <select name="taskMembersSelectName"
 				class="form-control">
@@ -52,9 +52,9 @@
 		</div>
 		<div class="form-group">
 			<label>Text area</label>
-			<textarea class="form-control" rows="3"></textarea>
-		</div>
+		<%-- 	<form:textarea path="commentDesc" class="form-control" rows="3"></form:textarea>
+ --%>		</div>
 		<input class="btn btn-primary" type="submit" name="discuss"
 			value="Discuss">
-	</form>
+	</form:form>
 </div>
