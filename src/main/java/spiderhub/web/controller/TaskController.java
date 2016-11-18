@@ -2,7 +2,8 @@ package spiderhub.web.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;import java.io.OutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -170,25 +171,14 @@ public class TaskController {
 
 	}
 
-	// file upload
-	@RequestMapping(value = "/manager/uploadFileToAssigned.html", method = RequestMethod.GET)
-	public String fileUpload(@RequestParam Integer tid, @RequestParam Integer pid, ModelMap models) {
-		models.put("task", taskDao.getTask(tid));
-		// for display of files
-		models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
-		// no files to show first time
-		return "manager/uploadFileToAssigned";
-	}
-
 	// file upload here
-	@RequestMapping(value = "/manager/uploadFileToAssigned.html", method = RequestMethod.POST)
-	public String fileUpload(@RequestParam Integer tid, @RequestParam Integer pid,
-			@RequestParam("action") String action, @ModelAttribute Task task, BindingResult bindingResult,
-			HttpServletRequest request, SessionStatus status, ModelMap models, @RequestParam MultipartFile file)
-			throws IllegalStateException, IOException {
+	@RequestMapping(value = "/manager/uploadFileToAssigned.html", method = { RequestMethod.GET, RequestMethod.POST })
+	public String fileUpload(@RequestParam Integer tid, @RequestParam Integer pid, @ModelAttribute Task task,
+			BindingResult bindingResult, HttpServletRequest request, SessionStatus status, ModelMap models,
+			@RequestParam(required = false) MultipartFile file) throws IllegalStateException, IOException {
 		System.out.println("***************Inside if");
 
-		if (action.equals("Upload")) {
+		if ("POST".equals(request.getMethod())) {
 			// handle upload
 			// System.out.println("***************Inside if");
 			models.put("task", taskDao.getTask(tid));
@@ -226,9 +216,13 @@ public class TaskController {
 			fileModel.setUploadDate(new Date());
 			fileModel.setTaskFiles(taskDao.getTask(tid));
 			fileDao.saveFile(fileModel);
-			return "redirect:viewProject.html?id=" + pid;
 		}
-		return null;
+
+		models.put("task", taskDao.getTask(tid));
+		// for display of files
+		models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
+
+		return "manager/uploadFileToAssigned";
 
 	}
 
