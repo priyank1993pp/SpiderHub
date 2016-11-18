@@ -63,12 +63,12 @@
 						role="button">Sign up today</a>
 				</security:authorize>
 			</p>
-		</div>
+		
 		<security:authorize access="hasRole('MEMBER')">
 			<div id="piechart" style="width: 500px; height: 300px"></div>
 			
 		</security:authorize>
-		
+		</div>
 
 		<!-- <footer class="footer">
 			<p>&copy; SpiderHub Company, Inc.</p>
