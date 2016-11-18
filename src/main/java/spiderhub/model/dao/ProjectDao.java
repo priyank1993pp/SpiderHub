@@ -3,6 +3,7 @@ package spiderhub.model.dao;
 import java.util.List;
 
 import spiderhub.model.Project;
+import spiderhub.model.User;
 
 public interface ProjectDao {
 	Project getProject(Integer id);
@@ -10,11 +11,9 @@ public interface ProjectDao {
 	List<Project> getProjects();
 
 	Project saveProject(Project project);
-	
+
 	List<Project> getProjectofManager(Integer id);
 
 	Project checkLinkExist(String link);
-	
 
-	
 }

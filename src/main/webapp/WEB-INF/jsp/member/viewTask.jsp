@@ -18,7 +18,7 @@
 			<th>Description</th>
 			<td>${task.taskDescription}</td>
 		</tr>
-		<table class="table table-hover" >
+		<table class="table table-hover">
 			<tr>
 				<th>File Name</th>
 				<th>File Type</th>
@@ -32,11 +32,29 @@
 					<td>${file.fileName}</td>
 					<td>${file.fileType}</td>
 					<td>${file.uploadDate}</td>
-					<td><a href="download.html?file=${file.fileName}.${file.fileType}">Download</a></td>
+					<td><a
+						href="download.html?file=${file.fileName}.${file.fileType}">Download</a></td>
 
 
 				</tr>
 			</c:forEach>
 		</table>
 	</table>
-	</div>
+
+	<form role="form">
+		<div class="form-group">
+			<label>Selects</label> <select name="taskMembersSelectName"
+				class="form-control">
+				<c:forEach items="${taskMembers}" var="member">
+					<option value="${member.id}">${member.userName}</option>
+				</c:forEach>
+			</select>
+		</div>
+		<div class="form-group">
+			<label>Text area</label>
+			<textarea class="form-control" rows="3"></textarea>
+		</div>
+		<input class="btn btn-primary" type="submit" name="discuss"
+			value="Discuss">
+	</form>
+</div>

@@ -63,6 +63,13 @@ public class ProjectController {
 		models.put("projects", projectDao.getProjectofManager(User.getId()));
 		return "manager/listProjects";
 	}
+	
+	@RequestMapping("/manager/report.html")
+	public String projectreport(ModelMap models , @RequestParam Integer id) {
+		models.put("project", projectDao.getProject(id));
+		models.put("tasks", projectDao.getProject(id).getTasks());
+		return "manager/report";
+	}
 
 	@RequestMapping("/member/listProjects.html")
 	public String projects(ModelMap models) {
