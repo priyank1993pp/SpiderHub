@@ -18,7 +18,8 @@
 			<th>Description</th>
 			<td>${task.taskDescription}</td>
 		</tr>
-		<table class="table table-hover" >
+			</table>
+		<table class="table table-hover">
 			<tr>
 				<th>File Name</th>
 				<th>File Type</th>
@@ -32,11 +33,26 @@
 					<td>${file.fileName}</td>
 					<td>${file.fileType}</td>
 					<td>${file.uploadDate}</td>
-					<td><a href="download.html?file=${file.fileName}.${file.fileType}">Download</a></td>
+					<td><a
+						href="download.html?file=${file.fileName}.${file.fileType}">Download</a></td>
 
 
 				</tr>
 			</c:forEach>
 		</table>
-	</table>
-	</div>
+
+	<c:if test="${not empty comments}">
+	<c:forEach items = "${comments}" var="c">
+		<p>${c.userComment.userName}</p><br />
+		<p>${c.commentDesc}</p>
+	</c:forEach>
+	</c:if>
+	<form:form modelAttribute="comment" role="form">
+		<form:textarea path="commentDesc" rows="2" cols="30"
+			class="form-control"  />
+		<input type="hidden" name = "task"  value = "${task.id}"/>	
+		<input class="btn btn-primary" type="submit" name="action"
+								value="Comment">
+	</form:form>
+
+</div>

@@ -9,8 +9,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import spiderhub.model.File;
-import spiderhub.model.Task;
-import spiderhub.model.User;
 import spiderhub.model.dao.FileDao;
 
 @Repository

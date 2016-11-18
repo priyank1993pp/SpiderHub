@@ -40,7 +40,7 @@
 					Done
 					</c:if></td>
 				<td>${project.createdUser.userName}</td>
-				<c:if test="${not empty task.files}"><td><a href="viewTask.html?tid=${task.id}&pid=${project.id}">View Files</a></td></c:if>
+				<td><a href="viewTask.html?tid=${task.id}&pid=${project.id}">View</a></td>
 				
 			</tr>
 

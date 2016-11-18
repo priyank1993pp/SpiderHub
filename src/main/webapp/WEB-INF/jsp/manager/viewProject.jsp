@@ -62,6 +62,7 @@
 							href="uploadFileToAssigned.html?tid=${task.id}&pid=${project.id}">Upload</a></td>
 					</c:otherwise>
 				</c:choose>
+				<td><a href="viewTask.html?tid=${task.id}">View</a></td>
 			</tr>
 
 		</c:forEach>
