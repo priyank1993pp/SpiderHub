@@ -44,69 +44,32 @@
 <!-- Bootstrap core CSS -->
 <link href="<%=request.getContextPath()%>/css/bootstrap.min.css"
 	rel="stylesheet">
-
+<link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico" type="image/x-icon">
+<link rel="icon" href="<%=request.getContextPath()%>/images/favicon.ico" type="image/x-icon">
 </head>
 
 <body>
 
 	<div class="container">
-		<%-- <div class="header clearfix">
-			<nav>
-				<ul class="nav nav-pills pull-right">
-					<li role="presentation" class="active"><a href="index.html">Home</a></li>
-
-					<li role="presentation"><security:authorize access="anonymous">
-							<a href="<c:url value='/login.html' />">Login</a>
-						</security:authorize></li>
-
-
-					<security:authorize access="authenticated">
-						<security:authorize access="hasRole('ADMIN')">
-
-							<li role="presentation"><a href="admin/listProjects.html">Project
-									Management</a></li>
-							<li role="presentation"><a href="admin/userManagement.html">User
-									Management</a></li>
-						</security:authorize>
-						<security:authorize access="hasAnyRole('MANAGER')">
-
-							<li role="presentation"><a href="manager/listProjects.html">Project
-									Management</a></li>
-
-
-						</security:authorize>
-						<security:authorize access="hasRole('MEMBER')">
-							<li role="presentation"><a href="member/listProjects.html">Projects
-									For You.</a></li>
-						</security:authorize>
-
-						<li role="presentation"><a href="<c:url value='/logout' />">Logout</a></li>
-					</security:authorize>
-				</ul>
-			</nav>
-			<security:authorize access="authenticated">
-				<h3 class="text-muted">
-					Welcome,
-					<security:authentication property="principal.username" />
-				</h3>
-			</security:authorize>
-		</div> --%>
+		
 		<jsp:include page="/WEB-INF/jsp/menu.jsp" />
 		<div class="jumbotron">
 			<h1>SpiderHub</h1>
 			<p class="lead">Competition makes us faster, Collaboration makes
 				us Better.</p>
 			<p>
+			
 				<security:authorize access="anonymous">
 					<a class="btn btn-lg btn-success" href="userRegistration.html"
 						role="button">Sign up today</a>
 				</security:authorize>
 			</p>
-		</div>
+		
 		<security:authorize access="hasRole('MEMBER')">
 			<div id="piechart" style="width: 500px; height: 300px"></div>
+			
 		</security:authorize>
-
+		</div>
 
 		<!-- <footer class="footer">
 			<p>&copy; SpiderHub Company, Inc.</p>

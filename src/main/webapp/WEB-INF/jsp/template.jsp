@@ -14,13 +14,18 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css" />
 <script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
+
+<link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico" type="image/x-icon">
+<link rel="icon" href="<%=request.getContextPath()%>/images/favicon.ico" type="image/x-icon">
+
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
 </head>
 <body>
 	<div class="container">
 		<nav>
 				<ul class="nav nav-pills pull-right">
-					<li role="presentation" class="active"><a href="../index.html">Home</a></li>
+					<li role="presentation" ><a href="../index.html">Home</a></li>
 
 					<li role="presentation"><security:authorize access="anonymous">
 							<a href="<c:url value='/login.html' />">Login</a>

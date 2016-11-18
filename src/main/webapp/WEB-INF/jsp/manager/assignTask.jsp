@@ -55,27 +55,21 @@
 								</div>
 							</div>
 							<h4 class="text-info">End Date</h4>
-							<div class="container">
-								<div class="row">
-									<div class='col-sm-6'>
-										<div class="form-group">
-											<div class='input-group date' id='datetimepicker1'>
-												<input type='text' class="form-control" /> <span
-													class="input-group-addon"> <span
-													class="glyphicon glyphicon-calendar"></span>
-												</span>
-											</div>
-										</div>
-									</div>
-									<script type="text/javascript">
-										$(function() {
-											$('#datetimepicker1')
-													.datetimepicker();
-										});
-									</script>
+							<div class="form-group">
+								<div class="input-group">
+									<div class="input-group-addon"></div>
+									<input type="date" name="enddate" placeholder="YYYY/mm/dd"
+										class="form-control" required="true" />
 								</div>
 							</div>
-
+							<h4 class="text-info">End Time</h4>
+							<div class="form-group">
+								<div class="input-group">
+									<div class="input-group-addon"></div>
+									<input type="time" name="endtime" class="form-control"
+										required="true" />
+								</div>
+							</div>
 							<h4 class="text-info">Select Priority</h4>
 							<div class="form-group">
 								<div class="input-group">
