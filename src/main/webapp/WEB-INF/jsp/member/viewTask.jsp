@@ -41,20 +41,20 @@
 		</table>
 	</table>
 
+	<c:if test="${not empty comments}">
+		<c:forEach items="${comments}" var="c">
+			<p>${c.userComment.userName}</p>
+			<br />
+			<p>${c.commentDesc}</p>
+		</c:forEach>
+	</c:if>
 	<form:form modelAttribute="comment" role="form">
-		<div class="form-group">
-			<label>Selects</label> <select name="taskMembersSelectName"
-				class="form-control">
-				<c:forEach items="${taskMembers}" var="member">
-					<option value="${member.id}">${member.userName}</option>
-				</c:forEach>
-			</select>
-		</div>
-		<div class="form-group">
-			<label>Text area</label>
-		<%-- 	<form:textarea path="commentDesc" class="form-control" rows="3"></form:textarea>
- --%>		</div>
-		<input class="btn btn-primary" type="submit" name="discuss"
-			value="Discuss">
+		<form:textarea path="commentDesc" rows="2" cols="30"
+			class="form-control" />
+		<input type="hidden" name="task" value="${task.id}" />
+		<input class="btn btn-primary" type="submit" name="action"
+			value="Comment">
 	</form:form>
+
 </div>
+>>>>>>> priyank/master
