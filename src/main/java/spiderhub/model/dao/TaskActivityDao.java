@@ -1,5 +1,9 @@
 package spiderhub.model.dao;
 
-public interface TaskActivityDao {
+import spiderhub.model.TaskActivity;
 
+public interface TaskActivityDao {
+	TaskActivity getTaskActivity(Integer id);
+
+	TaskActivity saveTaskActivity(TaskActivity taskActivity);
 }
