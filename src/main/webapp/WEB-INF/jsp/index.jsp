@@ -44,7 +44,8 @@
 <!-- Bootstrap core CSS -->
 <link href="<%=request.getContextPath()%>/css/bootstrap.min.css"
 	rel="stylesheet">
-
+<link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico" type="image/x-icon">
+<link rel="icon" href="<%=request.getContextPath()%>/images/favicon.ico" type="image/x-icon">
 </head>
 
 <body>
