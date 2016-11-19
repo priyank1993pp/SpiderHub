@@ -28,12 +28,11 @@
 			<c:forEach items="${fileModel}" var="file">
 				<tr>
 
-					<%-- <td><input type="radio" name="files" value="${file.id}" /></td> --%>
 					<td>${file.fileName}</td>
 					<td>${file.fileType}</td>
 					<td>${file.uploadDate}</td>
 					<td><a
-						href="download.html?file=${file.fileName}.${file.fileType}">Download</a></td>
+						href="download.html?fileNameWithType=${file.fileName}.${file.fileType}&fileId=${file.fileId}">Download</a></td>
 				</tr>
 			</c:forEach>
 		</table>
