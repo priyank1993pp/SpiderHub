@@ -244,11 +244,10 @@ public class TaskController {
 
 	@RequestMapping(value = "/member/viewTask.html", method = { RequestMethod.GET, RequestMethod.POST })
 	// optional required = false
-	public String memberView(@RequestParam(required = false) Integer tid, @ModelAttribute Comment comment,
+	public String memberView(@RequestParam(required = false) Integer tid,
+			@RequestParam(required = false, value = "action") String action, @ModelAttribute Comment comment,
 			ModelMap models, HttpServletRequest request, HttpServletResponse response) {
-	
-		
-		
+
 		if ("GET".equals(request.getMethod())) {
 			// get user from database and pass it to JSP
 			models.put("task", taskDao.getTask(tid));
@@ -266,19 +265,24 @@ public class TaskController {
 			comment.setCreateDate(new Date());
 			comment.setDelete(false);
 			commentDao.saveComment(comment);
-			SimpleMailMessage message = new SimpleMailMessage();
-			Project proj = taskDao.getTask(tid).getProjectTasks();
-			User user = proj.getCreatedUser();
-			message.setTo(user.getEmailAddress());
-			message.setFrom("testspiderhub@gmail.com");
-			message.setText("Dear " + user.getUserName() + ", You have new Comment in task "
-					+ taskDao.getTask(tid).getTaskName() + ".");
-			try {
-				this.mailSender.send(message);
-			} catch (MailException ex) {
-				// simply log it and go on...
-				System.err.println(ex.getMessage());
+
+			if (action != null && action.equals("Comment")) {
+				SimpleMailMessage message = new SimpleMailMessage();
+				Project proj = taskDao.getTask(tid).getProjectTasks();
+				User user = proj.getCreatedUser();
+				message.setTo(user.getEmailAddress());
+				message.setFrom("testspiderhub@gmail.com");
+				message.setText("Dear " + user.getUserName() + ", You have new Comment in task "
+						+ taskDao.getTask(tid).getTaskName() + ".");
+				try {
+					this.mailSender.send(message);
+				} catch (MailException ex) {
+					// simply log it and go on...
+					System.err.println(ex.getMessage());
+				}
+
 			}
+
 			models.put("task", taskDao.getTask(tid));
 			// for display of files
 			models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
@@ -292,7 +296,8 @@ public class TaskController {
 	@RequestMapping(value = "/manager/viewTask.html", method = { RequestMethod.GET, RequestMethod.POST })
 	// optional required = false
 	public String managerView(@RequestParam(required = false) Integer tid, @ModelAttribute Comment comment,
-			ModelMap models, HttpServletRequest request, HttpServletResponse response) {
+			@RequestParam(required = false, value = "action") String action, ModelMap models,
+			HttpServletRequest request, HttpServletResponse response) {
 		if ("GET".equals(request.getMethod())) {
 			// get user from database and pass it to JSP
 			models.put("task", taskDao.getTask(tid));
@@ -310,18 +315,23 @@ public class TaskController {
 			comment.setCreateDate(new Date());
 			comment.setDelete(false);
 			commentDao.saveComment(comment);
-			SimpleMailMessage message = new SimpleMailMessage();
-			User user = taskDao.getTask(tid).getUserTasks();
-			message.setTo(user.getEmailAddress());
-			message.setFrom("testspiderhub@gmail.com");
-			message.setText("Dear " + user.getUserName() + ", You have new Comment in task "
-					+ taskDao.getTask(tid).getTaskName() + ".");
-			try {
-				this.mailSender.send(message);
-			} catch (MailException ex) {
-				// simply log it and go on...
-				System.err.println(ex.getMessage());
+
+			if (action != null && action.equals("Comment")) {
+				SimpleMailMessage message = new SimpleMailMessage();
+				User user = taskDao.getTask(tid).getUserTasks();
+				message.setTo(user.getEmailAddress());
+				message.setFrom("testspiderhub@gmail.com");
+				message.setText("Dear " + user.getUserName() + ", You have new Comment in task "
+						+ taskDao.getTask(tid).getTaskName() + ".");
+				try {
+					this.mailSender.send(message);
+				} catch (MailException ex) {
+					// simply log it and go on...
+					System.err.println(ex.getMessage());
+				}
+
 			}
+
 			models.put("task", taskDao.getTask(tid));
 			// for display of files
 			models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
@@ -356,7 +366,5 @@ public class TaskController {
 
 		return null;
 	}
-	
-	
 
 }
