@@ -246,6 +246,9 @@ public class TaskController {
 	// optional required = false
 	public String memberView(@RequestParam(required = false) Integer tid, @ModelAttribute Comment comment,
 			ModelMap models, HttpServletRequest request, HttpServletResponse response) {
+	
+		
+		
 		if ("GET".equals(request.getMethod())) {
 			// get user from database and pass it to JSP
 			models.put("task", taskDao.getTask(tid));
@@ -352,7 +355,8 @@ public class TaskController {
 		in.close();
 
 		return null;
-
 	}
+	
+	
 
 }
