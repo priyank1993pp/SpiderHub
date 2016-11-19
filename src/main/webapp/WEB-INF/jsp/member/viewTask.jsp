@@ -27,13 +27,11 @@
 			</tr>
 			<c:forEach items="${fileModel}" var="file">
 				<tr>
-
-					<%-- <td><input type="radio" name="files" value="${file.id}" /></td> --%>
 					<td>${file.fileName}</td>
 					<td>${file.fileType}</td>
 					<td>${file.uploadDate}</td>
 					<td><a
-						href="download.html?file=${file.fileName}.${file.fileType}">Download</a></td>
+						href="download.html?fileNameWithType=${file.fileName}.${file.fileType}&fileId=${file.fileId}">Download</a></td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -48,10 +46,10 @@
 	</c:if>
 	<form:form modelAttribute="comment" role="form">
 		<form:textarea path="commentDesc" rows="2" cols="30"
-			class="form-control" />
+			class="form-control" required="required"/>
 		<input type="hidden" name="task" value="${task.id}" />
 		<input class="btn btn-primary" type="submit" name="action"
-			value="Comment">
+			value="Comment" >
 	</form:form>
 
 </div>
