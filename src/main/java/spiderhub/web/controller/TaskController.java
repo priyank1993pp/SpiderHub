@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -249,9 +248,12 @@ public class TaskController {
 
 	@RequestMapping(value = "/member/viewTask.html", method = { RequestMethod.GET, RequestMethod.POST })
 	// optional required = false
-	public String memberView(@RequestParam(required = false) Integer tid,
+	public String memberView(@RequestParam(required = false) Integer tid, @ModelAttribute TaskActivity taskActivity,
 			@RequestParam(required = false, value = "action") String action, @ModelAttribute Comment comment,
 			ModelMap models, HttpServletRequest request, HttpServletResponse response) {
+
+		// for display of activiies
+		models.put("activityModel", taskActivityDao.getTaskActivityFromRelatedTask(tid));
 
 		if ("GET".equals(request.getMethod())) {
 			// get user from database and pass it to JSP
@@ -262,16 +264,16 @@ public class TaskController {
 			models.put("comment", new Comment());
 		} else if ("POST".equals(request.getMethod())) {
 
-			comment.setTaskComments(taskDao.getTask(tid));
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			User User = (User) auth.getPrincipal();
 			int uid = User.getId();
-			comment.setUserComment(userDao.getUser(uid));
-			comment.setCreateDate(new Date());
-			comment.setDelete(false);
-			commentDao.saveComment(comment);
 
 			if (action != null && action.equals("Comment")) {
+				comment.setTaskComments(taskDao.getTask(tid));
+				comment.setUserComment(userDao.getUser(uid));
+				comment.setCreateDate(new Date());
+				comment.setDelete(false);
+				commentDao.saveComment(comment);
 				SimpleMailMessage message = new SimpleMailMessage();
 				Project proj = taskDao.getTask(tid).getProjectTasks();
 				User user = proj.getCreatedUser();
@@ -288,6 +290,29 @@ public class TaskController {
 
 			}
 
+			else if (action != null && action.equals("Start Working")) {
+				taskActivity = new TaskActivity();
+				taskActivity.setStartTime(new Date());
+				taskActivity.setComplete(false);
+				taskActivity.setActivityOfTask(taskDao.getTask(tid));
+
+				taskActivity.setActivityOfTaskByUser(userDao.getUser(uid));
+				taskActivity = taskActivityDao.saveTaskActivity(taskActivity);
+				models.put("activityId", taskActivity.getId());
+			} else if (action != null && action.equals("Take a Break")) {
+
+				String activityId = request.getParameter("activityId");
+				int id = 0;
+				if (activityId != null && !activityId.isEmpty()) {
+					id = Integer.parseInt((request.getParameter("activityId")));
+				}
+				taskActivity = taskActivityDao.getTaskActivity(id);
+				taskActivity.setEndTime(new Date());
+				taskActivity = taskActivityDao.saveTaskActivity(taskActivity);
+
+			} else if (action != null && action.equals("Finish Task")) {
+				
+			}
 			models.put("task", taskDao.getTask(tid));
 			// for display of files
 			models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
@@ -304,6 +329,10 @@ public class TaskController {
 			@RequestParam(required = false, value = "action") String action, ModelMap models,
 			HttpServletRequest request, HttpServletResponse response) {
 		if ("GET".equals(request.getMethod())) {
+
+			// for display of activiies
+			models.put("activityModel", taskActivityDao.getTaskActivityFromRelatedTask(tid));
+
 			// get user from database and pass it to JSP
 			models.put("task", taskDao.getTask(tid));
 			// for display of files
@@ -313,9 +342,13 @@ public class TaskController {
 		} else if ("POST".equals(request.getMethod())) {
 
 			comment.setTaskComments(taskDao.getTask(tid));
+			/*
+			 * to get uid
+			 */
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			User User = (User) auth.getPrincipal();
 			int uid = User.getId();
+
 			comment.setUserComment(userDao.getUser(uid));
 			comment.setCreateDate(new Date());
 			comment.setDelete(false);
@@ -336,7 +369,6 @@ public class TaskController {
 				}
 
 			}
-
 			models.put("task", taskDao.getTask(tid));
 			// for display of files
 			models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
@@ -402,7 +434,6 @@ public class TaskController {
 				if (activityId != null && !activityId.isEmpty()) {
 					id = Integer.parseInt((request.getParameter("activityId")));
 				}
-				System.out.println("jehkuiwjefhkerhujid: " + id);
 				taskActivity = taskActivityDao.getTaskActivity(id);
 				taskActivity.setEndTime(new Date());
 				taskActivity = taskActivityDao.saveTaskActivity(taskActivity);

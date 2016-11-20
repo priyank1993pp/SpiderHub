@@ -9,7 +9,6 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import spiderhub.model.File;
 import spiderhub.model.TaskActivity;
 import spiderhub.model.dao.TaskActivityDao;
 

@@ -49,7 +49,7 @@
 						</security:authorize>
 						<security:authorize access="hasRole('MEMBER')">
 							<li role="presentation"><a href="../member/listProjects.html">Projects
-									For You.</a></li>
+									For You</a></li>
 						</security:authorize>
 
 						<li role="presentation"><a href="<c:url value='/logout' />">Logout</a></li>
