@@ -1,5 +1,6 @@
 package spiderhub.model.dao.jpa;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -35,6 +36,15 @@ public class TaskActivityDaoImpl implements TaskActivityDao {
 	public List<TaskActivity> getTaskActivityFromRelatedTask(Integer tid) {
 		String query = "from TaskActivity where activityOfTask.id = :tId";
 		return entityManager.createQuery(query, TaskActivity.class).setParameter("tId", tid).getResultList();
+	}
+
+	@Override
+	public List<TaskActivity> getTakActivityWeekly(Date start, Date end) {
+		
+		return entityManager.createQuery("FROM TaskActivity AS t WHERE t.endTime BETWEEN :start AND :end " , TaskActivity.class)
+				.setParameter("start", start)
+				.setParameter("end", end)
+				.getResultList();
 	}
 
 }
