@@ -4,21 +4,28 @@
 	uri="http://www.springframework.org/security/tags"%>
 
 <div class="jumbotron">
-	<h1>Project Details</h1>
+	<h2>Project Details</h2>
 	<table class="table table-hover">
-		<tr>
+		<%-- <tr>
 			<th>ID</th>
 			<td>${project.id}</td>
-		</tr>
+		</tr> --%>
 		<tr>
-			<th>TaskName</th>
+			<th>Project Name</th>
 			<td>${project.projectName}</td>
 		</tr>
 		<tr>
 			<th>Description</th>
 			<td>${project.projectDescription}</td>
 		</tr>
-
+		<tr>
+			<th>Manager</th>
+			<td>${project.createdUser.userName }</td>
+		</tr>
+		<tr>
+			<th>Project Type</th>
+			<td>${project.projectType.projectType }</td>
+		</tr>
 	</table>
 	<h1>Assigned Tasks</h1>
 	<table class="table table-hover">
@@ -44,11 +51,12 @@
 				<c:if test="${not empty task.files}">
 					<td><a href="viewTask.html?tid=${task.id}&pid=${project.id}">View
 							Files</a></td>
-					<td><a
-						href="viewActivity.html?tid=${task.id}">start
-							Activity Files</a></td>
-				</c:if>
 
+				</c:if>
+				<td><c:if test="${task.statusTasks.id==1 }">
+						<a href="viewActivity.html?tid=${task.id}">start Activity
+							Files</a>
+					</c:if></td>
 			</tr>
 
 
@@ -64,8 +72,12 @@
 			<div class="list-group">
 				<c:forEach items="${task}" var="task">
 					<a href="viewTask.html?tid=${task.id}&pid=${project.id}"
-						class="list-group-item"> <span class="badge">${task.startDate }</span>
-						<i class="fa fa-fw fa-calendar"></i> ${task.taskName}
+						class="list-group-item"> <span class="badge">${task.startDate }</span><span
+						class="badge"><c:if test="${task.statusTasks.id==1 }">
+								On Going
+							</c:if> <c:if test="${task.statusTasks.id==2 }">
+					Done
+					</c:if></span> <i class="fa fa-fw fa-calendar"></i> ${task.taskName}
 					</a>
 
 				</c:forEach>
@@ -90,10 +102,7 @@
 						error on sales page"
 					</a> -->
 			</div>
-			<div class="text-right">
-				<a href="#">View All Activity <i
-					class="fa fa-arrow-circle-right"></i></a>
-			</div>
+
 		</div>
 	</div>
 </div>
