@@ -64,15 +64,15 @@
 				</tr>
 			</c:forEach>
 		</table>
-		<c:if test="${empty activityId}">
-			<input class="btn btn-primary" type="submit" name="activity"
+		<c:if test="${task.statusTasks.id==1 && empty activityId}">
+			<input class="btn btn-primary" type="submit" name="action"
 				value="Start Working" />
 			<input type="hidden" name="activityId" value="${activityId}"></input>
 		</c:if>
-		<c:if test="${not empty activityId}">
+		<c:if test="${task.statusTasks.id==1 && not empty activityId}">
 			<input type="hidden" name="activityId" value="${activityId}"></input>
 
-			<input class="btn btn-primary" type="submit" name="activity"
+			<input class="btn btn-primary" type="submit" name="action"
 				value="Take a Break"> </input>
 		</c:if>
 	</form:form>
@@ -91,8 +91,9 @@
 		<input class="btn btn-primary" type="submit" name="action"
 			value="Comment">
 	</form:form>
-	<c:if test="${task.statusTasks.id==1 }">
-		<a href="doneTask.html?tid=${task.id}&pid=${project.id}"><button
-				type="button" class="btn btn-warning">Finish Task</button></a>
+	<c:if test="${task.statusTasks.id==1 && empty activityId}">
+		<a href="doneTask.html?tid=${task.id}&pid=${project.id}"><input
+			name="action" type="submit" class="btn btn-warning"
+			value="Finish Task" /></a>
 	</c:if>
 </div>
