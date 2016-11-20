@@ -375,23 +375,26 @@ public class TaskController {
 	// start Activity
 	@RequestMapping(value = "/member/viewActivity.html", method = { RequestMethod.GET, RequestMethod.POST })
 	// optional required = false
-	public String viewActivity(@RequestParam(required = false) Integer tid, @ModelAttribute TaskActivity taskActivity,
-			@RequestParam(required = false, value = "action") String action, ModelMap models,
-			HttpServletRequest request, HttpServletResponse response) {
+	public String viewActivity(@RequestParam(required = false) Integer tid, 
+			@ModelAttribute TaskActivity taskActivity, @RequestParam(required = false, value = "action") String action,
+			ModelMap models, HttpServletRequest request, HttpServletResponse response) {
 		if ("GET".equals(request.getMethod())) {
 
-			if ("GET".equals(request.getMethod())) {
-
-			}
-			// get user from database and pass it to JSP
-			models.put("task", taskDao.getTask(tid));
 			// for display of activiies
 			models.put("activityModel", taskActivityDao.getTaskActivityFromRelatedTask(tid));
 
 		} else if ("POST".equals(request.getMethod())) {
 
 			if (action != null && action.equals("start")) {
-
+				taskActivity = new TaskActivity();
+				taskActivity.setStartTime(new Date());
+				taskActivity.setComplete(false);
+				taskActivity.setActivityOfTask(taskDao.getTask(tid));
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				User User = (User) auth.getPrincipal();
+				int uid = User.getId();
+				taskActivity.setActivityOfTaskByUser(userDao.getUser(uid));
+				taskActivity = taskActivityDao.saveTaskActivity(taskActivity);
 			} else if (action != null && action.equals("stop")) {
 
 			}

@@ -29,8 +29,8 @@
 					<td>${activity.complete}</td>
 					<td>${activity.startTime}</td>
 					<td>${activity.endTime}</td>
-					<td>${activity.task.id}</td>
-					<td>${activity.user.name}</td>
+					<td>${activity.activityOfTask.id}</td>
+					<td>${activity.activityOfTaskByUser.userName}</td>
 				</tr>
 			</c:forEach>
 		</table>
