@@ -37,6 +37,8 @@
 		</table>
 		<input class="btn btn-primary" type="submit" name="action"
 			value="start">
+					<input type = "hidden"  name = "activityId" value="${activityId}"></input>
+			
 		<input class="btn btn-primary" type="submit" name="action"
 			value="stop">
 	</form:form>

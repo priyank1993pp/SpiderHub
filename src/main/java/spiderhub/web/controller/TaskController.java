@@ -375,9 +375,9 @@ public class TaskController {
 	// start Activity
 	@RequestMapping(value = "/member/viewActivity.html", method = { RequestMethod.GET, RequestMethod.POST })
 	// optional required = false
-	public String viewActivity(@RequestParam(required = false) Integer tid, 
-			@ModelAttribute TaskActivity taskActivity, @RequestParam(required = false, value = "action") String action,
-			ModelMap models, HttpServletRequest request, HttpServletResponse response) {
+	public String viewActivity(@RequestParam(required = false) Integer tid, @ModelAttribute TaskActivity taskActivity,
+			@RequestParam(required = false, value = "action") String action, ModelMap models,
+			HttpServletRequest request, HttpServletResponse response) {
 		if ("GET".equals(request.getMethod())) {
 
 			// for display of activiies
@@ -395,8 +395,13 @@ public class TaskController {
 				int uid = User.getId();
 				taskActivity.setActivityOfTaskByUser(userDao.getUser(uid));
 				taskActivity = taskActivityDao.saveTaskActivity(taskActivity);
+				models.put("activityId", taskActivity.getId());
 			} else if (action != null && action.equals("stop")) {
-
+				int id = Integer.parseInt((request.getParameter("activityId")));
+				System.out.println("jehkuiwjefhkerhujid: " + id);
+				taskActivity = taskActivityDao.getTaskActivity(id);
+				taskActivity.setEndTime(new Date());
+				taskActivity = taskActivityDao.saveTaskActivity(taskActivity);
 			}
 
 		}
