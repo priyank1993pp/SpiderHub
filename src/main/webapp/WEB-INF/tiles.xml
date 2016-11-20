@@ -72,6 +72,10 @@
 		<put-attribute name="title" value="View Task" />
 		<put-attribute name="content" value="/WEB-INF/jsp/member/viewTask.jsp" />
 	</definition>
+	<definition name="member/viewActivity" template="/WEB-INF/jsp/template.jsp">
+		<put-attribute name="title" value="View Activity" />
+		<put-attribute name="content" value="/WEB-INF/jsp/member/viewActivity.jsp" />
+	</definition>
 	<definition name="manager/uploadFileToAssigned" template="/WEB-INF/jsp/template.jsp">
 		<put-attribute name="title" value="Upload File" />
 		<put-attribute name="content"
