@@ -34,13 +34,17 @@
 				</tr>
 			</c:forEach>
 		</table>
-		</table>
-		<input class="btn btn-primary" type="submit" name="action"
-			value="start">
-					<input type = "hidden"  name = "activityId" value="${activityId}"></input>
-			
-		<input class="btn btn-primary" type="submit" name="action"
-			value="stop">
+		<c:if test="${empty activityId}">
+			<input class="btn btn-primary" type="submit" name="action"
+				value="start" />
+			<input type="hidden" name="activityId" value="${activityId}"></input>
+		</c:if>
+		<c:if test="${not empty activityId}">
+			<input type="hidden" name="activityId" value="${activityId}"></input>
+
+			<input class="btn btn-primary" type="submit" name="action"
+				value="stop"> </input>
+		</c:if>
 	</form:form>
 </body>
 </html>

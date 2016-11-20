@@ -397,7 +397,11 @@ public class TaskController {
 				taskActivity = taskActivityDao.saveTaskActivity(taskActivity);
 				models.put("activityId", taskActivity.getId());
 			} else if (action != null && action.equals("stop")) {
-				int id = Integer.parseInt((request.getParameter("activityId")));
+				String activityId = request.getParameter("activityId");
+				int id = 0;
+				if (activityId != null && !activityId.isEmpty()) {
+					id = Integer.parseInt((request.getParameter("activityId")));
+				}
 				System.out.println("jehkuiwjefhkerhujid: " + id);
 				taskActivity = taskActivityDao.getTaskActivity(id);
 				taskActivity.setEndTime(new Date());
