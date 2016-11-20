@@ -34,6 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 import spiderhub.model.Comment;
 import spiderhub.model.Project;
 import spiderhub.model.Task;
+import spiderhub.model.TaskActivity;
 import spiderhub.model.User;
 import spiderhub.model.dao.CommentDao;
 import spiderhub.model.dao.FileDao;
@@ -365,6 +366,58 @@ public class TaskController {
 		in.close();
 
 		return null;
+	}
+
+	// start Activity
+	@RequestMapping(value = "/member/viewActivity.html", method = { RequestMethod.GET, RequestMethod.POST })
+	// optional required = false
+	public String viewActivity(@RequestParam(required = false) Integer tid, @ModelAttribute TaskActivity taskActivity,
+			@RequestParam(required = false, value = "action") String action, ModelMap models,
+			HttpServletRequest request, HttpServletResponse response) {
+		if ("GET".equals(request.getMethod())) {
+
+			if ("GET".equals(request.getMethod())) {
+				
+			}
+				// get user from database and pass it to JSP
+				models.put("task", taskDao.getTask(tid));
+				// for display of activiies
+				models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
+				models.put("comments", commentDao.getComment(tid));
+				models.put("comment", new Comment());
+			} else if ("POST".equals(request.getMethod())) {
+
+				comment.setTaskComments(taskDao.getTask(tid));
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				User User = (User) auth.getPrincipal();
+				int uid = User.getId();
+				comment.setUserComment(userDao.getUser(uid));
+				comment.setCreateDate(new Date());
+				comment.setDelete(false);
+				commentDao.saveComment(comment);
+
+				if (action != null && action.equals("Comment")) {
+					SimpleMailMessage message = new SimpleMailMessage();
+					User user = taskDao.getTask(tid).getUserTasks();
+					message.setTo(user.getEmailAddress());
+					message.setFrom("testspiderhub@gmail.com");
+					message.setText("Dear " + user.getUserName() + ", You have new Comment in task "
+							+ taskDao.getTask(tid).getTaskName() + ".");
+					try {
+						this.mailSender.send(message);
+					} catch (MailException ex) {
+						// simply log it and go on...
+						System.err.println(ex.getMessage());
+					}
+
+				}
+
+				models.put("task", taskDao.getTask(tid));
+				// for display of files
+				models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
+				models.put("comments", commentDao.getComment(tid));
+
+		return "member/viewActivity";
 	}
 
 }

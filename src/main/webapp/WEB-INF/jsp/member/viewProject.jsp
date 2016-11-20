@@ -44,6 +44,9 @@
 				<c:if test="${not empty task.files}">
 					<td><a href="viewTask.html?tid=${task.id}&pid=${project.id}">View
 							Files</a></td>
+					<td><a
+						href="viewActivity.html?tid=${task.id}&pid=${project.id}">start
+							Activity Files</a></td>
 				</c:if>
 
 			</tr>
