@@ -39,6 +39,7 @@ import spiderhub.model.User;
 import spiderhub.model.dao.CommentDao;
 import spiderhub.model.dao.FileDao;
 import spiderhub.model.dao.ProjectDao;
+import spiderhub.model.dao.TaskActivityDao;
 import spiderhub.model.dao.TaskDao;
 import spiderhub.model.dao.TaskPriorityDao;
 import spiderhub.model.dao.TaskStatusDao;
@@ -46,6 +47,9 @@ import spiderhub.model.dao.UserDao;
 
 @Controller
 public class TaskController {
+
+	@Autowired
+	private TaskActivityDao taskActivityDao;
 
 	@Autowired
 	private TaskDao taskDao;
@@ -377,47 +381,24 @@ public class TaskController {
 		if ("GET".equals(request.getMethod())) {
 
 			if ("GET".equals(request.getMethod())) {
-				
+
 			}
-				// get user from database and pass it to JSP
-				models.put("task", taskDao.getTask(tid));
-				// for display of activiies
-				models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
-				models.put("comments", commentDao.getComment(tid));
-				models.put("comment", new Comment());
-			} else if ("POST".equals(request.getMethod())) {
+			// get user from database and pass it to JSP
+			models.put("task", taskDao.getTask(tid));
+			// for display of activiies
+			models.put("activityModel", taskActivityDao.getTaskActivityFromRelatedTask(tid));
 
-				comment.setTaskComments(taskDao.getTask(tid));
-				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-				User User = (User) auth.getPrincipal();
-				int uid = User.getId();
-				comment.setUserComment(userDao.getUser(uid));
-				comment.setCreateDate(new Date());
-				comment.setDelete(false);
-				commentDao.saveComment(comment);
+		} else if ("POST".equals(request.getMethod())) {
 
-				if (action != null && action.equals("Comment")) {
-					SimpleMailMessage message = new SimpleMailMessage();
-					User user = taskDao.getTask(tid).getUserTasks();
-					message.setTo(user.getEmailAddress());
-					message.setFrom("testspiderhub@gmail.com");
-					message.setText("Dear " + user.getUserName() + ", You have new Comment in task "
-							+ taskDao.getTask(tid).getTaskName() + ".");
-					try {
-						this.mailSender.send(message);
-					} catch (MailException ex) {
-						// simply log it and go on...
-						System.err.println(ex.getMessage());
-					}
+			if (action != null && action.equals("start")) {
 
-				}
+			} else if (action != null && action.equals("stop")) {
 
-				models.put("task", taskDao.getTask(tid));
-				// for display of files
-				models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
-				models.put("comments", commentDao.getComment(tid));
+			}
+
+		}
+		models.put("activityModel", taskActivityDao.getTaskActivityFromRelatedTask(tid));
 
 		return "member/viewActivity";
 	}
-
 }
