@@ -20,8 +20,8 @@
 				<th>Activity complete</th>
 				<th>Activity start Time</th>
 				<th>activity endtime</th>
-				<th>activity of taskId</th>
-				<th>activity by userId</th>
+				<th>Task Id</th>
+				<th>userName</th>
 			</tr>
 			<c:forEach items="${activityModel}" var="activity">
 				<tr>
