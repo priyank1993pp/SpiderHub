@@ -3,7 +3,6 @@ package spiderhub.model.dao;
 import java.util.List;
 
 import spiderhub.model.File;
-import spiderhub.model.User;
 
 public interface FileDao {
 	
