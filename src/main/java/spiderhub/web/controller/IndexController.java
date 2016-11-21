@@ -39,16 +39,16 @@ public class IndexController {
 			models.put("high", taskDao.getAllTaskAccordingToHIGHPriorityWithinAProject(id));
 			models.put("medium", taskDao.getAllTaskAccordingToMEDIUMPriorityWithinAProject(id));
 			models.put("low", taskDao.getAllTaskAccordingToLOWPriorityWithinAProject(id));
-			Map <String, Long> list = new HashMap<String, Long>();
-			list.put("new Date(2015, 12, 1)", (long) 5);
-			list.put("new Date(2015, 12, 2)", (long) 7);
-			for (Map.Entry<String, Long> entry : list.entrySet()) {
-			    String key = entry.getKey();
-			    Long value = entry.getValue();
-			    System.out.println(key +"      "+value);
-			  
-			}
-			models.put("list", list);
+//			Map <String, Long> list = new HashMap<String, Long>();
+//			list.put("new Date(2015, 12, 1)", (long) 5);
+//			list.put("new Date(2015, 12, 2)", (long) 7);
+//			for (Map.Entry<String, Long> entry : list.entrySet()) {
+//			    String key = entry.getKey();
+//			    Long value = entry.getValue();
+//			    System.out.println(key +"      "+value);
+//			  
+//			}
+//			models.put("list", list);
 			/*
 			 * 
 			*/
@@ -57,15 +57,21 @@ public class IndexController {
 			String year = String.valueOf(now.get(Calendar.YEAR));
 			String month = String.valueOf(now.get(Calendar.MONTH));
 			Map<String, Long> map = new HashMap<String, Long>();
-			List<Date> dateList = new ArrayList<Date>();
 			int currentDate = now.get(Calendar.DATE);
 			for (int i = 1; i <= currentDate; i++) {
 				now.set(Calendar.DATE, i);
 				Date d = now.getTime();
 				String day = String.valueOf(i);
-				String dateString = "new Date("+ year  +", "+ month +", "+  i  +")";
+				String dateString = "new Date("+ year  +", "+ month +", "+  day  +")";
 				map.put(dateString, taskDao.getCountOfOngoingTaskOfMemberByDate(id, d));
 			}
+			for (Map.Entry<String, Long> entry : map.entrySet()) {
+			    String key = entry.getKey();
+			    Long value = entry.getValue();
+			    System.out.println(key +"      "+value);
+			  
+			}
+			models.put("list", map);
 
 		} catch (Exception e) {
 		}
