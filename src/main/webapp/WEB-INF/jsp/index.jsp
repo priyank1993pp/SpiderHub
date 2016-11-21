@@ -20,9 +20,69 @@
 		'packages' : [ 'corechart' ]
 	});
 	google.charts.setOnLoadCallback(drawChart);
+
 	function drawChart() {
-		var x = ${complete};
-		var y = ${remaining};
+
+		var data = new google.visualization.DataTable();
+		data.addColumn('date', 'Time of Day');
+		data.addColumn('number', 'Rating');
+
+		data.addRows([
+				<c:forEach var="c" items="${list}" >[<c:out value="${c.key}"/>,
+						<c:out value="${c.value}"/>], </c:forEach> ]);
+
+		var options = {
+			title : 'Rate the Day on a Scale of 1 to 10',
+			width : 900,
+			height : 500,
+			hAxis : {
+				format : 'M/d/yy',
+				gridlines : {
+					count : 15
+				}
+			},
+			vAxis : {
+				gridlines : {
+					color : 'none'
+				},
+				minValue : 0
+			}
+		};
+
+		var chart = new google.visualization.LineChart(document
+				.getElementById('chart_div'));
+
+		chart.draw(data, options);
+
+		var button = document.getElementById('change');
+
+		button.onclick = function() {
+
+			// If the format option matches, change it to the new option,
+			// if not, reset it to the original format.
+			options.hAxis.format === 'M/d/yy' ? options.hAxis.format = 'MMM dd, yyyy'
+					: options.hAxis.format = 'M/d/yy';
+
+			chart.draw(data, options);
+		};
+	}
+</script>
+<script type="text/javascript">
+	google.charts.load('current', {
+		'packages' : [ 'corechart' ]
+	});
+	google.charts.setOnLoadCallback(drawChart);
+	function drawChart() {
+		var x = $
+		{
+			complete
+		}
+		;
+		var y = $
+		{
+			remaining
+		}
+		;
 		var data = google.visualization.arrayToDataTable([
 				[ 'Task', 'Counts' ], [ 'Completed Task', x ],
 				[ 'Ongoing Task', y ] ]);
@@ -68,18 +128,56 @@
 
 			<security:authorize access="hasRole('MEMBER')">
 				<div id="piechart" style="width: 500px; height: 300px"></div>
+				<div id="chart_div" style="width: 100px; height: 100px"></div>
+				<h2>High Priority Task</h2>
+				<table name="High Priority Task" class="table table-hover">
+					<tr>
+						<th>Task Name</th>
+						<th>Task Deadline</th>
+
+					</tr>
+					<c:forEach items="${high}" var="h">
+						<tr>
+							<td>${h.taskName }</td>
+							<td>${h.endDate }</td>
+
+						</tr>
+					</c:forEach>
+				</table>
+				<h2>Medium Priority Task</h2>
+				<table class="table table-hover">
+					<tr>
+						<th>Task Name</th>
+						<th>Task Deadline</th>
+
+					</tr>
+					<c:forEach items="${medoum}" var="m">
+						<tr>
+							<td>${m.taskName }</td>
+							<td>${m.endDate }</td>
+
+						</tr>
+					</c:forEach>
+				</table>
+				<h2>Low Priority Task</h2>
+				<table class="table table-hover">
+					<tr>
+						<th>Task Name</th>
+						<th>Task Deadline</th>
+
+					</tr>
+					<c:forEach items="${low}" var="l">
+						<tr>
+							<td>${l.taskName }</td>
+							<td>${l.endDate }</td>
+
+						</tr>
+					</c:forEach>
+				</table>
 			</security:authorize>
 		</div>
-
-		<!-- <footer class="footer">
-			<p>&copy; SpiderHub Company, Inc.</p>
-		</footer> -->
 		<jsp:include page="/WEB-INF/jsp/footer.jsp" />
 	</div>
-	<!-- /container -->
-
-
-	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 </body>
 </html>
