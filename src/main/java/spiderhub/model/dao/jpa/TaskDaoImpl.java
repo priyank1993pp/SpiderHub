@@ -127,11 +127,17 @@ public class TaskDaoImpl implements TaskDao {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-		long count = (long) entityManager.createQuery(
-				"select count(*) from Task where userTasks.id = :uId and statusTasks.id=1 AND startDate <='"
+		long count = (long) entityManager
+				.createQuery("select count(*) from Task where userTasks.id = :uId and statusTasks.id=1 AND startDate <='"
 						+ sdf.format(startDate) + "'")
 				.setParameter("uId", uId).getSingleResult();
 		return count;
+
+		/*
+		 * long count = (long) entityManager .createQuery(
+		 * "select count(*) from Task where userTasks.id = :uId and statusTasks.id=1 AND startDate <= CURRENT_DATE()"
+		 * ) .setParameter("uId", uId).getSingleResult(); return count;
+		 */
 	}
 
 }

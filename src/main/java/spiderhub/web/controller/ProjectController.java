@@ -95,7 +95,13 @@ public class ProjectController {
 					task.getId(), cal.getTime(), new Date());
 			double totalHourByTask = 0;
 			for (TaskActivity activity : taskActivityListWeekly) {
-				double hrs = count_hr_from_start_end(activity.getStartTime(), activity.getEndTime());
+				double hrs = 0;
+				try {
+					hrs = count_hr_from_start_end(activity.getStartTime(), activity.getEndTime());
+				} catch (NullPointerException nu) {
+					hrs = 0;
+				}
+
 				// hourList.add(hrs);
 				totalHourByTask += hrs;
 			}
@@ -158,7 +164,13 @@ public class ProjectController {
 		List<Double> hourList = new ArrayList<Double>();
 		double totalHour = 0;
 		for (TaskActivity activity : taskActivityList) {
-			double hrs = count_hr_from_start_end(activity.getStartTime(), activity.getEndTime());
+
+			double hrs = 0;
+			try {
+				hrs = count_hr_from_start_end(activity.getStartTime(), activity.getEndTime());
+			} catch (NullPointerException nu) {
+
+			}
 			hourList.add(hrs);
 			totalHour += hrs;
 		}
@@ -178,7 +190,13 @@ public class ProjectController {
 			taskActivityList = taskActivityDao.getTaskActivityByTaskInsideProject(id, task.getId());
 			double totalHourByTask = 0;
 			for (TaskActivity activity : taskActivityList) {
-				double hrs = count_hr_from_start_end(activity.getStartTime(), activity.getEndTime());
+
+				double hrs = 0;
+				try {
+					hrs = count_hr_from_start_end(activity.getStartTime(), activity.getEndTime());
+				} catch (NullPointerException nu) {
+
+				}
 				// hourList.add(hrs);
 				totalHourByTask += hrs;
 			}
@@ -206,7 +224,13 @@ public class ProjectController {
 					task.getId(), cal.getTime(), new Date());
 			double totalHourByTask = 0;
 			for (TaskActivity activity : taskActivityListWeekly) {
-				double hrs = count_hr_from_start_end(activity.getStartTime(), activity.getEndTime());
+				double hrs = 0;
+				try {
+					hrs = count_hr_from_start_end(activity.getStartTime(), activity.getEndTime());
+				} catch (NullPointerException n) {
+
+				}
+
 				hourList.add(hrs);
 				totalHourByTask += hrs;
 			}
