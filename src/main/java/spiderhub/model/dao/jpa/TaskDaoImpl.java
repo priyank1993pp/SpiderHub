@@ -1,5 +1,6 @@
 package spiderhub.model.dao.jpa;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -104,19 +105,33 @@ public class TaskDaoImpl implements TaskDao {
 
 	@Override
 	public List<Task> getAllTaskAccordingToHIGHPriorityWithinAProject(Integer uid) {
-		String query = "from Task where userTasks.id = :uid and statusTasks.id=2 AND taskPriority.id=1";
+		String query = "from Task where userTasks.id = :uid and statusTasks.id=1 AND taskPriority.id=1";
 		return entityManager.createQuery(query, Task.class).setParameter("uid", uid).getResultList();
 	}
 
 	@Override
 	public List<Task> getAllTaskAccordingToMEDIUMPriorityWithinAProject(Integer uid) {
-		String query = "from Task where userTasks.id = :uid and statusTasks.id=2 AND taskPriority.id=2";
+		String query = "from Task where userTasks.id = :uid and statusTasks.id=1 AND taskPriority.id=2";
 		return entityManager.createQuery(query, Task.class).setParameter("uid", uid).getResultList();
 	}
 
 	@Override
 	public List<Task> getAllTaskAccordingToLOWPriorityWithinAProject(Integer uid) {
-		String query = "from Task where userTasks.id = :uid and statusTasks.id=2 AND taskPriority.id=3";
+		String query = "from Task where userTasks.id = :uid and statusTasks.id=1 AND taskPriority.id=3";
 		return entityManager.createQuery(query, Task.class).setParameter("uid", uid).getResultList();
 	}
+
+	@Override
+	public long getCountOfOngoingTaskOfMemberByDate(Integer uId, Date startDate) {
+		// TODO Auto-generated method stub
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+		long count = (long) entityManager.createQuery(
+				"select count(*) from Task where userTasks.id = :uId and statusTasks.id=1 AND startDate <='"
+						+ sdf.format(startDate) + "'")
+				.setParameter("uId", uId).getSingleResult();
+		return count;
+	}
+
 }
