@@ -242,7 +242,6 @@ public class TaskController {
 		changestatusoftask.setStatusTasks(taskstatusDao.getTaskStatus(2));
 
 		changestatusoftask = taskDao.saveTask(changestatusoftask);
-
 		return "redirect:viewProject.html?id=" + pid;
 	}
 

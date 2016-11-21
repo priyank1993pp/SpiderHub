@@ -58,18 +58,18 @@
 		<thead>
 			<tr>
 				<th>Task Name</th>
-				<th>Task Description</th>
 				<th>Task Related User</th>
 				<th>Task Status</th>
+				<th>hrs spent</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${tasks}" var="task">
+			<c:forEach items="${tasksWeekly}" var="task" varStatus="status">
 				<tr>
 					<td>${task.taskName}</td>
-					<td>${task.taskDescription}</td>
 					<td>${task.userTasks.userName}</td>
 					<td>${task.statusTasks.statusName}</td>
+					<td>${totalHourArrayWeekly[status.index]}</td>
 				</tr>
 			</c:forEach>
 		</tbody>
