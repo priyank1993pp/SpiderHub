@@ -87,6 +87,7 @@
 			<th>Task Status</th>
 			<th>Assign</th>
 			<th>Upload Files</th>
+			<th>View</th>
 			<th>Hours spent</th>
 		</tr>
 
@@ -119,11 +120,64 @@
 			</tr>
 
 		</c:forEach>
+
 	</table>
 
+	<p>totalHourArraySum: ${totalHourArraySum }</p>
 
 
-	<h1>User Detail</h1>
+
+<h1>Task Details Weekly</h1>
+	<table class="table table-hover">
+		<tr>
+			<th>Task</th>
+			<th>Task Status</th>
+			<th>Assign</th>
+			<th>Upload Files</th>
+			<th>View</th>
+			<th>Hours spent</th>
+		</tr>
+
+		<c:forEach items="${tasksWeekly}" var="task" varStatus="status">
+
+			<tr>
+				<td>${task.taskName}</td>
+				<c:choose>
+					<c:when test="${empty task.statusTasks.statusName}">
+						<td>Incomplete</td>
+					</c:when>
+					<c:otherwise>
+						<td>${task.statusTasks.statusName }</td>
+					</c:otherwise>
+				</c:choose>
+				<c:choose>
+					<c:when test="${empty task.userTasks}">
+						<td><a
+							href="assignTask.html?tid=${task.id}&pid=${project.id}">Assign</a></td>
+					</c:when>
+					<c:otherwise>
+						<td>${task.userTasks.userName}</td>
+						<td><a
+							href="uploadFileToAssigned.html?tid=${task.id}&pid=${project.id}">Upload</a></td>
+					</c:otherwise>
+				</c:choose>
+				<td><a href="viewTask.html?tid=${task.id}">View</a></td>
+
+				<td>${totalHourArrayWeekly[status.index]}</td>
+			</tr>
+
+		</c:forEach>
+
+	</table>
+
+	<p>totalHourArraySumWeekly: ${totalHourArraySumWeekly }</p>
+
+
+
+
+
+	User Detail
+	</h1>
 	<table class="table table-hover">
 		<tr>
 			<th>User Name</th>
@@ -138,6 +192,7 @@
 				<td><a
 					href="remove.html?id=${projectUser.id}&pid=${project.id}"><img
 						src="<%=request.getContextPath()%>/IMAGE/delete.png" /></a>
+			
 			</tr>
 
 		</c:forEach>

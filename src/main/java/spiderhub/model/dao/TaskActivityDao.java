@@ -12,14 +12,18 @@ public interface TaskActivityDao {
 
 	List<TaskActivity> getTaskActivityFromRelatedTask(Integer tid);
 
-	List<TaskActivity> getTakActivityByProject(Integer pid);
+	List<TaskActivity> getTaskActivityByProject(Integer pid);
 
-	List<TaskActivity> getTakActivityByTaskInsideProject(Integer pid, Integer tid);
+	List<TaskActivity> getTaskActivityByTaskInsideProject(Integer pid, Integer tid);
 
-	List<TaskActivity> getTakActivityWeeklyByTask(Integer tid, Date start, Date end);
+	// weekly
 
-	List<TaskActivity> getTakActivityWeeklyByProject(Integer pid, Date start, Date end);
+	List<TaskActivity> getTaskActivityWeeklyByTaskInsideProject(Integer pid, Integer tid, Date start, Date end);
 
-	List<TaskActivity> getTakActivityWeeklyByUser(Integer uid, Date start, Date end);
+	List<TaskActivity> getTaskActivityWeeklyByTask(Integer tid, Date start, Date end);
+
+	List<TaskActivity> getTaskActivityWeeklyByProject(Integer pid, Date start, Date end);
+
+	List<TaskActivity> getTaskActivityWeeklyByUser(Integer uid, Date start, Date end);
 
 }

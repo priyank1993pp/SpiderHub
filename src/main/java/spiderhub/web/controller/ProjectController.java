@@ -119,7 +119,7 @@ public class ProjectController {
 		/*
 		 * to show the activity of related project
 		 */
-		List<TaskActivity> taskActivityList = taskActivityDao.getTakActivityByProject(id);
+		List<TaskActivity> taskActivityList = taskActivityDao.getTaskActivityByProject(id);
 		models.put("activityModel", taskActivityList);
 
 		// to calculate no of hrs for each activity
@@ -132,34 +132,65 @@ public class ProjectController {
 		}
 		models.put("totalHour", totalHour);
 		models.put("hours", hourList);
+
 		/*
 		 * to show the activity hrs for each task inside the Project
 		 * 
 		 */
+
 		List<Task> taskList = taskDao.getTaskByProject(id);
-		double[] totalHourArray = new double[taskList.size()]; 
-		int count=0;
+		double[] totalHourArray = new double[taskList.size()];
+		int count = 0;
+		double totalHourArraySum = 0;
 		for (Task task : taskList) {
-			taskActivityList = taskActivityDao.getTakActivityByTaskInsideProject(id, task.getId());
-			double totalHourByTask=0;
+			taskActivityList = taskActivityDao.getTaskActivityByTaskInsideProject(id, task.getId());
+			double totalHourByTask = 0;
 			for (TaskActivity activity : taskActivityList) {
 				double hrs = count_hr_from_start_end(activity.getStartTime(), activity.getEndTime());
 				hourList.add(hrs);
 				totalHourByTask += hrs;
 			}
 			totalHourArray[count++] = totalHourByTask;
+			totalHourArraySum += totalHourByTask;
+
 		}
-		
+
 		models.put("totalHourArray", totalHourArray);
-
+		models.put("totalHourArraySum", totalHourArraySum);
 		/*
-		 * to show weekly project related activity
+		 * to show weekly task related activity
 		 */
-
+		
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, -7);
 		System.out.println("Date = " + cal.getTime());
-		models.put("activityModelWeekly", taskActivityDao.getTakActivityWeeklyByProject(id, cal.getTime(), new Date()));
+		
+		List<TaskActivity> taskActivityListWeekly;
+		
+		List<Task> taskListWeekly = taskDao.getTaskByProject(id);
+		double[] totalHourArrayWeekly = new double[taskListWeekly.size()];
+		int countWeekly = 0;
+		double totalHourArraySumWeekly = 0;
+		for (Task task : taskList) {
+			taskActivityListWeekly = taskActivityDao.getTaskActivityWeeklyByTaskInsideProject(id, task.getId(), cal.getTime(), new Date());
+			double totalHourByTask = 0;
+			for (TaskActivity activity : taskActivityListWeekly) {
+				double hrs = count_hr_from_start_end(activity.getStartTime(), activity.getEndTime());
+				hourList.add(hrs);
+				totalHourByTask += hrs;
+			}
+			totalHourArray[countWeekly++] = totalHourByTask;
+			totalHourArraySumWeekly += totalHourByTask;
+
+		}
+
+		models.put("totalHourArray", totalHourArray);
+		models.put("totalHourArraySum", totalHourArraySum);
+
+		Calendar cal2 = Calendar.getInstance();
+		cal2.add(Calendar.DATE, -7);
+		System.out.println("Date = " + cal2.getTime());
+		models.put("activityModelWeekly", taskActivityDao.getTaskActivityWeeklyByProject(id, cal2.getTime(), new Date()));
 
 		return "manager/viewProject";
 

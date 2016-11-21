@@ -38,7 +38,7 @@ public class TaskActivityDaoImpl implements TaskActivityDao {
 	}
 
 	@Override
-	public List<TaskActivity> getTakActivityWeeklyByTask(Integer tid, Date start, Date end) {
+	public List<TaskActivity> getTaskActivityWeeklyByTask(Integer tid, Date start, Date end) {
 
 		return entityManager
 				.createQuery(
@@ -48,7 +48,7 @@ public class TaskActivityDaoImpl implements TaskActivityDao {
 	}
 
 	@Override
-	public List<TaskActivity> getTakActivityWeeklyByProject(Integer pid, Date start, Date end) {
+	public List<TaskActivity> getTaskActivityWeeklyByProject(Integer pid, Date start, Date end) {
 		// TODO Auto-generated method stub
 		return entityManager
 				.createQuery(
@@ -58,7 +58,7 @@ public class TaskActivityDaoImpl implements TaskActivityDao {
 	}
 
 	@Override
-	public List<TaskActivity> getTakActivityWeeklyByUser(Integer uid, Date start, Date end) {
+	public List<TaskActivity> getTaskActivityWeeklyByUser(Integer uid, Date start, Date end) {
 		// TODO Auto-generated method stub
 		return entityManager
 				.createQuery(
@@ -68,16 +68,26 @@ public class TaskActivityDaoImpl implements TaskActivityDao {
 	}
 
 	@Override
-	public List<TaskActivity> getTakActivityByProject(Integer pid) {
+	public List<TaskActivity> getTaskActivityByProject(Integer pid) {
 		return entityManager.createQuery("FROM TaskActivity AS t WHERE t.activityOfTask.projectTasks.id = :pid ",
 				TaskActivity.class).setParameter("pid", pid).getResultList();
 	}
 
 	@Override
-	public List<TaskActivity> getTakActivityByTaskInsideProject(Integer pid, Integer tid) {
+	public List<TaskActivity> getTaskActivityByTaskInsideProject(Integer pid, Integer tid) {
 		return entityManager.createQuery(
 				"FROM TaskActivity AS t WHERE t.activityOfTask.projectTasks.id = :pid AND t.activityOfTask.id=:tid ",
 				TaskActivity.class).setParameter("pid", pid).setParameter("tid", tid).getResultList();
+	}
+
+	@Override
+	public List<TaskActivity> getTaskActivityWeeklyByTaskInsideProject(Integer pid, Integer tid, Date start, Date end) {
+		return entityManager
+				.createQuery(
+						"FROM TaskActivity AS t WHERE t.endTime BETWEEN :start AND :end AND t.activityOfTask.id = :tid AND t.activityOfTask.projectTasks.id = :pid AND t.activityOfTask.id=:tid",
+						TaskActivity.class)
+				.setParameter("start", start).setParameter("end", end).setParameter("tid", tid).setParameter("pid", pid)
+				.getResultList();
 	}
 
 }
