@@ -335,10 +335,12 @@ public class TaskController {
 
 			// get user from database and pass it to JSP
 			models.put("task", taskDao.getTask(tid));
+			
 			// for display of files
 			models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
 			models.put("comments", commentDao.getComment(tid));
 			models.put("comment", new Comment());
+			
 		} else if ("POST".equals(request.getMethod())) {
 
 			comment.setTaskComments(taskDao.getTask(tid));

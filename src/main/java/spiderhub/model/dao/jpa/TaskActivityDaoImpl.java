@@ -38,12 +38,46 @@ public class TaskActivityDaoImpl implements TaskActivityDao {
 	}
 
 	@Override
-	public List<TaskActivity> getTakActivityWeekly(Date start, Date end) {
-		
-		return entityManager.createQuery("FROM TaskActivity AS t WHERE t.endTime BETWEEN :start AND :end " , TaskActivity.class)
-				.setParameter("start", start)
-				.setParameter("end", end)
-				.getResultList();
+	public List<TaskActivity> getTakActivityWeeklyByTask(Integer tid, Date start, Date end) {
+
+		return entityManager
+				.createQuery(
+						"FROM TaskActivity AS t WHERE t.endTime BETWEEN :start AND :end AND t.activityOfTask.id = :tid ",
+						TaskActivity.class)
+				.setParameter("start", start).setParameter("end", end).setParameter("tid", tid).getResultList();
+	}
+
+	@Override
+	public List<TaskActivity> getTakActivityWeeklyByProject(Integer pid, Date start, Date end) {
+		// TODO Auto-generated method stub
+		return entityManager
+				.createQuery(
+						"FROM TaskActivity AS t WHERE t.endTime BETWEEN :start AND :end AND t.activityOfTask.projectTasks.id = :pid ",
+						TaskActivity.class)
+				.setParameter("start", start).setParameter("end", end).setParameter("pid", pid).getResultList();
+	}
+
+	@Override
+	public List<TaskActivity> getTakActivityWeeklyByUser(Integer uid, Date start, Date end) {
+		// TODO Auto-generated method stub
+		return entityManager
+				.createQuery(
+						"FROM TaskActivity AS t WHERE t.endTime BETWEEN :start AND :end AND t.activityOfTaskByUserr.id = :uid ",
+						TaskActivity.class)
+				.setParameter("start", start).setParameter("end", end).setParameter("uid", uid).getResultList();
+	}
+
+	@Override
+	public List<TaskActivity> getTakActivityByProject(Integer pid) {
+		return entityManager.createQuery("FROM TaskActivity AS t WHERE t.activityOfTask.projectTasks.id = :pid ",
+				TaskActivity.class).setParameter("pid", pid).getResultList();
+	}
+
+	@Override
+	public List<TaskActivity> getTakActivityByTaskInsideProject(Integer pid, Integer tid) {
+		return entityManager.createQuery(
+				"FROM TaskActivity AS t WHERE t.activityOfTask.projectTasks.id = :pid AND t.activityOfTask.id=:tid ",
+				TaskActivity.class).setParameter("pid", pid).setParameter("tid", tid).getResultList();
 	}
 
 }

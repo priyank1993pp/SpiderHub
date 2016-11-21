@@ -29,6 +29,56 @@
 
 	</table>
 
+	<h2>
+		<p>all project related activity</p>
+	</h2>
+	<table class="table table-hover">
+		<tr>
+			<th>Activity id</th>
+			<th>Activity complete</th>
+			<th>Activity start Time</th>
+			<th>activity endtime</th>
+			<th>Task Id</th>
+			<th>userName</th>
+		</tr>
+		<c:forEach items="${activityModel}" var="activity">
+			<tr>
+				<td>${activity.id}</td>
+				<td>${activity.complete}</td>
+				<td>${activity.startTime}</td>
+				<td>${activity.endTime}</td>
+				<td>${activity.activityOfTask.id}</td>
+				<td>${activity.activityOfTaskByUser.userName}</td>
+			</tr>
+		</c:forEach>
+	</table>
+
+	<h2>
+		<p>all weekly project related activity</p>
+	</h2>
+	<table class="table table-hover">
+		<tr>
+			<th>Activity id</th>
+			<th>Activity complete</th>
+			<th>Activity start Time</th>
+			<th>activity endtime</th>
+			<th>Task Id</th>
+			<th>userName</th>
+			<th>hours</th>
+		</tr>
+		<c:forEach items="${activityModelWeekly}" var="activity" varStatus="s">
+			<tr>
+				<td>${activity.id}</td>
+				<td>${activity.complete}</td>
+				<td>${activity.startTime}</td>
+				<td>${activity.endTime}</td>
+				<td>${activity.activityOfTask.id}</td>
+				<td>${activity.activityOfTaskByUser.userName}</td>
+				<td>${hours[s.index]}</td>
+			</tr>
+		</c:forEach>
+	</table>
+	<p>${totalHour}</p>
 
 	<h1>Task Details</h1>
 	<table class="table table-hover">
@@ -37,9 +87,10 @@
 			<th>Task Status</th>
 			<th>Assign</th>
 			<th>Upload Files</th>
+			<th>Hours spent</th>
 		</tr>
 
-		<c:forEach items="${tasks}" var="task">
+		<c:forEach items="${tasks}" var="task" varStatus="status">
 
 			<tr>
 				<td>${task.taskName}</td>
@@ -63,10 +114,14 @@
 					</c:otherwise>
 				</c:choose>
 				<td><a href="viewTask.html?tid=${task.id}">View</a></td>
+
+				<td>${totalHourArray[status.index]}</td>
 			</tr>
 
 		</c:forEach>
 	</table>
+
+
 
 	<h1>User Detail</h1>
 	<table class="table table-hover">

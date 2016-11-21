@@ -1,5 +1,8 @@
 package spiderhub.web.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -22,9 +25,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import spiderhub.model.Project;
+import spiderhub.model.Task;
+import spiderhub.model.TaskActivity;
 import spiderhub.model.User;
 import spiderhub.model.dao.ProjectDao;
 import spiderhub.model.dao.ProjectTypeDao;
+import spiderhub.model.dao.TaskActivityDao;
 import spiderhub.model.dao.TaskDao;
 import spiderhub.model.dao.UserDao;
 import spiderhub.web.validator.ProjectValidator;
@@ -34,6 +40,9 @@ import spiderhub.web.validator.ProjectValidator;
 public class ProjectController {
 
 	Set<User> users = new HashSet<>();
+
+	@Autowired
+	private TaskActivityDao taskActivityDao;
 
 	@Autowired
 	private ProjectDao projectDao;
@@ -106,6 +115,52 @@ public class ProjectController {
 			System.out.println(
 					"++++" + taskDao.getNoOfCompletedTaskinProject(id) * 100 / taskDao.getTotalNofTaskinProject(id));
 		}
+
+		/*
+		 * to show the activity of related project
+		 */
+		List<TaskActivity> taskActivityList = taskActivityDao.getTakActivityByProject(id);
+		models.put("activityModel", taskActivityList);
+
+		// to calculate no of hrs for each activity
+		List<Double> hourList = new ArrayList<Double>();
+		double totalHour = 0;
+		for (TaskActivity activity : taskActivityList) {
+			double hrs = count_hr_from_start_end(activity.getStartTime(), activity.getEndTime());
+			hourList.add(hrs);
+			totalHour += hrs;
+		}
+		models.put("totalHour", totalHour);
+		models.put("hours", hourList);
+		/*
+		 * to show the activity hrs for each task inside the Project
+		 * 
+		 */
+		List<Task> taskList = taskDao.getTaskByProject(id);
+		double[] totalHourArray = new double[taskList.size()]; 
+		int count=0;
+		for (Task task : taskList) {
+			taskActivityList = taskActivityDao.getTakActivityByTaskInsideProject(id, task.getId());
+			double totalHourByTask=0;
+			for (TaskActivity activity : taskActivityList) {
+				double hrs = count_hr_from_start_end(activity.getStartTime(), activity.getEndTime());
+				hourList.add(hrs);
+				totalHourByTask += hrs;
+			}
+			totalHourArray[count++] = totalHourByTask;
+		}
+		
+		models.put("totalHourArray", totalHourArray);
+
+		/*
+		 * to show weekly project related activity
+		 */
+
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, -7);
+		System.out.println("Date = " + cal.getTime());
+		models.put("activityModelWeekly", taskActivityDao.getTakActivityWeeklyByProject(id, cal.getTime(), new Date()));
+
 		return "manager/viewProject";
 
 	}
@@ -254,5 +309,23 @@ public class ProjectController {
 		project.setUsersRelatedProject(detail);
 		projectDao.saveProject(project);
 		return "redirect:listProjects.html";
+	}
+
+	// helper methods
+	private double count_hr_from_start_end(Date start, Date end) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		double hours = 0;
+		try {
+			String d1 = format.format(start);
+			String d2 = format.format(end);
+			long diff = (format.parse(d2).getTime() - format.parse(d1).getTime()) / 1000;
+			hours = (diff / (double) 3600);
+
+		} catch (Exception e)
+
+		{
+			e.printStackTrace();
+		}
+		return hours;
 	}
 }

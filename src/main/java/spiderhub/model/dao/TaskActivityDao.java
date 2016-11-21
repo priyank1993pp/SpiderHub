@@ -11,7 +11,15 @@ public interface TaskActivityDao {
 	TaskActivity saveTaskActivity(TaskActivity taskActivity);
 
 	List<TaskActivity> getTaskActivityFromRelatedTask(Integer tid);
-	
-	List<TaskActivity> getTakActivityWeekly(Date start , Date end);
+
+	List<TaskActivity> getTakActivityByProject(Integer pid);
+
+	List<TaskActivity> getTakActivityByTaskInsideProject(Integer pid, Integer tid);
+
+	List<TaskActivity> getTakActivityWeeklyByTask(Integer tid, Date start, Date end);
+
+	List<TaskActivity> getTakActivityWeeklyByProject(Integer pid, Date start, Date end);
+
+	List<TaskActivity> getTakActivityWeeklyByUser(Integer uid, Date start, Date end);
 
 }
