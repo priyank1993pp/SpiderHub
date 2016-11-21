@@ -185,8 +185,8 @@ public class ProjectController {
 		
 		models.put("tasksWeekly", tasksWeekly);
 
-		models.put("totalHourArrayWeekly", totalHourArray);
-		models.put("totalHourArraySumWeekly", totalHourArraySum);
+		models.put("totalHourArrayWeekly", totalHourArrayWeekly);
+		models.put("totalHourArraySumWeekly", totalHourArraySumWeekly);
 
 		Calendar cal2 = Calendar.getInstance();
 		cal2.add(Calendar.DATE, -7);
