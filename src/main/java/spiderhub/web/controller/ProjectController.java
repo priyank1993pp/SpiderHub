@@ -77,6 +77,38 @@ public class ProjectController {
 	public String projectreport(ModelMap models, @RequestParam Integer id) {
 		models.put("project", projectDao.getProject(id));
 		models.put("tasks", projectDao.getProject(id).getTasks());
+
+		/*
+		 * to show weekly task related activity
+		 */
+
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, -7);
+		System.out.println("Date = " + cal.getTime());
+
+		List<Task> tasksWeekly = taskDao.getTasksWeeklyWithinProject(id, cal.getTime(), new Date());
+		double[] totalHourArrayWeekly = new double[tasksWeekly.size()];
+		int countWeekly = 0;
+		double totalHourArraySumWeekly = 0;
+		for (Task task : tasksWeekly) {
+			List<TaskActivity> taskActivityListWeekly = taskActivityDao.getTaskActivityWeeklyByTaskInsideProject(id,
+					task.getId(), cal.getTime(), new Date());
+			double totalHourByTask = 0;
+			for (TaskActivity activity : taskActivityListWeekly) {
+				double hrs = count_hr_from_start_end(activity.getStartTime(), activity.getEndTime());
+				// hourList.add(hrs);
+				totalHourByTask += hrs;
+			}
+			totalHourArrayWeekly[countWeekly++] = totalHourByTask;
+			totalHourArraySumWeekly += totalHourByTask;
+
+		}
+
+		models.put("tasksWeekly", tasksWeekly);
+
+		models.put("totalHourArrayWeekly", totalHourArrayWeekly);
+		models.put("totalHourArraySumWeekly", totalHourArraySumWeekly);
+
 		return "manager/report";
 	}
 
@@ -147,7 +179,7 @@ public class ProjectController {
 			double totalHourByTask = 0;
 			for (TaskActivity activity : taskActivityList) {
 				double hrs = count_hr_from_start_end(activity.getStartTime(), activity.getEndTime());
-				hourList.add(hrs);
+				// hourList.add(hrs);
 				totalHourByTask += hrs;
 			}
 			totalHourArray[count++] = totalHourByTask;
@@ -178,11 +210,11 @@ public class ProjectController {
 				hourList.add(hrs);
 				totalHourByTask += hrs;
 			}
-			totalHourArray[countWeekly++] = totalHourByTask;
+			totalHourArrayWeekly[countWeekly++] = totalHourByTask;
 			totalHourArraySumWeekly += totalHourByTask;
 
 		}
-		
+
 		models.put("tasksWeekly", tasksWeekly);
 
 		models.put("totalHourArrayWeekly", totalHourArrayWeekly);
