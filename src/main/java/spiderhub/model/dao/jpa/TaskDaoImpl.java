@@ -1,5 +1,6 @@
 package spiderhub.model.dao.jpa;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -70,7 +71,7 @@ public class TaskDaoImpl implements TaskDao {
 				.setParameter("uId", uId).getSingleResult();
 		return count;
 	}
-	
+
 	@Override
 	public long getNoOfOngoingTaskinProject(Integer pId) {
 		long count = (long) entityManager
@@ -92,5 +93,12 @@ public class TaskDaoImpl implements TaskDao {
 		long count = (long) entityManager.createQuery("select count(*) from Task where projectTasks.id = :pId")
 				.setParameter("pId", pId).getSingleResult();
 		return count;
+	}
+
+	@Override
+	public List<Task> getTasksWeeklyWithinProject(Integer pid, Date start, Date end) {
+		String query = "from Task AS t where t.startDate BETWEEN :start AND :end AND t.projectTasks.id = :pid";
+		return entityManager.createQuery(query, Task.class).setParameter("start", start).setParameter("end", end)
+				.setParameter("pid", pid).getResultList();
 	}
 }
