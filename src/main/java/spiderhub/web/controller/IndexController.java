@@ -1,6 +1,9 @@
 package spiderhub.web.controller;
 
 import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +34,7 @@ public class IndexController {
 			int id = User.getId();
 			models.put("complete", taskDao.getNoOfCompletedTask(id));
 			models.put("remaining", taskDao.getNoOfOngoingTask(id));
-			System.out.println("remaining" +taskDao.getNoOfOngoingTask(id));
+			System.out.println("remaining" + taskDao.getNoOfOngoingTask(id));
 			models.put("totalTasks", taskDao.getTotalNofTask(id));
 			models.put("high", taskDao.getAllTaskAccordingToHIGHPriorityWithinAProject(id));
 			models.put("medium", taskDao.getAllTaskAccordingToMEDIUMPriorityWithinAProject(id));
@@ -46,6 +49,24 @@ public class IndexController {
 			  
 			}
 			models.put("list", list);
+			/*
+			 * 
+			*/
+			Calendar now = Calendar.getInstance();
+			//
+			String year = String.valueOf(now.get(Calendar.YEAR));
+			String month = String.valueOf(now.get(Calendar.MONTH));
+			Map<String, Long> map = new HashMap<String, Long>();
+			List<Date> dateList = new ArrayList<Date>();
+			int currentDate = now.get(Calendar.DATE);
+			for (int i = 1; i <= currentDate; i++) {
+				now.set(Calendar.DATE, i);
+				Date d = now.getTime();
+				String day = String.valueOf(i);
+				String dateString = "new Date("+ year  +", "+ month +", "+  i  +")";
+				map.put(dateString, taskDao.getCountOfOngoingTaskOfMemberByDate(id, d));
+			}
+
 		} catch (Exception e) {
 		}
 		return "index";

@@ -4,7 +4,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+import org.hibernate.mapping.Array;
 
 public class TimeDateFormat {
 
@@ -33,6 +38,27 @@ public class TimeDateFormat {
 
 		count_hr_from_start_end(start, end);
 
+		Calendar cal = Calendar.getInstance();
+		int days = cal.getActualMaximum(Calendar.DAY_OF_MONTH); // 28
+
+		System.out.println("no of days:   " + days);
+
+		Calendar now = Calendar.getInstance();
+		//
+		System.out.println("Current Year is : " + now.get(Calendar.YEAR));
+		// month start from 0 to 11
+		System.out.println("Current Month is : " + (now.get(Calendar.MONTH) + 1));
+		System.out.println("Current Date is : " + now.get(Calendar.DATE));
+
+		List<Date> dateList = new ArrayList<Date>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		 int currentDate = now.get(Calendar.DATE);
+		for (int i = 1; i <= currentDate; i++) {
+			now.set(Calendar.DATE, i);
+			Date d = now.getTime();
+			dateList.add(d);
+			System.out.println(d);
+		}
 	}
 
 	public static Date fromStrings(String date, String time) {
