@@ -101,4 +101,22 @@ public class TaskDaoImpl implements TaskDao {
 		return entityManager.createQuery(query, Task.class).setParameter("start", start).setParameter("end", end)
 				.setParameter("pid", pid).getResultList();
 	}
+
+	@Override
+	public List<Task> getAllTaskAccordingToHIGHPriorityWithinAProject(Integer uid) {
+		String query = "from Task where userTasks.id = :uid and statusTasks.id=2 AND taskPriority.id=1";
+		return entityManager.createQuery(query, Task.class).setParameter("uid", uid).getResultList();
+	}
+
+	@Override
+	public List<Task> getAllTaskAccordingToMEDIUMPriorityWithinAProject(Integer uid) {
+		String query = "from Task where userTasks.id = :uid and statusTasks.id=2 AND taskPriority.id=2";
+		return entityManager.createQuery(query, Task.class).setParameter("uid", uid).getResultList();
+	}
+
+	@Override
+	public List<Task> getAllTaskAccordingToLOWPriorityWithinAProject(Integer uid) {
+		String query = "from Task where userTasks.id = :uid and statusTasks.id=2 AND taskPriority.id=3";
+		return entityManager.createQuery(query, Task.class).setParameter("uid", uid).getResultList();
+	}
 }
