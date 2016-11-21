@@ -29,6 +29,32 @@
 		chart.draw(data, options);
 	}
 </script>
+<script type="text/javascript">
+	google.charts.load('current', {
+		'packages' : [ 'bar' ]
+	});
+	google.charts.setOnLoadCallback(drawChart);
+	function drawChart() {
+		var data = google.visualization.arrayToDataTable([
+				[ 'Year', 'Hours' ],
+				<c:forEach var="c" items="${tasksWeekly}" varStatus = "s">[
+						'<c:out value="${c.taskName}"/>',
+						<c:out value="${totalHourArrayWeekly[s.index]}"/>],
+				</c:forEach> ]);
+		var options = {
+			chart : {
+				title : 'Spent time on Task Weekly',
+				subtitle : '${project.projectName}',
+			},
+			bars : 'vertical' // Required for Material Bar Charts.
+		};
+
+		var chart = new google.charts.Bar(document
+				.getElementById('barchart_material2'));
+
+		chart.draw(data, options);
+	}
+</script>
 <div class="jumbotron">
 	<h1>Project Details</h1>
 	<table class="table table-hover">
@@ -152,6 +178,7 @@
 
 	<p>totalHourArraySum: ${totalHourArraySum }</p>
 
+	<div id="barchart_material" style="width: 900px; height: 500px;"></div>
 
 
 <h1>Task Details Weekly</h1>
@@ -199,9 +226,7 @@
 
 	<p>totalHourArraySumWeekly: ${totalHourArraySumWeekly }</p>
 
-	<div id="barchart_material" style="width: 900px; height: 500px;"></div>
-
-
+<div id="barchart_material2" style="width: 900px; height: 500px;"></div>
 
 	User Detail
 	</h1>
