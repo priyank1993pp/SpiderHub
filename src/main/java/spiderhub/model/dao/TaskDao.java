@@ -16,8 +16,13 @@ public interface TaskDao {
 
 	List<Task> getTaskOfMemberByProject(Integer uId, Integer pId);
 
-//to get tasks inside a project within past task
+	// to get tasks inside a project within past task
 	List<Task> getTasksWeeklyWithinProject(Integer pid, Date start, Date end);
+
+	List<Task> getAllTaskAccordingToHIGHPriorityWithinAProject(Integer uid);
+
+	List<Task> getAllTaskAccordingToMEDIUMPriorityWithinAProject(Integer uid);
+	List<Task> getAllTaskAccordingToLOWPriorityWithinAProject(Integer uid);
 
 	
 	// to get no of ongoing task
