@@ -1,6 +1,34 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
+<script type="text/javascript"
+	src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+	google.charts.load('current', {
+		'packages' : [ 'bar' ]
+	});
+	google.charts.setOnLoadCallback(drawChart);
+	function drawChart() {
+		var data = google.visualization.arrayToDataTable([
+				[ 'Year', 'Hours' ],
+				<c:forEach var="c" items="${tasks}" varStatus = "s">[
+						'<c:out value="${c.taskName}"/>',
+						<c:out value="${totalHourArray[s.index]}"/>],
+				</c:forEach> ]);
+		var options = {
+			chart : {
+				title : 'Spent time on Task',
+				subtitle : '${project.projectName}',
+			},
+			bars : 'vertical' // Required for Material Bar Charts.
+		};
+
+		var chart = new google.charts.Bar(document
+				.getElementById('barchart_material'));
+
+		chart.draw(data, options);
+	}
+</script>
 
 <div class="jumbotron">
 	<h1>Project Details</h1>
@@ -121,7 +149,7 @@
 		</c:forEach>
 	</table>
 
-
+	<div id="barchart_material" style="width: 900px; height: 500px;"></div>
 
 	<h1>User Detail</h1>
 	<table class="table table-hover">
