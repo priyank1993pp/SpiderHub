@@ -59,6 +59,9 @@ public class IndexController {
 			String year = String.valueOf(now.get(Calendar.YEAR));
 			String month = String.valueOf(now.get(Calendar.MONTH));
 			Map<String, Long> oldMap = new HashMap<String, Long>();
+			now.set(Calendar.HOUR, 11);
+			now.set(Calendar.MINUTE, 59);
+			now.set(Calendar.SECOND, 59);
 
 			int currentDate = now.get(Calendar.DATE);
 			for (int i = 1; i <= currentDate; i++) {
@@ -67,9 +70,14 @@ public class IndexController {
 				String day = "";
 				if (i < 10) {
 					day = "0" + String.valueOf(i);
-				} else
+					System.out.println("day lfkflkfr" +day);
+				} else{
 					day = String.valueOf(i);
-
+					System.out.println("day lfkflkfr" +day);
+	
+				}
+				System.out.println("day lfkflkfr" +day);
+				
 				String dateString = "new Date(" + year + ", " + month + ", " + day + ")";
 				oldMap.put(dateString, taskDao.getCountOfOngoingTaskOfMemberByDate(id, d));
 			}
