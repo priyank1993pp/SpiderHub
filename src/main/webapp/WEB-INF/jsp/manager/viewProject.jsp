@@ -82,10 +82,10 @@
 
 	</table>
 
-	<h2>
+	<!-- <h2>
 		<p>all project related activity</p>
-	</h2>
-	<table class="table table-hover">
+	</h2> -->
+	<%-- <table class="table table-hover">
 		<tr>
 			<th>Activity id</th>
 			<th>Activity complete</th>
@@ -104,8 +104,8 @@
 				<td>${activity.activityOfTaskByUser.userName}</td>
 			</tr>
 		</c:forEach>
-	</table>
-
+	</table> --%>
+<%-- 
 	<h2>
 		<p>all weekly project related activity</p>
 	</h2>
@@ -132,7 +132,7 @@
 		</c:forEach>
 	</table>
 	<p>${totalHour}</p>
-
+ --%>
 	<h1>Task Details</h1>
 	<table class="table table-hover">
 		<tr>

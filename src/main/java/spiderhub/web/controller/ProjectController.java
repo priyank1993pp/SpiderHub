@@ -413,6 +413,7 @@ public class ProjectController {
 		} catch (Exception e)
 
 		{
+			hours = 0;
 			e.printStackTrace();
 		}
 		return hours;
