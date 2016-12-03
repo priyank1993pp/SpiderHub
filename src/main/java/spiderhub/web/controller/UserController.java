@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import spiderhub.jsonResponse.JsonResponse;
 import spiderhub.model.User;
 import spiderhub.model.dao.UserDao;
 import spiderhub.model.dao.UserRoleDao;
@@ -25,6 +26,9 @@ import spiderhub.web.validator.UserValidator;
 @SessionAttributes("user")
 public class UserController {
 
+	@Autowired
+	JsonResponse res;
+	
 	@Autowired
 	UserDao userDao;
 
@@ -49,6 +53,7 @@ public class UserController {
 		userValidator.validate(user, bindingResult);
 		if (bindingResult.hasErrors()) {
 		//	models.put("user", new User());
+			res.setStatus("FAIL");
 			models.put("UserRole", roleDao.getUserRoles());
 			System.out.println("validation done");
 			return "userRegistration";
