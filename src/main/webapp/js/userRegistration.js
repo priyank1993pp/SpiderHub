@@ -8,8 +8,9 @@ function doAjaxPost() {
 
     $.ajax({
         type: "POST",
-        url: contexPath + "/AddUser.htm",
+        url: contexPath + "/userRegistration.html",
         data: "name=" + name + "&education=" + education,
+  
         success: function(response){
             // we have the response
             if(response.status == "SUCCESS"){
@@ -20,8 +21,8 @@ function doAjaxPost() {
                  }
                  userInfo += "</ol>";
                  $('#info').html("User has been added to the list successfully. " + userInfo);
-                 $('#name').val('');
-                 $('#education').val('');
+                 $('#userName').val('');
+                 $('#emailAddress').val('');
                  $('#error').hide('slow');
                  $('#info').show('slow');
              }else{
