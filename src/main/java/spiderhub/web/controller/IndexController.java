@@ -1,14 +1,9 @@
 package spiderhub.web.controller;
 
-import java.util.ArrayList;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -39,21 +34,8 @@ public class IndexController {
 			models.put("high", taskDao.getAllTaskAccordingToHIGHPriorityWithinAProject(id));
 			models.put("medium", taskDao.getAllTaskAccordingToMEDIUMPriorityWithinAProject(id));
 			models.put("low", taskDao.getAllTaskAccordingToLOWPriorityWithinAProject(id));
-//			Map <String, Long> list = new HashMap<String, Long>();
-//			list.put("new Date(2015, 12, 1)", (long) 5);
-//			list.put("new Date(2015, 12, 2)", (long) 7);
-//			for (Map.Entry<String, Long> entry : list.entrySet()) {
-//			    String key = entry.getKey();
-//			    Long value = entry.getValue();
-//			    System.out.println(key +"      "+value);
-//			  
-//			}
-//			models.put("list", list);
-			/*
-			 * 
-			*/
+			
 			Calendar now = Calendar.getInstance();
-			//
 			String year = String.valueOf(now.get(Calendar.YEAR));
 			String month = String.valueOf(now.get(Calendar.MONTH));
 			Map<String, Long> map = new HashMap<String, Long>();

@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title><tiles:insertAttribute name="title"
 		defaultValue="Projects" defaultValueType="string" /></title>
 <link href="<%=request.getContextPath()%>/css/bootstrap.min.css"
@@ -17,34 +17,7 @@
 
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico" type="image/x-icon">
 <link rel="icon" href="<%=request.getContextPath()%>/images/favicon.ico" type="image/x-icon">
-
-<!-- <!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> -->
-<!-- <!-- 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> --> 
-<!-- <!--     <script type="text/javascript"> --> 
-<!-- //       google.charts.load('current', {'packages':['bar']}); -->
-<!-- //       google.charts.setOnLoadCallback(drawChart); -->
-<!-- //       function drawChart() { -->
-<!-- //         var data = google.visualization.arrayToDataTable([ -->
-<!-- //           ['Task', 'Hours'], -->
-<%-- //           <c:forEach items="${tasks}" var="task" varStatus="status"> --%>
-<%-- //          var name = ${task.taskName}; --%>
-<%-- //          var hour = ${totalHourArray[status.index]}; --%>
-<!-- //          [name , 10], -->
-<%-- //      	 </c:forEach>]); --%>
-
-<!-- //         var options = { -->
-<!-- //           chart: { -->
-<!-- //             title: 'Company Performance', -->
-<!-- //             subtitle: 'Sales, Expenses, and Profit: 2014-2017', -->
-<!-- //           }, -->
-<!-- //           bars: 'horizontal' // Required for Material Bar Charts. -->
-<!-- //         }; -->
-
-<!-- //         var chart = new google.charts.Bar(document.getElementById('barchart_material')); -->
-
-<!-- //         chart.draw(data, options); -->
-<!-- //       } -->
-<!-- <!--     </script> --> 
+	<link rel="stylesheet" href="../../css/bootstrap1.min.css">
 
 </head>
 <body>
@@ -93,16 +66,6 @@
 		</div>
 		<jsp:include page="/WEB-INF/jsp/footer.jsp" />
 	</div>
-
-
-
-	<%-- <security:authorize access="authenticated">
-		<p>
-			<a href="<c:url value='/logout' />">Logout</a>
-		</p>
-	</security:authorize>
-
-	<p>Copyright &copy; 2016, Chengyu Sun. All rights reserved.</p> --%>
 
 </body>
 </html>

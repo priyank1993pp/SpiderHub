@@ -7,6 +7,8 @@ import spiderhub.model.TaskActivity;
 
 public interface TaskActivityDao {
 	TaskActivity getTaskActivity(Integer id);
+	
+	TaskActivity getRecentTaskActivity();
 
 	TaskActivity saveTaskActivity(TaskActivity taskActivity);
 

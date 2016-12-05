@@ -37,18 +37,18 @@ public class ProjectValidator implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		Project project = (Project) target;
-		String link = project.getProjectGitHubLink();
-		if (!StringUtils.hasText(link))
-			errors.rejectValue("projectGitHubLink", "error.field.empty");
-		else if (!validateLink(link)) {
-			// check using regex whether it is
-			errors.rejectValue("projectGitHubLink", "error.field.link");
-		} else if (StringUtils.hasText(link)) {
-			Project p = projectDao.checkLinkExist(link);
-			if (p != null) {
-				errors.rejectValue("projectGitHubLink", "error.field.linkExist");
-			}
-		}
+//		Project project = (Project) target;
+//		String link = project.getProjectGitHubLink();
+//		if (!StringUtils.hasText(link))
+//			errors.rejectValue("projectGitHubLink", "error.field.empty");
+//		else if (!validateLink(link)) {
+//			// check using regex whether it is
+//			errors.rejectValue("projectGitHubLink", "error.field.link");
+//		} else if (StringUtils.hasText(link)) {
+//			Project p = projectDao.checkLinkExist(link);
+//			if (p != null) {
+//				errors.rejectValue("projectGitHubLink", "error.field.linkExist");
+//			}
+//		}
 	}
 }

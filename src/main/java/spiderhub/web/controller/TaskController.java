@@ -24,11 +24,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonAnyFormatVisitor;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 
 import spiderhub.model.Comment;
 import spiderhub.model.Project;
@@ -138,7 +147,7 @@ public class TaskController {
 	@RequestMapping(value = "/manager/assignTask.html", method = RequestMethod.POST)
 	public String assign(@RequestParam Integer tid, @RequestParam Integer pid, @ModelAttribute Task task,
 			BindingResult bindingResult, HttpServletRequest request, SessionStatus status, ModelMap models)
-			throws ParseException {
+					throws ParseException {
 		task = taskDao.getTask(tid);
 
 		String endDate = request.getParameter("endDate");
@@ -245,6 +254,56 @@ public class TaskController {
 		return "redirect:viewProject.html?id=" + pid;
 	}
 
+	@RequestMapping(value = "/manager/comment.html", method = RequestMethod.POST)
+	@ResponseBody
+	public String addComment(@RequestBody String jsonString) {
+		//System.out.println(tid);
+		System.out.println(jsonString);
+		String[] test = jsonString.split("&");
+		String[] cmttest = test[0].split("=");
+		String[] ttest = test[1].split("=");
+		int tid = Integer.parseInt(ttest[1]);
+		String cmtDes = cmttest[1];
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User User = (User) auth.getPrincipal();
+		int uid = User.getId();
+		
+		System.out.println(uid);
+		//System.out.println(tid);
+		Comment comment = new Comment();
+		comment.setUserComment(userDao.getUser(uid));
+		comment.setTaskComments(taskDao.getTask(tid));
+		comment.setCommentDesc(cmtDes);
+		Comment cmt = commentDao.saveComment(comment);
+		return 	null;
+	}
+	
+	@RequestMapping(value = "/member/activity.html", method = RequestMethod.POST)
+	@ResponseBody
+	public String getEmail(@RequestParam String task) {
+		System.out.println(task);
+		TaskActivity tActivity = new TaskActivity();
+		tActivity.setActivityOfTask(taskDao.getTask(Integer.parseInt(task)));
+		tActivity.setStartTime(new Date());
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User User = (User) auth.getPrincipal();
+		int uid = User.getId();
+		tActivity.setActivityOfTaskByUser(userDao.getUser(uid));
+		taskActivityDao.saveTaskActivity(tActivity);
+		System.out.println(taskActivityDao.getRecentTaskActivity().getId());
+
+		return null ;
+	}
+	@RequestMapping(value = "/member/endactivity.html", method = RequestMethod.POST)
+	@ResponseBody
+	public String geditactivity() {
+		TaskActivity tk = taskActivityDao.getRecentTaskActivity();
+		tk.setEndTime(new Date());
+		taskActivityDao.saveTaskActivity(tk);
+		return null ;
+	}
+
+	
 	@RequestMapping(value = "/member/viewTask.html", method = { RequestMethod.GET, RequestMethod.POST })
 	// optional required = false
 	public String memberView(@RequestParam(required = false) Integer tid, @ModelAttribute TaskActivity taskActivity,
@@ -310,7 +369,7 @@ public class TaskController {
 				taskActivity = taskActivityDao.saveTaskActivity(taskActivity);
 
 			} else if (action != null && action.equals("Finish Task")) {
-				
+
 			}
 			models.put("task", taskDao.getTask(tid));
 			// for display of files
@@ -334,12 +393,12 @@ public class TaskController {
 
 			// get user from database and pass it to JSP
 			models.put("task", taskDao.getTask(tid));
-			
+
 			// for display of files
 			models.put("fileModel", fileDao.getFilesAssignedToTask(tid));
 			models.put("comments", commentDao.getComment(tid));
 			models.put("comment", new Comment());
-			
+
 		} else if ("POST".equals(request.getMethod())) {
 
 			comment.setTaskComments(taskDao.getTask(tid));

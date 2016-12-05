@@ -1,5 +1,6 @@
 package spiderhub.web.controller;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -21,8 +23,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import spiderhub.model.Project;
 import spiderhub.model.Task;
@@ -110,6 +117,22 @@ public class ProjectController {
 		models.put("totalHourArraySumWeekly", totalHourArraySumWeekly);
 
 		return "manager/report";
+	}
+	
+	@RequestMapping(value = "/manager/getprotype.html", method = RequestMethod.GET)
+	@ResponseBody
+	public String getEmail(@RequestParam String typeId, HttpServletResponse response) 
+			throws JsonGenerationException, JsonMappingException, IOException {
+		
+		String check = "false";
+		if(projecttypeDao.getPerojectType(Integer.parseInt(typeId)).getProjectType().equals("Software Project")){
+			check = "true";
+		}
+		ObjectMapper mapper = new ObjectMapper();
+		response.setContentType("application/json");
+       mapper.writeValue(response.getWriter(), check);
+
+		return null ;
 	}
 
 	@RequestMapping("/member/listProjects.html")
@@ -274,12 +297,14 @@ public class ProjectController {
 			models.put("projecttype", projecttypeDao.getProjectType());
 			return "manager/addProject";
 		}
+		
 		project.setProjectType(projecttypeDao.getPerojectType(Integer.parseInt(request.getParameter("projecttype"))));
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User User = (User) auth.getPrincipal();
 		int userId = User.getId();
 		project.setCreatedUser(userDao.getUser(userId));
 		project.setCreatedDate(new Date());
+
 		project = projectDao.saveProject(project);
 		return "redirect:listProjects.html";
 	}

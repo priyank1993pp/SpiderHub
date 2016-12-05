@@ -90,4 +90,10 @@ public class TaskActivityDaoImpl implements TaskActivityDao {
 				.getResultList();
 	}
 
+	@Override
+	public TaskActivity getRecentTaskActivity() {
+		String query = "Select t from TaskActivity t where t.id = (select max(id) from TaskActivity)";
+		return entityManager.createQuery(query , TaskActivity.class).getSingleResult();
+	}
+
 }
