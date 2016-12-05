@@ -125,13 +125,19 @@ public class TaskDaoImpl implements TaskDao {
 	public long getCountOfOngoingTaskOfMemberByDate(Integer uId, Date startDate) {
 		// TODO Auto-generated method stub
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		long count = (long) entityManager.createQuery(
-				"select count(*) from Task where userTasks.id = :uId and statusTasks.id=1 AND startDate <='"
+				"select count(*) from Task where userTasks.id = :uId and statusTasks.id=1 AND startDate <= '"
 						+ sdf.format(startDate) + "'")
 				.setParameter("uId", uId).getSingleResult();
 		return count;
+
+		/*
+		 * long count = (long) entityManager .createQuery(
+		 * "select count(*) from Task where userTasks.id = :uId and statusTasks.id=1 AND startDate <= CURRENT_DATE()"
+		 * ) .setParameter("uId", uId).getSingleResult(); return count;
+		 */
 	}
 
 }

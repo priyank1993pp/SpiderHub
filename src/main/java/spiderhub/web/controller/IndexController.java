@@ -4,6 +4,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+<<<<<<< HEAD
+=======
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
+>>>>>>> ayush/homework5
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -34,24 +40,46 @@ public class IndexController {
 			models.put("high", taskDao.getAllTaskAccordingToHIGHPriorityWithinAProject(id));
 			models.put("medium", taskDao.getAllTaskAccordingToMEDIUMPriorityWithinAProject(id));
 			models.put("low", taskDao.getAllTaskAccordingToLOWPriorityWithinAProject(id));
-			
+
 			Calendar now = Calendar.getInstance();
 			String year = String.valueOf(now.get(Calendar.YEAR));
 			String month = String.valueOf(now.get(Calendar.MONTH));
-			Map<String, Long> map = new HashMap<String, Long>();
+			Map<String, Long> oldMap = new HashMap<String, Long>();
+			now.set(Calendar.HOUR, 11);
+			now.set(Calendar.MINUTE, 59);
+			now.set(Calendar.SECOND, 59);
+
 			int currentDate = now.get(Calendar.DATE);
 			for (int i = 1; i <= currentDate; i++) {
 				now.set(Calendar.DATE, i);
 				Date d = now.getTime();
-				String day = String.valueOf(i);
-				String dateString = "new Date("+ year  +", "+ month +", "+  day  +")";
-				map.put(dateString, taskDao.getCountOfOngoingTaskOfMemberByDate(id, d));
+				String day = "";
+				if (i < 10) {
+					day = "0" + String.valueOf(i);
+					System.out.println("day lfkflkfr" +day);
+				} else{
+					day = String.valueOf(i);
+					System.out.println("day lfkflkfr" +day);
+	
+				}
+				System.out.println("day lfkflkfr" +day);
+				
+				String dateString = "new Date(" + year + ", " + month + ", " + day + ")";
+				oldMap.put(dateString, taskDao.getCountOfOngoingTaskOfMemberByDate(id, d));
 			}
-			for (Map.Entry<String, Long> entry : map.entrySet()) {
-			    String key = entry.getKey();
-			    Long value = entry.getValue();
-			    System.out.println(key +"      "+value);
-			  
+
+			for (Map.Entry<String, Long> entry : oldMap.entrySet()) {
+				String key = entry.getKey();
+				Long value = entry.getValue();
+				System.out.println(key + "      " + value);
+
+			}
+			SortedMap<String, Long> map = new TreeMap<String, Long>(oldMap);
+			for (SortedMap.Entry<String, Long> entry : map.entrySet()) {
+				String key = entry.getKey();
+				Long value = entry.getValue();
+				System.out.println(key + "      " + value);
+
 			}
 			models.put("list", map);
 

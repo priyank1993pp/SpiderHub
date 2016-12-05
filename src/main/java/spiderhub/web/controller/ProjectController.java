@@ -40,11 +40,13 @@ import spiderhub.model.dao.ProjectTypeDao;
 import spiderhub.model.dao.TaskActivityDao;
 import spiderhub.model.dao.TaskDao;
 import spiderhub.model.dao.UserDao;
+import spiderhub.web.Tag;
 import spiderhub.web.validator.ProjectValidator;
 
 @Controller
 @SessionAttributes("project")
 public class ProjectController {
+	List<String> data = new ArrayList<String>();
 
 	Set<User> users = new HashSet<>();
 
@@ -109,7 +111,13 @@ public class ProjectController {
 					task.getId(), cal.getTime(), new Date());
 			double totalHourByTask = 0;
 			for (TaskActivity activity : taskActivityListWeekly) {
-				double hrs = count_hr_from_start_end(activity.getStartTime(), activity.getEndTime());
+				double hrs = 0;
+				try {
+					hrs = count_hr_from_start_end(activity.getStartTime(), activity.getEndTime());
+				} catch (NullPointerException nu) {
+					hrs = 0;
+				}
+
 				// hourList.add(hrs);
 				totalHourByTask += hrs;
 			}
@@ -187,7 +195,13 @@ public class ProjectController {
 		List<Double> hourList = new ArrayList<Double>();
 		double totalHour = 0;
 		for (TaskActivity activity : taskActivityList) {
-			double hrs = count_hr_from_start_end(activity.getStartTime(), activity.getEndTime());
+
+			double hrs = 0;
+			try {
+				hrs = count_hr_from_start_end(activity.getStartTime(), activity.getEndTime());
+			} catch (NullPointerException nu) {
+
+			}
 			hourList.add(hrs);
 			totalHour += hrs;
 		}
@@ -207,7 +221,13 @@ public class ProjectController {
 			taskActivityList = taskActivityDao.getTaskActivityByTaskInsideProject(id, task.getId());
 			double totalHourByTask = 0;
 			for (TaskActivity activity : taskActivityList) {
-				double hrs = count_hr_from_start_end(activity.getStartTime(), activity.getEndTime());
+
+				double hrs = 0;
+				try {
+					hrs = count_hr_from_start_end(activity.getStartTime(), activity.getEndTime());
+				} catch (NullPointerException nu) {
+
+				}
 				// hourList.add(hrs);
 				totalHourByTask += hrs;
 			}
@@ -235,7 +255,13 @@ public class ProjectController {
 					task.getId(), cal.getTime(), new Date());
 			double totalHourByTask = 0;
 			for (TaskActivity activity : taskActivityListWeekly) {
-				double hrs = count_hr_from_start_end(activity.getStartTime(), activity.getEndTime());
+				double hrs = 0;
+				try {
+					hrs = count_hr_from_start_end(activity.getStartTime(), activity.getEndTime());
+				} catch (NullPointerException n) {
+
+				}
+
 				hourList.add(hrs);
 				totalHourByTask += hrs;
 			}
@@ -356,11 +382,53 @@ public class ProjectController {
 		Set<User> detail = project.getUsersRelatedProject();
 
 		projectNotInProject.removeAll(detail);
+		data.clear();
+		// for adding autocomplete
+		for (User user : projectNotInProject) {
+			data.add(user.getUsername());
+			System.out.println("data: 899838935895");
 
-		models.put("users", projectNotInProject);
-		models.put("project", projectDao.getProject(id));
+		}
+/*		models.put("users", projectNotInProject);
+*/		models.put("project", projectDao.getProject(id));
 
 		return "manager/addUserInProject";
+	}
+
+	@RequestMapping(value = "/getTags.json", method = RequestMethod.GET)
+	public @ResponseBody List<String> getTags(@RequestParam("term") String tags, HttpServletResponse response,
+			ModelMap models) throws JsonGenerationException, JsonMappingException, IOException {
+		response.setContentType("application/json");
+		
+		//models.put("users", simulateSearchResultList(simulateSearchResult(tags)));
+
+		return simulateSearchResult(tags);
+
+	}
+	private List<String> simulateSearchResult(String tagName) {
+
+		List<String> result = new ArrayList<String>();
+		result.clear();
+		// iterate a list and filter by tagName
+		for (String tag : data) {
+			if (tag.contains(tagName)) {
+				System.out.println("Tagagname--==-=-=-=-=" + tag);
+				result.add(tag);
+			}
+		}
+
+		return result;
+	}
+
+	private List<User> simulateSearchResultList(List<String> tags) {
+
+		List<User> users = new ArrayList<User>();
+		for (String userName : tags) {
+			User user = userDao.getUserByUsername(userName);
+			users.add(user);
+		}
+
+		return users;
 	}
 
 	@RequestMapping(value = "/manager/addUserInProject.html", method = RequestMethod.POST)
@@ -370,17 +438,17 @@ public class ProjectController {
 		Set<User> detail = projectDao.getProject(id).getUsersRelatedProject();
 
 		String[] chkSms = request.getParameterValues("chksms");
-		int[] value = new int[chkSms.length];
+		String[] value = new String[chkSms.length];
 
 		for (int i = 0; i < chkSms.length; i++)
-			value[i] = Integer.parseInt(chkSms[i]);
+			value[i] =chkSms[i];
 
 		System.out.println("adding user to project" + chkSms);
 
 		users.addAll(detail);
 
 		for (int i = 0; i < value.length; i++) {
-			users.add(userDao.getUser(value[i]));
+			users.add(userDao.getUserByUsername((value[i])));
 		}
 
 		project.setUsersRelatedProject(users);
@@ -420,6 +488,7 @@ public class ProjectController {
 		} catch (Exception e)
 
 		{
+			hours = 0;
 			e.printStackTrace();
 		}
 		return hours;
