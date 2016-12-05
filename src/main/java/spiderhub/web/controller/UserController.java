@@ -33,6 +33,8 @@ import spiderhub.web.validator.ValidationResponse;
 @SessionAttributes("user")
 public class UserController {
 
+	
+
 	@Autowired
 	private MessageSource messageSource;
 
@@ -62,9 +64,12 @@ public class UserController {
 			res.setStatus("FAIL");
 			List<FieldError> allErrors = bindingResult.getFieldErrors();
 			List<ErrorMessage> errorMesages = new ArrayList<ErrorMessage>();
+			
 			for (FieldError objectError : allErrors) {
 				String message = messageSource.getMessage(objectError, null);
 				errorMesages.add(new ErrorMessage(objectError.getField(), message));
+				
+				
 				System.out.println("error fir=eld: " + objectError.getField() + "   message : " + message
 						+ " get rejected value : " + objectError.getRejectedValue().toString() + " name: "
 						+ objectError.getObjectName() + "  code " + objectError.getCode());
@@ -88,7 +93,7 @@ public class UserController {
 	public String register(@ModelAttribute User user, BindingResult bindingResult, ModelMap models,
 			HttpServletRequest request) {
 
-		if (bindingResult.hasErrors()) { 
+		if (bindingResult.hasErrors()) {
 			models.put("UserRole", roleDao.getUserRoles());
 			System.out.println("validation done");
 			return "userRegistration";
