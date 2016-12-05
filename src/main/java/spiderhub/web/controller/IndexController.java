@@ -4,12 +4,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-<<<<<<< HEAD
-=======
+
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
->>>>>>> ayush/homework5
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
