@@ -472,7 +472,7 @@ public class ProjectController {
 		detail.remove(removeUser);
 		project.setUsersRelatedProject(detail);
 		projectDao.saveProject(project);
-		return "redirect:listProjects.html";
+		return "redirect:viewProject.html?id=" + pid;
 	}
 
 	// helper methods
