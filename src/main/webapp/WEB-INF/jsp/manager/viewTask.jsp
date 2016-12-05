@@ -8,15 +8,13 @@
 function addComment() {
 	var cmt = $("input[name='comment']").val();
 		var taskid = $("#task").val();
-		alert(taskid);
 		$.ajax({	
 			type : "POST",
 			url : "comment.html",
 			datatype : "json",
 			data : {"desc" :  cmt, "taskId" : taskid}, 
 					success : function(data) {
-						alert("test");
-						$(this).dialog("close");
+						window.location.reload();
 					}
 				});
 	}
@@ -76,13 +74,13 @@ $(function(){
 		</c:forEach>
 	</table>
 
+<div id = comments>
 	<c:if test="${not empty comments}">
 		<c:forEach items="${comments}" var="c">
-			<p>${c.userComment.userName}</p>
-			<br/>
-			<p>${c.commentDesc}</p>
+			<h4>${c.userComment.userName}:${c.commentDesc}</h4>
 		</c:forEach>
 	</c:if>
+	</div>
 	<%-- <form:form modelAttribute="comment" role="form">
 		<form:textarea path="commentDesc" rows="2" cols="30"
 			class="form-control" required="required" />

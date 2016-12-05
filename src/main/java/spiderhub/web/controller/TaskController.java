@@ -256,7 +256,8 @@ public class TaskController {
 
 	@RequestMapping(value = "/manager/comment.html", method = RequestMethod.POST)
 	@ResponseBody
-	public String addComment(@RequestBody String jsonString) {
+	public String addComment(@RequestBody String jsonString , HttpServletResponse response) 
+			throws JsonGenerationException, JsonMappingException, IOException{
 		//System.out.println(tid);
 		System.out.println(jsonString);
 		String[] test = jsonString.split("&");

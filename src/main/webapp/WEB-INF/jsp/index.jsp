@@ -127,8 +127,9 @@
 			</p>
 
 			<security:authorize access="hasRole('MEMBER')">
-				<div id="piechart" style="width: 500px; height: 300px"></div>
-				<div id="chart_div" style="width: 100px; height: 100px"></div>
+				<!--<div id="piechart" style="width: 500px; height: 300px"></div>-->
+				 <!-- <div id="chart_div" style="width: 1px; height: 1px"></div>  -->
+				<div>
 				<h2>High Priority Task</h2>
 				<table name="High Priority Task" class="table table-hover">
 					<tr>
@@ -144,6 +145,8 @@
 						</tr>
 					</c:forEach>
 				</table>
+				</div>
+				<div>
 				<h2>Medium Priority Task</h2>
 				<table class="table table-hover">
 					<tr>
@@ -159,6 +162,8 @@
 						</tr>
 					</c:forEach>
 				</table>
+				</div>
+				<div>
 				<h2>Low Priority Task</h2>
 				<table class="table table-hover">
 					<tr>
@@ -174,6 +179,7 @@
 						</tr>
 					</c:forEach>
 				</table>
+				</div>
 			</security:authorize>
 		</div>
 		<jsp:include page="/WEB-INF/jsp/footer.jsp" />

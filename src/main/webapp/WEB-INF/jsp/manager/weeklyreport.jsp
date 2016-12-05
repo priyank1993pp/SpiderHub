@@ -44,8 +44,10 @@
 </script>
 <div class="jumbotron">
 <div id="report">
-	<h2>Project Name : ${project.projectName}</h2>
-	<h3>Project Description :</h3><p>${project.projectDescription}</p>
+	<h2>Project Name :</h2>
+	<a>${project.projectName}</a>
+	<h3>Project Description :</h3>
+	<p>${project.projectDescription}</p>
 	<table id="tab_customers" class="table table-hover">
 		<colgroup>
 			<col width="20%">
@@ -58,14 +60,16 @@
 				<th>Task Name</th>
 				<th>Task Related User</th>
 				<th>Task Status</th>
+				<th>hrs spent</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${tasks}" var="task" varStatus="status">
+			<c:forEach items="${tasksWeekly}" var="task" varStatus="status">
 				<tr>
 					<td>${task.taskName}</td>
 					<td>${task.userTasks.userName}</td>
 					<td>${task.statusTasks.statusName}</td>
+					<td>${totalHourArrayWeekly[status.index]}</td>
 				</tr>
 			</c:forEach>
 		</tbody>

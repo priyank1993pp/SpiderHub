@@ -9,7 +9,8 @@
 (function($){
 	
 	// Number of seconds in every time division
-	var hours	= 60*60,
+	var days	= 24*60*60,
+		hours	= 60*60,
 		minutes	= 60;
 	
 	// Creating the plugin
@@ -20,7 +21,7 @@
 			start		: new Date()
 		},prop);
 		
-		var passed = 0, h, m, s, 
+		var passed = 0, d, h, m, s, 
 			positions;
 
 		// Initialize the plugin
@@ -32,6 +33,10 @@
 			
 			passed = Math.floor((new Date() - options.start) / 1000);
 			
+			// Number of days passed
+			d = Math.floor(passed / days);
+			updateDuo(0, 1, d);
+			passed -= d*days;
 			
 			// Number of hours left
 			h = Math.floor(passed / hours);
@@ -48,7 +53,7 @@
 			updateDuo(6, 7, s);
 			
 			// Calling an optional user supplied callback
-			options.callback(h, m, s);
+			options.callback(d, h, m, s);
 			
 			// Scheduling another call of this function in 1s
 			setTimeout(tick, 1000);
@@ -68,7 +73,7 @@
 		elem.addClass('countdownHolder');
 
 		// Creating the markup inside the container
-		$.each(['Hours','Minutes','Seconds'],function(i){
+		$.each(['Days','Hours','Minutes','Seconds'],function(i){
 			$('<span class="count'+this+'">').html(
 				'<span class="position">\
 					<span class="digit static">0</span>\

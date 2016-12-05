@@ -79,9 +79,16 @@ public class ProjectController {
 		models.put("projects", projectDao.getProjectofManager(User.getId()));
 		return "manager/listProjects";
 	}
-
+	
 	@RequestMapping("/manager/report.html")
 	public String projectreport(ModelMap models, @RequestParam Integer id) {
+		models.put("project", projectDao.getProject(id));
+		models.put("tasks", projectDao.getProject(id).getTasks());
+		return "manager/report";
+	}
+
+	@RequestMapping("/manager/weeklyreport.html")
+	public String projectreportweekly(ModelMap models, @RequestParam Integer id) {
 		models.put("project", projectDao.getProject(id));
 		models.put("tasks", projectDao.getProject(id).getTasks());
 
@@ -112,11 +119,10 @@ public class ProjectController {
 		}
 
 		models.put("tasksWeekly", tasksWeekly);
-
 		models.put("totalHourArrayWeekly", totalHourArrayWeekly);
 		models.put("totalHourArraySumWeekly", totalHourArraySumWeekly);
 
-		return "manager/report";
+		return "manager/weeklyreport";
 	}
 	
 	@RequestMapping(value = "/manager/getprotype.html", method = RequestMethod.GET)

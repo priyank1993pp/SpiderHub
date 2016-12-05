@@ -39,7 +39,8 @@
 						</c:if> <c:if test="${project.delete }">
 					Done
 					</c:if></td>
-					<td><a href="report.html?id=${project.id }">Report</a></td>
+					<td><a href="report.html?id=${project.id }">Report</a> | <a
+								href="weeklyreport.html?id=${project.id }">Weekly Report</a></td>
 				</tr>
 			</c:forEach>
 		</table>

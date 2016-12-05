@@ -28,43 +28,6 @@
 		</tr>
 	</table>
 	<h1>Assigned Tasks</h1>
-	<table class="table table-hover">
-		<tr>
-			<th>Task</th>
-			<th>Task Description</th>
-			<th>Operation</th>
-			<th>Assigned By</th>
-		</tr>
-
-		<c:forEach items="${task}" var="task">
-
-			<tr>
-				<td>${task.taskName}</td>
-				<td>${task.taskDescription}</td>
-				<td><c:if test="${task.statusTasks.id==1 }">
-						<a href="doneTask.html?tid=${task.id}&pid=${project.id}"><img
-							src="<%=request.getContextPath()%>/IMAGE/delete.png" /></a>
-					</c:if> <c:if test="${task.statusTasks.id==2 }">
-					Done
-					</c:if></td>
-				<td>${project.createdUser.userName}</td>
-				<c:if test="${not empty task.files}">
-					<td><a href="viewTask.html?tid=${task.id}&pid=${project.id}">View
-							Files</a></td>
-
-				</c:if>
-
-
-
-				<td><c:if test="${task.statusTasks.id==1 }">
-						<a href="viewActivity.html?tid=${task.id}">start Activity
-							Files</a>
-					</c:if></td>
-			</tr>
-
-
-		</c:forEach>
-	</table>
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
