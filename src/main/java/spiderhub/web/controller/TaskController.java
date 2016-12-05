@@ -278,7 +278,30 @@ public class TaskController {
 		Comment cmt = commentDao.saveComment(comment);
 		return 	null;
 	}
-	
+	@RequestMapping(value = "/member/comment.html", method = RequestMethod.POST)
+	@ResponseBody
+	public String addCommentmember(@RequestBody String jsonString , HttpServletResponse response) 
+			throws JsonGenerationException, JsonMappingException, IOException{
+		//System.out.println(tid);
+		System.out.println(jsonString);
+		String[] test = jsonString.split("&");
+		String[] cmttest = test[0].split("=");
+		String[] ttest = test[1].split("=");
+		int tid = Integer.parseInt(ttest[1]);
+		String cmtDes = cmttest[1];
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User User = (User) auth.getPrincipal();
+		int uid = User.getId();
+		
+		System.out.println(uid);
+		//System.out.println(tid);
+		Comment comment = new Comment();
+		comment.setUserComment(userDao.getUser(uid));
+		comment.setTaskComments(taskDao.getTask(tid));
+		comment.setCommentDesc(cmtDes);
+		Comment cmt = commentDao.saveComment(comment);
+		return 	null;
+	}
 	@RequestMapping(value = "/member/activity.html", method = RequestMethod.POST)
 	@ResponseBody
 	public String getEmail(@RequestParam String task) {

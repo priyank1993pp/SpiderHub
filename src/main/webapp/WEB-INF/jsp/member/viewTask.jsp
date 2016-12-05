@@ -4,8 +4,11 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	
-<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+	<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
 <link rel="stylesheet" href="<%=request.getContextPath()%>/countup/jquery.countup.css" />
 <script src="<%=request.getContextPath()%>/countup/jquery.countup.js"></script>
 <script type="text/javascript">
